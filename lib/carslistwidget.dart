@@ -5,11 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:sss_mobile/string.dart';
 import 'package:http/http.dart' as http;
 import 'package:sss_mobile/vehicle.dart';
+import 'package:sss_mobile/vehicledetailwidget.dart';
 
 class SSSState extends State<CarsListWidget> {
   var _vehicles = <Vehicle>[];
-
-  final _biggerFont = const TextStyle(fontSize: 18.0);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,10 @@ class SSSState extends State<CarsListWidget> {
   Widget _buildRow(int i) {
     return new ListTile(
         subtitle: new Text("${_vehicles[i].spz}"),
-        title: new Text("${_vehicles[i].name}")
+        title: new Text("${_vehicles[i].name}"), 
+      onTap: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(vehicle: _vehicles[i],)));
+      },
     );
   }
 
