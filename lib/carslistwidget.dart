@@ -12,7 +12,7 @@ class SSSState extends State<CarsListWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return new  Scaffold(
         appBar: new AppBar(
           title: new Text(
               Strings.appTitle)),

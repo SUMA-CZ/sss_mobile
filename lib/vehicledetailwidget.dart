@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -90,8 +89,8 @@ class VehicleDetailState extends State<VehicleDetailWidget> {
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.directions_transit)),
-                Tab(icon: Icon(Icons.directions_bike)),
+                Tab(icon: Icon(Icons.local_dining)),
+                Tab(icon: Icon(Icons.build)),
               ],
             ),
             title: Text(vehicle.name),
@@ -106,13 +105,13 @@ class VehicleDetailState extends State<VehicleDetailWidget> {
                   }),
               new ListView.builder(
                   padding: const EdgeInsets.all(16.0),
-                  itemCount: _trips.length,
+                  itemCount: _refuelings.length,
                   itemBuilder: (BuildContext context, int position) {
                     return _buildRowForRefueling(position);
                   }),
               new ListView.builder(
                   padding: const EdgeInsets.all(16.0),
-                  itemCount: _trips.length,
+                  itemCount: _maintenance.length,
                   itemBuilder: (BuildContext context, int position) {
                     return _buildRowForMaintenance(position);
                   }),
