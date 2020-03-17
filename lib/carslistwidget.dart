@@ -36,7 +36,7 @@ class SSSState extends State<CarsListWidget> {
         subtitle: new Text("${_vehicles[i].spz}"),
         title: new Text("${_vehicles[i].name}"), 
       onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(vehicle: _vehicles[i],)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailWidget(_vehicles[i],)));
       },
     );
   }
