@@ -1,29 +1,10 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sss_mobile/user.dart';
+import 'package:sss_mobile/models/user.dart';
 
 /// This allows the `User` class to access private members in
 /// the generated file. The value for this is *.g.dart, where
 /// the star denotes the source file name.
 part 'trip.g.dart';
-
-//{
-//"Id": 2643,
-//"InitialOdometer": 5,
-//"FinalOdometer": 6,
-//"OfficialJourney": true,
-//"ParkingNote": "sample string 10",
-//"Latitude": 11.1,
-//"Longtitude": 12.1,
-//"Note": "sample string 8",
-//"FuelStatus": 9,
-//"User": {
-//"Id": "41be89d0-16e4-4133-a941-f6c98273bed7",
-//"Email": "tomas.sykora@ajty.cz",
-//"Name": "Syky"
-//},
-//"FromDate": "2016-09-05T07:50:41.953",
-//"ToDate": "2016-09-05T07:50:41.953"
-//}
 
 @JsonSerializable()
 class Trip {

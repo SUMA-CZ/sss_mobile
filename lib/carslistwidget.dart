@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sss_mobile/string.dart';
 import 'package:http/http.dart' as http;
-import 'package:sss_mobile/vehicle.dart';
+import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/vehicledetailwidget.dart';
 
 class SSSState extends State<CarsListWidget> {
