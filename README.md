@@ -2,6 +2,9 @@
 
 Mobile SSS, mainly SCM
 
+## JSON Serialization
+- [Via: `json_serializable`](https://flutter.dev/docs/development/data-and-backend/json)
+
 ## Getting Started
 
 This project is a starting point for a Flutter application.
