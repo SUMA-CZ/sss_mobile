@@ -6,11 +6,19 @@ import 'package:sss_mobile/string.dart';
 import 'package:http/http.dart' as http;
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class VehicleListScreenState extends State<VehicleListScreen> {
+  RefreshController _refreshController = RefreshController(initialRefresh: true);
   var _vehicles = <Vehicle>[];
   // TODO: Fill in all the data
   final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
+
+  void _onRefresh() async{
+    await _loadVehicles();
+    _refreshController.refreshCompleted();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,28 +34,39 @@ class VehicleListScreenState extends State<VehicleListScreen> {
               ],
             ),
           ),
-          body: TabBarView(
-            children: [
-              new ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: _vehicles.where((v) => _companySPZ.contains(v.spz)).length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return _buildCompanyVehicleRow(position);
-                  }),
-              new ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: _vehicles.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return _buildPersonalVehicleRow(position);
-                  }),
-            ],
+          body: SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: WaterDropHeader(),
+              controller: _refreshController,
+              onRefresh: _onRefresh,
+//              onLoading: _onLoading,
+              child:  TabBarView(
+                children: [
+                  new ListView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: _vehicles.where((v) => _companySPZ.contains(v.spz)).length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return _buildCompanyVehicleRow(position);
+                      }),
+                  new ListView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: _vehicles.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return _buildPersonalVehicleRow(position);
+                      }),
+                ],
+              ),
           ),
+        ),
         )
-    ),);
+    );
   }
 
   @override
   void initState() {
+
+
     super.initState();
     _loadVehicles();
   }
