@@ -2,20 +2,20 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:sss_mobile/screens/vehicle_list_screen.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 
-class VehicleDetailState extends State<VehicleDetailWidget> {
+class VehicleDetailScreenState extends State<VehicleDetailScreen> {
 
   final Vehicle vehicle;
   var _trips = <Trip>[];
   var _refuelings = <Refueling>[];
   var _maintenance = <Maintenance>[];
 
-  VehicleDetailState(this.vehicle);
-
+  VehicleDetailScreenState(this.vehicle);
 
   @override
   void initState() {
@@ -58,6 +58,10 @@ class VehicleDetailState extends State<VehicleDetailWidget> {
     });
   }
 
+  _routeToNew(int selectedIndex) {
+    print(selectedIndex);
+  }
+
   Widget _buildRowForTrip(int i) {
     return new ListTile(
       subtitle: new Text("${_trips[i].id}"),
@@ -86,6 +90,12 @@ class VehicleDetailState extends State<VehicleDetailWidget> {
         length: 3,
         child: Scaffold(
           appBar: AppBar(
+            actions: <Widget>[
+                IconButton(
+                  icon: Icon(Icons.add),
+                  onPressed: _loadTrips,
+                ),
+             ],
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.directions_car)),
@@ -123,12 +133,11 @@ class VehicleDetailState extends State<VehicleDetailWidget> {
   }
 }
 
-class VehicleDetailWidget extends StatefulWidget {
+class VehicleDetailScreen extends StatefulWidget {
   final Vehicle vehicle;
 
-
-  VehicleDetailWidget(this.vehicle);
+  VehicleDetailScreen(this.vehicle);
 
   @override
-  createState() => new VehicleDetailState(vehicle);
+  createState() => new VehicleDetailScreenState(vehicle);
 }

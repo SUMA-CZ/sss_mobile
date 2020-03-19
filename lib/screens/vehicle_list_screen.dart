@@ -5,24 +5,44 @@ import 'package:flutter/material.dart';
 import 'package:sss_mobile/string.dart';
 import 'package:http/http.dart' as http;
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/vehicledetailwidget.dart';
+import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
 
-class SSSState extends State<CarsListWidget> {
+class VehicleListScreenState extends State<VehicleListScreen> {
   var _vehicles = <Vehicle>[];
+  final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
 
   @override
   Widget build(BuildContext context) {
-    return new  Scaffold(
-        appBar: new AppBar(
-          title: new Text(
-              Strings.appTitle)),
-      body: new ListView.builder(
-          padding: const EdgeInsets.all(16.0),
-          itemCount: _vehicles.length,
-          itemBuilder: (BuildContext context, int position) {
-        return _buildRow(position);
-      })
-    );
+    return MaterialApp(home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: new AppBar(
+            title: new Text(Strings.appTitle),
+            bottom: TabBar(
+              tabs: [
+                Tab(icon: Icon(Icons.domain), text: "Company Vehicles"),
+                Tab(icon: Icon(Icons.person), text: "Personal Vehicles")
+              ],
+            ),
+          ),
+          body: TabBarView(
+            children: [
+              new ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: _vehicles.where((v) => _companySPZ.contains(v.spz)).length,
+                  itemBuilder: (BuildContext context, int position) {
+                    return _buildCompanyVehicleRow(position);
+                  }),
+              new ListView.builder(
+                  padding: const EdgeInsets.all(16.0),
+                  itemCount: _vehicles.length,
+                  itemBuilder: (BuildContext context, int position) {
+                    return _buildRow(position);
+                  }),
+            ],
+          ),
+        )
+    ),);
   }
 
   @override
@@ -31,12 +51,25 @@ class SSSState extends State<CarsListWidget> {
     _loadVehicles();
   }
 
+  Widget _buildCompanyVehicleRow(int i) {
+    var sorted = _vehicles.where((v) => _companySPZ.contains(v.spz)).toList();
+    return new ListTile(
+      subtitle: new Text("${sorted[i].spz}"),
+      title: new Text("${sorted[i].name}"),
+      onTap: () {
+        Navigator.push(context,
+            MaterialPageRoute(
+                builder: (context) => VehicleDetailScreen(_vehicles[i])));
+      },
+    );
+  }
+
   Widget _buildRow(int i) {
     return new ListTile(
         subtitle: new Text("${_vehicles[i].spz}"),
         title: new Text("${_vehicles[i].name}"), 
       onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailWidget(_vehicles[i],)));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(_vehicles[i])));
       },
     );
   }
@@ -54,7 +87,7 @@ class SSSState extends State<CarsListWidget> {
 
 }
 
-class CarsListWidget extends StatefulWidget {
+class VehicleListScreen extends StatefulWidget {
   @override
-  createState() => new SSSState();
+  createState() => new VehicleListScreenState();
 }

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sss_mobile/carslistwidget.dart';
+import 'package:sss_mobile/screens/vehicle_list_screen.dart';
 import 'string.dart';
 
 void main() => runApp(SSSApp());
@@ -9,7 +9,7 @@ class SSSApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: Strings.appTitle,
-      home: new CarsListWidget()
+      home: new VehicleListScreen()
     );
   }
   
