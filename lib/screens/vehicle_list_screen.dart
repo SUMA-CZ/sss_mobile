@@ -9,6 +9,7 @@ import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
 
 class VehicleListScreenState extends State<VehicleListScreen> {
   var _vehicles = <Vehicle>[];
+  // TODO: Fill in all the data
   final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
 
   @override
@@ -37,7 +38,7 @@ class VehicleListScreenState extends State<VehicleListScreen> {
                   padding: const EdgeInsets.all(16.0),
                   itemCount: _vehicles.length,
                   itemBuilder: (BuildContext context, int position) {
-                    return _buildRow(position);
+                    return _buildPersonalVehicleRow(position);
                   }),
             ],
           ),
@@ -52,24 +53,21 @@ class VehicleListScreenState extends State<VehicleListScreen> {
   }
 
   Widget _buildCompanyVehicleRow(int i) {
-    var sorted = _vehicles.where((v) => _companySPZ.contains(v.spz)).toList();
-    return new ListTile(
-      subtitle: new Text("${sorted[i].spz}"),
-      title: new Text("${sorted[i].name}"),
-      onTap: () {
-        Navigator.push(context,
-            MaterialPageRoute(
-                builder: (context) => VehicleDetailScreen(_vehicles[i])));
-      },
-    );
+    var filtered = _vehicles.where((v) => _companySPZ.contains(v.spz)).toList();
+    return _buildRow(i, filtered);
   }
 
-  Widget _buildRow(int i) {
+  Widget _buildPersonalVehicleRow(int i) {
+    var filtered = _vehicles.where((v) => !_companySPZ.contains(v.spz)).toList();
+    return _buildRow(i, filtered);
+  }
+
+  Widget _buildRow(int i, List<Vehicle> data) {
     return new ListTile(
-        subtitle: new Text("${_vehicles[i].spz}"),
-        title: new Text("${_vehicles[i].name}"), 
+        subtitle: new Text("${data[i].spz}"),
+        title: new Text("${data[i].name}"),
       onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(_vehicles[i])));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(data[i])));
       },
     );
   }
