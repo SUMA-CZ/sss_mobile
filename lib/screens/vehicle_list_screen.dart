@@ -1,10 +1,7 @@
-
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sss_mobile/networking/vehicle_factory.dart';
 import 'package:sss_mobile/string.dart';
-import 'package:http/http.dart' as http;
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -19,7 +16,6 @@ class VehicleListScreenState extends State<VehicleListScreen> {
     await _loadVehicles();
     _refreshController.refreshCompleted();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +37,6 @@ class VehicleListScreenState extends State<VehicleListScreen> {
               header: WaterDropHeader(),
               controller: _refreshController,
               onRefresh: _onRefresh,
-//              onLoading: _onLoading,
               child:  TabBarView(
                 children: [
                   new ListView.builder(
@@ -86,14 +81,16 @@ class VehicleListScreenState extends State<VehicleListScreen> {
         title: new Text("${data[i].name}"),
       onTap: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(data[i])));
+
       },
     );
   }
 
   _loadVehicles() async {
-    VehicleFactory().fetchVehicles().then((onValue) {
+    VehicleAPI().fetchVehicles().then((onValue) {
       setState(() {
         this._vehicles = onValue;
+        _refreshController.refreshCompleted();
       });
     }).catchError((error) {
       showDialog(
@@ -115,6 +112,7 @@ class VehicleListScreenState extends State<VehicleListScreen> {
           );
         },
       );
+      _refreshController.refreshCompleted();
     });
   }
 }

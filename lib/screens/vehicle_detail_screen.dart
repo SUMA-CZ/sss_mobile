@@ -1,14 +1,19 @@
-import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:sss_mobile/screens/vehicle_list_screen.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sss_mobile/networking/vehicle_factory.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
+import 'package:sss_mobile/screens/new_trip_screen.dart';
 
 class VehicleDetailScreenState extends State<VehicleDetailScreen> {
+  RefreshController _refreshTrips = RefreshController(initialRefresh: true);
+  RefreshController _refreshMaintenance =
+      RefreshController(initialRefresh: true);
+  RefreshController _refreshRefuelings =
+      RefreshController(initialRefresh: true);
 
   final Vehicle vehicle;
   var _trips = <Trip>[];
@@ -20,46 +25,80 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   @override
   void initState() {
     super.initState();
-    _loadTrips();
-    _loadMaintenances();
-    _loadRefuelings();
+    _loadData();
+    _refreshMaintenance.refreshToIdle();
+    _refreshRefuelings.refreshToIdle();
+    _refreshTrips.refreshToIdle();
   }
 
-  _loadTrips() async {
-    String dataUrl = "https://sss.sumanet.cz/api/vehicles/${vehicle.id}/trips";
-    http.Response response = await http.get(dataUrl, headers: {"Authorization": "Bearer UbWpEOgPliravt82xF8SbMU-zKMpBM5I6LDi87QG75uAgHfWJ04Je6lcbtlz9Vrjh6LNn76-xoZldggNcREB910n7jCJKsP4U_EVJPycIm1xLIjwaEkcCWma3WFhOq6571oY29pm8QwyzUPnNKO4xcQJ9HSwP6KsmI-UGmnr0Zlp8fATXk80_KuLZBjG0zui_5eZfyJh3-Q7sIL4XcDAXEO6Fs7X9MEiwzSkGMgDZJ51EhNkc7S99vg31k1YMIu36tOcktjEgr9k_B5KG8bFMPIO44McThcH-DE7V2l1S-sz68Q17xp77rtdNjta7Zgt_BFTyA9KFVpOgTT8h5GRQfNfXJpmTP1vQGpK4JGEwBmmZvciQBlqrfwrlkd6jakba-3I-yqcisM4IxPafdbTZL7FKgQKqNAkKcBBg2Q-Y46Jbm_fg9KN7hyvIlSa9_Cj9sPV1NVYPdT5W2IFm4K0Cpy-RnQMOl-5BYAuZen9-ouv6nKyNY72yJN804SiptJjAl8O65vg2VXdvAilyr-Ht6b4onCAQILZelb47b2qbAnsETLXrQuYxC-kEOLglLsA_iE3nGGXJQUpS5gl_ozzCEt7IknBUZTcRFPrS79jChhCvt0LGPrHPuj9MzHiN3SEOlEvlwjqM7phQxAvVck5It4FwS40jhtAxGCaZrvi52WaesKJVFwpemnYvxAWn3m4eGpunj3yglLHUawKhTBU_MS6Fm8lsqvRO7Dn9uvag_EUW1iyOempfkqpyY3m71pd8XFR7m6Mo00ZGgiuyhZ5nk5uSncNtVu_HAhPhR74GyHtFXX72i-Ow1le7LSymLmpGm87UdqlnNFeHFIpLABb-Mrl79VXNpxYxIMKEvmHmt87y85JYd0uRaj7C76KokseXHe8gyABAfMIBzVAMpBSkbXAr3GJsjPuFMZqj0Co3lbXpCLm9K8_Yz_FwTw77xkfTi8I35f06-fFnm-O20VS0pTb-RadxptIIl3KNnPt2jLnbxNEouIHzUAHZeoHSxrMO-KD18NceDBQ7jkrSreEZM86KF7GooWr0kqnBCraQQ8Lbhqp8_b1__ZqZDlYaounS5svghmOZT0St8JKeVOuXlhLmAg7tncTK1bGn14M20z4jrxccUL-frr50mCxpCwZjLbuyKta3gN4qUkujhCkGLXkNxgYHIqzPwK9grNs4nmjUSmr90NrSUy0C4odMsR1VtWlImsmaqTKcXVzAYm4U1xgZ50RSsXZgMbKY9kz4OZNxjXzI5NWhfKde-UvmoCBCuYIInNQMl6lDyIldbS1aDKOLQlKfjuDcQQoS8AEufssOBav0fRJdnIustjaildO2appqf_ZlJTnCisGa8aKEMfGrbTuI6Drfik_1I2JZr_u1gJgWxChF3aNOTqYgUsMECSFLfLWs1AzzHqf60TeYG3Kz_OBai9A942npaHrs-EfX9O48ryFqoeK0voJC0o9"});
-    setState(() {
-      final json = jsonDecode(response.body);
-      for (var j in json) {
-        _trips.add(Trip.fromJson(j));
-      }
+  _loadData() async {
+    var futures = <Future>[];
+
+    futures.add(VehicleAPI().fetchMaintenancesFor(vehicle).then((data) {
+      setState(() {
+        _maintenance = data;
+        _refreshMaintenance.refreshCompleted();
+      });
+    }).catchError((){
+      _refreshMaintenance.refreshFailed();
+    }));
+
+    futures.add(VehicleAPI().fetchRefuelingsFor(vehicle).then((data) {
+      setState(() {
+        _refuelings = data;
+        _refreshRefuelings.refreshCompleted();
+      });
+    }).catchError((){
+      _refreshRefuelings.refreshFailed();
+    }));
+
+    futures.add(VehicleAPI().fetchTripsFor(vehicle).then((data) {
+      setState(() {
+        _trips = data;
+        _refreshTrips.refreshCompleted();
+      });
+    }).catchError((){
+      _refreshTrips.refreshFailed();
+    }));
+
+    await Future.wait(futures).catchError((error) {
+      print('Data se nepodařilo stáhnout ze SSS API');
     });
   }
 
-  _loadRefuelings() async {
-    String dataUrl = "https://sss.sumanet.cz/api/vehicles/${vehicle.id}/refuelings";
-    http.Response response = await http.get(dataUrl, headers: {"Authorization": "Bearer UbWpEOgPliravt82xF8SbMU-zKMpBM5I6LDi87QG75uAgHfWJ04Je6lcbtlz9Vrjh6LNn76-xoZldggNcREB910n7jCJKsP4U_EVJPycIm1xLIjwaEkcCWma3WFhOq6571oY29pm8QwyzUPnNKO4xcQJ9HSwP6KsmI-UGmnr0Zlp8fATXk80_KuLZBjG0zui_5eZfyJh3-Q7sIL4XcDAXEO6Fs7X9MEiwzSkGMgDZJ51EhNkc7S99vg31k1YMIu36tOcktjEgr9k_B5KG8bFMPIO44McThcH-DE7V2l1S-sz68Q17xp77rtdNjta7Zgt_BFTyA9KFVpOgTT8h5GRQfNfXJpmTP1vQGpK4JGEwBmmZvciQBlqrfwrlkd6jakba-3I-yqcisM4IxPafdbTZL7FKgQKqNAkKcBBg2Q-Y46Jbm_fg9KN7hyvIlSa9_Cj9sPV1NVYPdT5W2IFm4K0Cpy-RnQMOl-5BYAuZen9-ouv6nKyNY72yJN804SiptJjAl8O65vg2VXdvAilyr-Ht6b4onCAQILZelb47b2qbAnsETLXrQuYxC-kEOLglLsA_iE3nGGXJQUpS5gl_ozzCEt7IknBUZTcRFPrS79jChhCvt0LGPrHPuj9MzHiN3SEOlEvlwjqM7phQxAvVck5It4FwS40jhtAxGCaZrvi52WaesKJVFwpemnYvxAWn3m4eGpunj3yglLHUawKhTBU_MS6Fm8lsqvRO7Dn9uvag_EUW1iyOempfkqpyY3m71pd8XFR7m6Mo00ZGgiuyhZ5nk5uSncNtVu_HAhPhR74GyHtFXX72i-Ow1le7LSymLmpGm87UdqlnNFeHFIpLABb-Mrl79VXNpxYxIMKEvmHmt87y85JYd0uRaj7C76KokseXHe8gyABAfMIBzVAMpBSkbXAr3GJsjPuFMZqj0Co3lbXpCLm9K8_Yz_FwTw77xkfTi8I35f06-fFnm-O20VS0pTb-RadxptIIl3KNnPt2jLnbxNEouIHzUAHZeoHSxrMO-KD18NceDBQ7jkrSreEZM86KF7GooWr0kqnBCraQQ8Lbhqp8_b1__ZqZDlYaounS5svghmOZT0St8JKeVOuXlhLmAg7tncTK1bGn14M20z4jrxccUL-frr50mCxpCwZjLbuyKta3gN4qUkujhCkGLXkNxgYHIqzPwK9grNs4nmjUSmr90NrSUy0C4odMsR1VtWlImsmaqTKcXVzAYm4U1xgZ50RSsXZgMbKY9kz4OZNxjXzI5NWhfKde-UvmoCBCuYIInNQMl6lDyIldbS1aDKOLQlKfjuDcQQoS8AEufssOBav0fRJdnIustjaildO2appqf_ZlJTnCisGa8aKEMfGrbTuI6Drfik_1I2JZr_u1gJgWxChF3aNOTqYgUsMECSFLfLWs1AzzHqf60TeYG3Kz_OBai9A942npaHrs-EfX9O48ryFqoeK0voJC0o9"});
-    setState(() {
-      final json = jsonDecode(response.body);
-      for (var j in json) {
-        _refuelings.add(Refueling.fromJson(j));
-      }
-    });
-  }
-
-  _loadMaintenances() async {
-    String dataUrl = "https://sss.sumanet.cz/api/vehicles/${vehicle.id}/maintenances";
-    http.Response response = await http.get(dataUrl, headers: {"Authorization": "Bearer UbWpEOgPliravt82xF8SbMU-zKMpBM5I6LDi87QG75uAgHfWJ04Je6lcbtlz9Vrjh6LNn76-xoZldggNcREB910n7jCJKsP4U_EVJPycIm1xLIjwaEkcCWma3WFhOq6571oY29pm8QwyzUPnNKO4xcQJ9HSwP6KsmI-UGmnr0Zlp8fATXk80_KuLZBjG0zui_5eZfyJh3-Q7sIL4XcDAXEO6Fs7X9MEiwzSkGMgDZJ51EhNkc7S99vg31k1YMIu36tOcktjEgr9k_B5KG8bFMPIO44McThcH-DE7V2l1S-sz68Q17xp77rtdNjta7Zgt_BFTyA9KFVpOgTT8h5GRQfNfXJpmTP1vQGpK4JGEwBmmZvciQBlqrfwrlkd6jakba-3I-yqcisM4IxPafdbTZL7FKgQKqNAkKcBBg2Q-Y46Jbm_fg9KN7hyvIlSa9_Cj9sPV1NVYPdT5W2IFm4K0Cpy-RnQMOl-5BYAuZen9-ouv6nKyNY72yJN804SiptJjAl8O65vg2VXdvAilyr-Ht6b4onCAQILZelb47b2qbAnsETLXrQuYxC-kEOLglLsA_iE3nGGXJQUpS5gl_ozzCEt7IknBUZTcRFPrS79jChhCvt0LGPrHPuj9MzHiN3SEOlEvlwjqM7phQxAvVck5It4FwS40jhtAxGCaZrvi52WaesKJVFwpemnYvxAWn3m4eGpunj3yglLHUawKhTBU_MS6Fm8lsqvRO7Dn9uvag_EUW1iyOempfkqpyY3m71pd8XFR7m6Mo00ZGgiuyhZ5nk5uSncNtVu_HAhPhR74GyHtFXX72i-Ow1le7LSymLmpGm87UdqlnNFeHFIpLABb-Mrl79VXNpxYxIMKEvmHmt87y85JYd0uRaj7C76KokseXHe8gyABAfMIBzVAMpBSkbXAr3GJsjPuFMZqj0Co3lbXpCLm9K8_Yz_FwTw77xkfTi8I35f06-fFnm-O20VS0pTb-RadxptIIl3KNnPt2jLnbxNEouIHzUAHZeoHSxrMO-KD18NceDBQ7jkrSreEZM86KF7GooWr0kqnBCraQQ8Lbhqp8_b1__ZqZDlYaounS5svghmOZT0St8JKeVOuXlhLmAg7tncTK1bGn14M20z4jrxccUL-frr50mCxpCwZjLbuyKta3gN4qUkujhCkGLXkNxgYHIqzPwK9grNs4nmjUSmr90NrSUy0C4odMsR1VtWlImsmaqTKcXVzAYm4U1xgZ50RSsXZgMbKY9kz4OZNxjXzI5NWhfKde-UvmoCBCuYIInNQMl6lDyIldbS1aDKOLQlKfjuDcQQoS8AEufssOBav0fRJdnIustjaildO2appqf_ZlJTnCisGa8aKEMfGrbTuI6Drfik_1I2JZr_u1gJgWxChF3aNOTqYgUsMECSFLfLWs1AzzHqf60TeYG3Kz_OBai9A942npaHrs-EfX9O48ryFqoeK0voJC0o9"});
-    setState(() {
-      final json = jsonDecode(response.body);
-      for (var j in json) {
-        _maintenance.add(Maintenance.fromJson(j));
-      }
-    });
-  }
-
-  _routeToNew(int selectedIndex) {
-    print(selectedIndex);
+  _routeToNew() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+        return AlertDialog(
+          title: new Text("Nový Záznam"),
+          content: new Text("Vyber typ záznamu"),
+          actions: <Widget>[
+            // usually buttons at the bottom of the dialog
+            new FlatButton(
+              child: new  Icon(Icons.directions_car),
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeMaterial()));
+              },
+            ),
+            new FlatButton(
+              child: new Icon(Icons.local_gas_station),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Icon(Icons.build),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
   }
 
   Widget _buildRowForTrip(int i) {
@@ -79,55 +118,77 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   Widget _buildRowForRefueling(int i) {
     return new ListTile(
       subtitle: new Text("${_refuelings[i].user.name}"),
-      title: new Text("${_refuelings[i].odometer} km - ${_refuelings[i].fuelAmount} litres"),
+      title: new Text(
+          "${_refuelings[i].odometer} km - ${_refuelings[i].fuelAmount} litres"),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            actions: <Widget>[
-                IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: _loadTrips,
-                ),
-             ],
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.directions_car)),
-                Tab(icon: Icon(Icons.local_dining)),
-                Tab(icon: Icon(Icons.build)),
-              ],
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.add),
+              onPressed: _routeToNew,
             ),
-            title: Text(vehicle.name),
+          ],
+          bottom: TabBar(
+            tabs: [
+              Tab(icon: Icon(Icons.directions_car)),
+              Tab(icon: Icon(Icons.local_gas_station)),
+              Tab(icon: Icon(Icons.build)),
+            ],
           ),
-          body: TabBarView(
-            children: [
-              new ListView.builder(
+          title: Text(vehicle.name),
+        ),
+        body: TabBarView(
+          children: [
+            SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: WaterDropHeader(),
+              controller: _refreshTrips,
+              onRefresh: _loadData,
+              child: new ListView.builder(
                   padding: const EdgeInsets.all(16.0),
                   itemCount: _trips.length,
                   itemBuilder: (BuildContext context, int position) {
                     return _buildRowForTrip(position);
                   }),
-              new ListView.builder(
+            ),
+            SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: WaterDropHeader(),
+              controller: _refreshRefuelings,
+              onRefresh: _loadData,
+              child: new ListView.builder(
                   padding: const EdgeInsets.all(16.0),
                   itemCount: _refuelings.length,
                   itemBuilder: (BuildContext context, int position) {
                     return _buildRowForRefueling(position);
                   }),
-              new ListView.builder(
+            ),
+            SmartRefresher(
+              enablePullDown: true,
+              enablePullUp: true,
+              header: WaterDropHeader(),
+              controller: _refreshMaintenance,
+              onRefresh: _loadData,
+              child: new ListView.builder(
                   padding: const EdgeInsets.all(16.0),
                   itemCount: _maintenance.length,
                   itemBuilder: (BuildContext context, int position) {
                     return _buildRowForMaintenance(position);
                   }),
-            ],
-          ),
+            ),
+          ],
         ),
-      );
+      ),
+    );
   }
 }
 
