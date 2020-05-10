@@ -7,6 +7,7 @@ import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/screens/new_trip_screen.dart';
+import 'package:sss_mobile/screens/vehicle_list_screen.dart';
 
 class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   RefreshController _refreshTrips = RefreshController(initialRefresh: true);
@@ -80,7 +81,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
               child: new  Icon(Icons.directions_car),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeMaterial()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleListScreen()));
               },
             ),
             new FlatButton(

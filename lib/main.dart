@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sss_mobile/screens/new_trip_screen.dart';
 import 'package:sss_mobile/screens/vehicle_list_screen.dart';
 import 'string.dart';
 
@@ -9,7 +10,7 @@ class SSSApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return new MaterialApp(
       title: Strings.appTitle,
-      home: new VehicleListScreen()
+      home: new LoginForm()
     );
   }
   

@@ -4,6 +4,7 @@ Mobile SSS, mainly SCM
 
 ## JSON Serialization
 - [Via: `json_serializable`](https://flutter.dev/docs/development/data-and-backend/json)
+- Run `flutter pub run build_runner watch` to generate models when sources change
 
 ## Getting Started
 
