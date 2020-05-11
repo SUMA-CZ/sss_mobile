@@ -9,7 +9,17 @@ import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/networking/vehicle_factory.dart';
-import 'package:sss_mobile/screens/vehicle_list_screen.dart';
+import 'package:sss_mobile/screens/trip_screen.dart';
+
+
+class VehicleDetailScreen extends StatefulWidget {
+  final Vehicle vehicle;
+
+  VehicleDetailScreen(this.vehicle);
+
+  @override
+  createState() => new VehicleDetailScreenState(vehicle);
+}
 
 class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   RefreshController _refreshTrips = RefreshController(initialRefresh: true);
@@ -85,48 +95,15 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     });
   }
 
-  _routeToNew() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        // return object of type Dialog
-        return AlertDialog(
-          title: new Text("Nový Záznam"),
-          content: new Text("Vyber typ záznamu"),
-          actions: <Widget>[
-            // usually buttons at the bottom of the dialog
-            new FlatButton(
-              child: new Icon(Icons.directions_car),
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VehicleListScreen()));
-              },
-            ),
-            new FlatButton(
-              child: new Icon(Icons.local_gas_station),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            new FlatButton(
-              child: new Icon(Icons.build),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            )
-          ],
-        );
-      },
-    );
-  }
-
   Widget _buildRowForTrip(int i) {
     return new ListTile(
       subtitle: new Text("${_trips[i].id}"),
       title: new Text("${_trips[i].beginOdometer} - ${_trips[i].endOdometer}"),
+      onTap: () {
+        print('object');
+        Navigator.push(context, MaterialPageRoute(
+            builder: (context) => TripScreen(trip: _trips[i])));
+      },
     );
   }
 
@@ -142,6 +119,9 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
       subtitle: new Text("${_refuelings[i].user.name}"),
       title: new Text(
           "${_refuelings[i].odometer} km - ${_refuelings[i].fuelAmount} litres"),
+      onTap: () {
+
+      },
     );
   }
 
@@ -178,11 +158,13 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                       }),
                 ),
                 floatingActionButton: FloatingActionButton.extended(
-                  onPressed: _goToTheLake,
+                  onPressed: () {
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context) => TripScreen()));
+                  },
                   label: Text('Přidat Jízdu'),
                   icon: Icon(Icons.directions_car),
-                )
-            ),
+                )),
             Scaffold(
                 body: SmartRefresher(
                   enablePullDown: true,
@@ -201,8 +183,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                   onPressed: _goToTheLake,
                   label: Text('Přidat Tankování'),
                   icon: Icon(Icons.local_gas_station),
-                )
-            ),
+                )),
             Scaffold(
               body: SmartRefresher(
                 enablePullDown: true,
@@ -233,11 +214,6 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                   }
                 },
               ),
-//          floatingActionButton: FloatingActionButton.extended(
-//            onPressed: _goToTheLake,
-//            label: Text('To the lake!'),
-//            icon: Icon(Icons.directions_boat),
-//          ),
             )
           ],
         ),
@@ -249,13 +225,4 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     final GoogleMapController controller = await _controller.future;
     controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
-}
-
-class VehicleDetailScreen extends StatefulWidget {
-  final Vehicle vehicle;
-
-  VehicleDetailScreen(this.vehicle);
-
-  @override
-  createState() => new VehicleDetailScreenState(vehicle);
 }
