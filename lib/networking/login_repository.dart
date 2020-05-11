@@ -1,27 +1,31 @@
+import 'dart:convert';
+
 import 'package:http/http.dart';
-import 'package:http_interceptor/http_client_with_interceptor.dart';
-import 'package:sss_mobile/networking/vehicle_factory.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sss_mobile/models/token.dart';
+import 'package:sss_mobile/models/user_creds.dart';
 
 import 'env.dart';
 
-class VehicleAPI {
-  Client client = HttpClientWithInterceptor.build();
+class LoginAPI {
+  Client client = Client();
 
-  Future<List<Vehicle>> fetchVehicles() async {
-    var vehicles = <Vehicle>[];
+  Future<Token> login(UserCreds creds) async {
+    var token = Token();
     try {
-      final response = await client.get("${environment['baseUrl']}/vehicles");
+      final response = await client.post(
+          "${environment['baseUrl']}/Account/Login", body: creds.toJson());
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
-        for (var j in json) {
-          vehicles.add(Vehicle.fromJson(j));
-        }
+        token = Token.fromJson(json);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('token', token.accessToken);
       } else {
         throw Exception("Error while fetching. \n ${response.body}");
       }
     } catch (e) {
       print(e);
     }
-    return vehicles;
+    return token;
   }
 }

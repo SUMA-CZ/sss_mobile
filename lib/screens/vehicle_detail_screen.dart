@@ -1,12 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
-import 'package:sss_mobile/networking/vehicle_factory.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/screens/new_trip_screen.dart';
+import 'package:sss_mobile/networking/vehicle_factory.dart';
 import 'package:sss_mobile/screens/vehicle_list_screen.dart';
 
 class VehicleDetailScreenState extends State<VehicleDetailScreen> {
@@ -40,7 +39,8 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
         _maintenance = data;
         _refreshMaintenance.refreshCompleted();
       });
-    }).catchError((){
+    }).catchError((Object error) {
+      print(error);
       _refreshMaintenance.refreshFailed();
     }));
 
@@ -49,7 +49,8 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
         _refuelings = data;
         _refreshRefuelings.refreshCompleted();
       });
-    }).catchError((){
+    }).catchError((Object error) {
+      print(error);
       _refreshRefuelings.refreshFailed();
     }));
 
@@ -58,7 +59,8 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
         _trips = data;
         _refreshTrips.refreshCompleted();
       });
-    }).catchError((){
+    }).catchError((Object error) {
+      print(error);
       _refreshTrips.refreshFailed();
     }));
 
