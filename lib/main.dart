@@ -19,10 +19,6 @@ void main() async {
 class SSSApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return new MaterialApp(
-        title: Strings.appTitle,
-        home: new LoginForm()
-    );
+    return new MaterialApp(title: Strings.appTitle, home: new LoginForm());
   }
-
 }

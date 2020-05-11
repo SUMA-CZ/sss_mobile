@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
@@ -11,9 +14,9 @@ import 'package:sss_mobile/screens/vehicle_list_screen.dart';
 class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   RefreshController _refreshTrips = RefreshController(initialRefresh: true);
   RefreshController _refreshMaintenance =
-      RefreshController(initialRefresh: true);
+  RefreshController(initialRefresh: true);
   RefreshController _refreshRefuelings =
-      RefreshController(initialRefresh: true);
+  RefreshController(initialRefresh: true);
 
   final Vehicle vehicle;
   var _trips = <Trip>[];
@@ -21,6 +24,19 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   var _maintenance = <Maintenance>[];
 
   VehicleDetailScreenState(this.vehicle);
+
+  Completer<GoogleMapController> _controller = Completer();
+
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
+
+  static final CameraPosition _kLake = CameraPosition(
+      bearing: 192.8334901395799,
+      target: LatLng(37.43296265331129, -122.08832357078792),
+      tilt: 59.440717697143555,
+      zoom: 19.151926040649414);
 
   @override
   void initState() {
@@ -80,10 +96,13 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
           actions: <Widget>[
             // usually buttons at the bottom of the dialog
             new FlatButton(
-              child: new  Icon(Icons.directions_car),
+              child: new Icon(Icons.directions_car),
               onPressed: () {
                 Navigator.of(context).pop();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleListScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VehicleListScreen()));
               },
             ),
             new FlatButton(
@@ -129,69 +148,106 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: _routeToNew,
-            ),
-          ],
           bottom: TabBar(
             tabs: [
               Tab(icon: Icon(Icons.directions_car)),
               Tab(icon: Icon(Icons.local_gas_station)),
               Tab(icon: Icon(Icons.build)),
+              Tab(icon: Icon(Icons.map))
             ],
           ),
           title: Text(vehicle.name),
         ),
         body: TabBarView(
           children: [
-            SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              header: WaterDropHeader(),
-              controller: _refreshTrips,
-              onRefresh: _loadData,
-              child: new ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: _trips.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return _buildRowForTrip(position);
-                  }),
+            Scaffold(
+                body: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  header: WaterDropHeader(),
+                  controller: _refreshTrips,
+                  onRefresh: _loadData,
+                  child: new ListView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: _trips.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return _buildRowForTrip(position);
+                      }),
+                ),
+                floatingActionButton: FloatingActionButton.extended(
+                  onPressed: _goToTheLake,
+                  label: Text('Přidat Jízdu'),
+                  icon: Icon(Icons.directions_car),
+                )
             ),
-            SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              header: WaterDropHeader(),
-              controller: _refreshRefuelings,
-              onRefresh: _loadData,
-              child: new ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: _refuelings.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return _buildRowForRefueling(position);
-                  }),
+            Scaffold(
+                body: SmartRefresher(
+                  enablePullDown: true,
+                  enablePullUp: true,
+                  header: WaterDropHeader(),
+                  controller: _refreshRefuelings,
+                  onRefresh: _loadData,
+                  child: new ListView.builder(
+                      padding: const EdgeInsets.all(16.0),
+                      itemCount: _refuelings.length,
+                      itemBuilder: (BuildContext context, int position) {
+                        return _buildRowForRefueling(position);
+                      }),
+                ),
+                floatingActionButton: FloatingActionButton.extended(
+                  onPressed: _goToTheLake,
+                  label: Text('Přidat Tankování'),
+                  icon: Icon(Icons.local_gas_station),
+                )
             ),
-            SmartRefresher(
-              enablePullDown: true,
-              enablePullUp: true,
-              header: WaterDropHeader(),
-              controller: _refreshMaintenance,
-              onRefresh: _loadData,
-              child: new ListView.builder(
-                  padding: const EdgeInsets.all(16.0),
-                  itemCount: _maintenance.length,
-                  itemBuilder: (BuildContext context, int position) {
-                    return _buildRowForMaintenance(position);
-                  }),
+            Scaffold(
+              body: SmartRefresher(
+                enablePullDown: true,
+                enablePullUp: true,
+                header: WaterDropHeader(),
+                controller: _refreshMaintenance,
+                onRefresh: _loadData,
+                child: new ListView.builder(
+                    padding: const EdgeInsets.all(16.0),
+                    itemCount: _maintenance.length,
+                    itemBuilder: (BuildContext context, int position) {
+                      return _buildRowForMaintenance(position);
+                    }),
+              ),
+              floatingActionButton: FloatingActionButton.extended(
+                onPressed: _goToTheLake,
+                label: Text('Přidat Servis'),
+                icon: Icon(Icons.build),
+              ),
             ),
+            new Scaffold(
+              body: GoogleMap(
+                mapType: MapType.hybrid,
+                initialCameraPosition: _kGooglePlex,
+                onMapCreated: (GoogleMapController controller) {
+                  if (!_controller.isCompleted) {
+                    _controller.complete(controller);
+                  }
+                },
+              ),
+//          floatingActionButton: FloatingActionButton.extended(
+//            onPressed: _goToTheLake,
+//            label: Text('To the lake!'),
+//            icon: Icon(Icons.directions_boat),
+//          ),
+            )
           ],
         ),
       ),
     );
+  }
+
+  Future<void> _goToTheLake() async {
+    final GoogleMapController controller = await _controller.future;
+    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
 
