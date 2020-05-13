@@ -28,7 +28,7 @@ class _TripScreenState extends State<TripScreen> {
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(2015, 8),
-        lastDate: DateTime(2101));
+        lastDate: DateTime.now());
 
     if (picked != null)
       setState(() {
@@ -37,7 +37,7 @@ class _TripScreenState extends State<TripScreen> {
           beginDateController.text = trip.beginDate.toString();
         } else {
           trip.endDate = picked;
-          endDateController.text = trip.beginDate.toString();
+          endDateController.text = trip.endDate.toString();
         }
       });
   }
@@ -112,9 +112,6 @@ class _TripScreenState extends State<TripScreen> {
                                   decoration: InputDecoration(
                                       labelText: 'Počáteční datum'),
                                   controller: beginDateController,
-                                  initialValue: trip.beginDate != null
-                                      ? trip.beginDate.toString()
-                                      : "",
                                   onTap: () {
                                     _selectDate(context, true);
                                   },
@@ -130,9 +127,6 @@ class _TripScreenState extends State<TripScreen> {
                                   decoration: InputDecoration(
                                       labelText: 'Konečné datum'),
                                   controller: endDateController,
-                                  initialValue: trip.endDate != null
-                                      ? trip.endDate.toString()
-                                      : "",
                                   onTap: () {
                                     _selectDate(context, true);
                                   },

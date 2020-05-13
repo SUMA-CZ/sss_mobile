@@ -11,7 +11,6 @@ import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/networking/vehicle_factory.dart';
 import 'package:sss_mobile/screens/trip_screen.dart';
 
-
 class VehicleDetailScreen extends StatefulWidget {
   final Vehicle vehicle;
 
@@ -31,15 +30,43 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   final Vehicle vehicle;
   var _trips = <Trip>[];
   var _refuelings = <Refueling>[];
-  var _maintenance = <Maintenance>[];
+  List<Maintenance> _maintenance = List<Maintenance>();
 
   VehicleDetailScreenState(this.vehicle);
 
   Completer<GoogleMapController> _controller = Completer();
 
-  static final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+  Set<Marker> _markers = {};
+
+  static final LatLng center = const LatLng(50.041553, 14.443436);
+
+  Trip lastTrip() {
+    if (_trips != null) {
+      for (Trip trip in _trips) {
+        if (trip.latitude != null && trip.longitude != null) {
+          return trip;
+        }
+      }
+    }
+
+    return null;
+  }
+
+  LatLng lastTripPosition() {
+    Trip trip = lastTrip();
+    if (trip != null) {
+      print("Found position");
+      return LatLng(trip.latitude, trip.longitude);
+    }
+    print("Using suma position");
+    return _kSUMAPos;
+  }
+
+  static final LatLng _kSUMAPos = LatLng(50.041553, 14.443436);
+
+  static final CameraPosition _kSUMACameraPos = CameraPosition(
+    target: _kSUMAPos,
+    zoom: 17,
   );
 
   static final CameraPosition _kLake = CameraPosition(
@@ -63,6 +90,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     futures.add(VehicleAPI().fetchMaintenancesFor(vehicle).then((data) {
       setState(() {
         _maintenance = data;
+        _maintenance.sort((a, b) => a.date.compareTo(b.date));
         _refreshMaintenance.refreshCompleted();
       });
     }).catchError((Object error) {
@@ -73,6 +101,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     futures.add(VehicleAPI().fetchRefuelingsFor(vehicle).then((data) {
       setState(() {
         _refuelings = data;
+        _refuelings.sort((a, b) => a.date.compareTo(b.date));
         _refreshRefuelings.refreshCompleted();
       });
     }).catchError((Object error) {
@@ -83,6 +112,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     futures.add(VehicleAPI().fetchTripsFor(vehicle).then((data) {
       setState(() {
         _trips = data;
+        _trips.sort((a, b) => a.endDate.compareTo(b.endDate));
         _refreshTrips.refreshCompleted();
       });
     }).catchError((Object error) {
@@ -101,8 +131,10 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
       title: new Text("${_trips[i].beginOdometer} - ${_trips[i].endOdometer}"),
       onTap: () {
         print('object');
-        Navigator.push(context, MaterialPageRoute(
-            builder: (context) => TripScreen(trip: _trips[i])));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => TripScreen(trip: _trips[i])));
       },
     );
   }
@@ -119,9 +151,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
       subtitle: new Text("${_refuelings[i].user.name}"),
       title: new Text(
           "${_refuelings[i].odometer} km - ${_refuelings[i].fuelAmount} litres"),
-      onTap: () {
-
-      },
+      onTap: () {},
     );
   }
 
@@ -142,6 +172,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
           title: Text(vehicle.name),
         ),
         body: TabBarView(
+          physics: NeverScrollableScrollPhysics(),
           children: [
             Scaffold(
                 body: SmartRefresher(
@@ -180,7 +211,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                       }),
                 ),
                 floatingActionButton: FloatingActionButton.extended(
-                  onPressed: _goToTheLake,
+                  onPressed: () => print('Add Fueling'),
                   label: Text('Přidat Tankování'),
                   icon: Icon(Icons.local_gas_station),
                 )),
@@ -199,30 +230,37 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                     }),
               ),
               floatingActionButton: FloatingActionButton.extended(
-                onPressed: _goToTheLake,
+                onPressed: () => print('Add Service'),
                 label: Text('Přidat Servis'),
                 icon: Icon(Icons.build),
               ),
             ),
             new Scaffold(
               body: GoogleMap(
-                mapType: MapType.hybrid,
-                initialCameraPosition: _kGooglePlex,
-                onMapCreated: (GoogleMapController controller) {
-                  if (!_controller.isCompleted) {
-                    _controller.complete(controller);
-                  }
-                },
-              ),
+                  mapType: MapType.normal,
+                  initialCameraPosition: _kSUMACameraPos,
+                  onMapCreated: (GoogleMapController controller) {
+                    if (!_controller.isCompleted) {
+                      _controller.complete(controller);
+                    }
+
+                    LatLng lastTripPos = lastTripPosition();
+
+                    setState(() {
+                      _markers.add(Marker(
+                        markerId: MarkerId('<MARKER_ID>'),
+                        position: lastTripPos,
+                      ));
+                    });
+
+                    controller.animateCamera(CameraUpdate.newCameraPosition(
+                        CameraPosition(target: lastTripPos, zoom: 16)));
+                  },
+                  markers: _markers),
             )
           ],
         ),
       ),
     );
-  }
-
-  Future<void> _goToTheLake() async {
-    final GoogleMapController controller = await _controller.future;
-    controller.animateCamera(CameraUpdate.newCameraPosition(_kLake));
   }
 }
