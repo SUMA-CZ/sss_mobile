@@ -12,52 +12,50 @@ import 'package:sss_mobile/string.dart';
 class VehicleListScreenState extends State<VehicleListScreen> {
   RefreshController _refreshController = RefreshController(initialRefresh: true);
   var _vehicles = <Vehicle>[];
+
   // TODO: Fill in all the data
   final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
 
-  void _onRefresh() async{
+  void _onRefresh() async {
     await _loadVehicles();
     _refreshController.refreshCompleted();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: new AppBar(
-            title: new Text(Strings.appTitle),
-            actions: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-                    },
-                    child: Icon(
-                        Icons.exit_to_app
-                    ),
-                  )
-              ),
-            ],
-            bottom: TabBar(
-              tabs: [
-                Tab(icon: Icon(Icons.domain), text: "Company Vehicles"),
-                Tab(icon: Icon(Icons.person), text: "Personal Vehicles")
+    return MaterialApp(
+        home: DefaultTabController(
+          length: 2,
+          child: Scaffold(
+            appBar: new AppBar(
+              title: new Text(Strings.appTitle),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                      },
+                      child: Icon(Icons.exit_to_app),
+                    )),
               ],
+              bottom: TabBar(
+                tabs: [Tab(icon: Icon(Icons.domain), text: "Company Vehicles"), Tab(icon: Icon(Icons.person), text: "Personal Vehicles")],
+              ),
             ),
-          ),
-          body: SmartRefresher(
+            body: SmartRefresher(
               enablePullDown: true,
               enablePullUp: true,
               header: WaterDropHeader(),
               controller: _refreshController,
               onRefresh: _onRefresh,
-              child:  TabBarView(
+              child: TabBarView(
                 children: [
                   new ListView.builder(
                       padding: const EdgeInsets.all(16.0),
-                      itemCount: _vehicles.where((v) => _companySPZ.contains(v.spz)).length,
+                      itemCount: _vehicles
+                          .where((v) => _companySPZ.contains(v.spz))
+                          .length,
                       itemBuilder: (BuildContext context, int position) {
                         return _buildCompanyVehicleRow(position);
                       }),
@@ -69,10 +67,9 @@ class VehicleListScreenState extends State<VehicleListScreen> {
                       }),
                 ],
               ),
+            ),
           ),
-        ),
-        )
-    );
+        ));
   }
 
   @override
@@ -93,11 +90,10 @@ class VehicleListScreenState extends State<VehicleListScreen> {
 
   Widget _buildRow(int i, List<Vehicle> data) {
     return new ListTile(
-        subtitle: new Text("${data[i].spz}"),
-        title: new Text("${data[i].name}"),
+      subtitle: new Text("${data[i].spz}"),
+      title: new Text("${data[i].name}"),
       onTap: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(data[i])));
-
+        Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(data[i])));
       },
     );
   }

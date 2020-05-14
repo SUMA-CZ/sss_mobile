@@ -22,10 +22,8 @@ class VehicleDetailScreen extends StatefulWidget {
 
 class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   RefreshController _refreshTrips = RefreshController(initialRefresh: true);
-  RefreshController _refreshMaintenance =
-  RefreshController(initialRefresh: true);
-  RefreshController _refreshRefuelings =
-  RefreshController(initialRefresh: true);
+  RefreshController _refreshMaintenance = RefreshController(initialRefresh: true);
+  RefreshController _refreshRefuelings = RefreshController(initialRefresh: true);
 
   final Vehicle vehicle;
   var _trips = <Trip>[];
@@ -125,10 +123,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
       subtitle: new Text("${_trips[i].id} - date: ${_trips[i].endDate}"),
       onTap: () {
         print('object');
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => TripScreen(_trips[i], vehicle)));
+        Navigator.push(context, MaterialPageRoute(builder: (context) => TripScreen(_trips[i], vehicle)));
       },
     );
   }
@@ -143,8 +138,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
   Widget _buildRowForRefueling(int i) {
     return new ListTile(
       subtitle: new Text("${_refuelings[i].user.name}"),
-      title: new Text(
-          "${_refuelings[i].odometer} km - ${_refuelings[i].fuelAmount} litres"),
+      title: new Text("${_refuelings[i].odometer} km - ${_refuelings[i].fuelAmount} litres"),
       onTap: () {},
     );
   }
@@ -156,12 +150,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            tabs: [
-              Tab(icon: Icon(Icons.directions_car)),
-              Tab(icon: Icon(Icons.local_gas_station)),
-              Tab(icon: Icon(Icons.build)),
-              Tab(icon: Icon(Icons.map))
-            ],
+            tabs: [Tab(icon: Icon(Icons.directions_car)), Tab(icon: Icon(Icons.local_gas_station)), Tab(icon: Icon(Icons.build)), Tab(icon: Icon(Icons.map))],
           ),
           title: Text(vehicle.name),
         ),
@@ -184,8 +173,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                 ),
                 floatingActionButton: FloatingActionButton.extended(
                   onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TripScreen(Trip(), vehicle)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => TripScreen(Trip(), vehicle)));
                   },
                   label: Text('Přidat Jízdu'),
                   icon: Icon(Icons.directions_car),
@@ -247,8 +235,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                       ));
                     });
 
-                    controller.animateCamera(CameraUpdate.newCameraPosition(
-                        CameraPosition(target: lastTripPos, zoom: 16)));
+                    controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: lastTripPos, zoom: 16)));
                   },
                   markers: _markers),
             )
