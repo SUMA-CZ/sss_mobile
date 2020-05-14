@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sss_mobile/auth/auth_bloc.dart';
+import 'package:sss_mobile/auth/auth_events.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/networking/vehicle_api.dart';
 import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
@@ -24,6 +27,19 @@ class VehicleListScreenState extends State<VehicleListScreen> {
         child: Scaffold(
           appBar: new AppBar(
             title: new Text(Strings.appTitle),
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                    },
+                    child: Icon(
+                        Icons.exit_to_app
+                    ),
+                  )
+              ),
+            ],
             bottom: TabBar(
               tabs: [
                 Tab(icon: Icon(Icons.domain), text: "Company Vehicles"),
