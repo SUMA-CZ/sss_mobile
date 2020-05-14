@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/auth/auth_bloc.dart';
 import 'package:sss_mobile/auth/auth_events.dart';
-import 'package:sss_mobile/repository/user_repo.dart';
+import 'package:sss_mobile/repositories/user_repo.dart';
 
 import 'login_events.dart';
 import 'login_state.dart';

@@ -1,6 +1,6 @@
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sss_mobile/login/login_api.dart';
+import 'package:sss_mobile/apis/login_api.dart';
 import 'package:sss_mobile/models/token.dart';
 import 'package:sss_mobile/models/user_creds.dart';
 

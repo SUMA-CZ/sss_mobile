@@ -11,7 +11,7 @@ import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 
-import 'env.dart';
+import '../networking/env.dart';
 
 class AuthInterceptor implements InterceptorContract {
   @override

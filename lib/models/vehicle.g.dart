@@ -16,7 +16,19 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
     ..odometer = (json['Odometer'] as num)?.toDouble()
     ..latitude = (json['Latitude'] as num)?.toDouble()
     ..longitude = (json['Longtitude'] as num)?.toDouble()
-    ..fuelStatus = json['FuelStatus'] as int;
+    ..fuelStatus = json['FuelStatus'] as int
+    ..trips = (json['trips'] as List)
+        ?.map(
+            (e) => e == null ? null : Trip.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..maintenance = (json['maintenance'] as List)
+        ?.map((e) =>
+    e == null ? null : Maintenance.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..refueling = (json['refueling'] as List)
+        ?.map((e) =>
+    e == null ? null : Refueling.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
@@ -29,4 +41,7 @@ Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
       'Latitude': instance.latitude,
       'Longtitude': instance.longitude,
       'FuelStatus': instance.fuelStatus,
+  'trips': instance.trips,
+  'maintenance': instance.maintenance,
+  'refueling': instance.refueling,
     };

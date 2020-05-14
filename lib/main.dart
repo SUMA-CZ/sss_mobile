@@ -1,37 +1,14 @@
-//import 'package:flutter/foundation.dart';
-//import 'package:flutter/material.dart';
-//import 'package:sss_mobile/screens/login_form.dart';
-//
-//import 'networking/custom_proxy.dart';
-//import 'string.dart';
-//
-//void main() async {
-//  if (!kReleaseMode) {
-//    // For Android devices you can also allowBadCertificates: true below, but you should ONLY do this when !kReleaseMode
-//    final proxy = CustomProxy(ipAddress: "localhost", port: 8888);
-//    proxy.enable();
-//  }
-//
-//  // Run app
-//  runApp(SSSApp());
-//}
-//
-//class SSSApp extends StatelessWidget {
-//  @override
-//  Widget build(BuildContext context) {
-//    return new MaterialApp(title: Strings.appTitle, home: new LoginForm());
-//  }
-//}
-
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sss_mobile/apis/vehicle_api.dart';
 import 'package:sss_mobile/login/login_page.dart';
-import 'package:sss_mobile/repository/user_repo.dart';
+import 'package:sss_mobile/repositories/user_repo.dart';
+import 'package:sss_mobile/repositories/vehicle_repo.dart';
 import 'package:sss_mobile/screens/loading_indicator.dart';
 import 'package:sss_mobile/screens/splash_screen.dart';
-import 'package:sss_mobile/screens/vehicle_list_screen.dart';
+import 'package:sss_mobile/vehicles/vehicle_bloc.dart';
+import 'package:sss_mobile/vehicles/vehicles.dart';
 
 import 'auth/auth_bloc.dart';
 import 'auth/auth_events.dart';
@@ -60,21 +37,25 @@ class SimpleBlocDelegate extends BlocDelegate {
 void main() {
   BlocSupervisor.delegate = SimpleBlocDelegate();
   final userRepository = UserRepository();
+  final vehicleRepository = VehicleRepository(vehicleAPI: VehicleAPI());
+
+
   runApp(
     BlocProvider<AuthenticationBloc>(
       create: (context) {
         return AuthenticationBloc(userRepository: userRepository)
           ..add(AppStarted());
       },
-      child: App(userRepository: userRepository),
+      child: App(userRepository: userRepository, vehicleRepository: vehicleRepository),
     ),
   );
 }
 
 class App extends StatelessWidget {
   final UserRepository userRepository;
+  final VehicleRepository vehicleRepository;
 
-  App({Key key, @required this.userRepository}) : super(key: key);
+  App({Key key, @required this.userRepository, @required this.vehicleRepository}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +63,7 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            return VehicleListScreen();
+            return BlocProvider(create: (context) => VehicleBloc(vehicleRepository: vehicleRepository), child: Vehicles());
           }
           if (state is AuthenticationUnauthenticated) {
             return LoginPage(userRepository: userRepository);

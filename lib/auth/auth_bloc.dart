@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/auth/auth_state.dart';
-import 'package:sss_mobile/repository/user_repo.dart';
+import 'package:sss_mobile/repositories/user_repo.dart';
 
 import 'auth_events.dart';
 

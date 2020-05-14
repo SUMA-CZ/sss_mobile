@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sss_mobile/apis/vehicle_api.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/networking/vehicle_api.dart';
 
 class TripScreen extends StatefulWidget {
   final Trip trip;
