@@ -10,3 +10,11 @@ class FetchVehicles extends VehicleEvent {
   @override
   List<Object> get props => [];
 }
+
+class TESTEvent extends VehicleEvent {
+  const TESTEvent();
+
+  @override
+  // TODO: implement props
+  List<Object> get props => [];
+}

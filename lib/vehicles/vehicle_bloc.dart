@@ -24,5 +24,15 @@ class VehicleBloc extends Bloc<VehicleEvent, VehicleState> {
         yield VehicleError();
       }
     }
+
+    if (event is TESTEvent) {
+      yield VehicleLoading();
+      try {
+        await Future.delayed(Duration(seconds: 2));
+        yield VehicleLoaded(vehicles: []);
+      } catch (_) {
+        yield VehicleError();
+      }
+    }
   }
 }
