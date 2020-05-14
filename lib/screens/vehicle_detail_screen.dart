@@ -8,7 +8,7 @@ import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/networking/vehicle_factory.dart';
+import 'package:sss_mobile/networking/vehicle_api.dart';
 import 'package:sss_mobile/screens/trip_screen.dart';
 
 class VehicleDetailScreen extends StatefulWidget {
@@ -69,12 +69,6 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     zoom: 17,
   );
 
-  static final CameraPosition _kLake = CameraPosition(
-      bearing: 192.8334901395799,
-      target: LatLng(37.43296265331129, -122.08832357078792),
-      tilt: 59.440717697143555,
-      zoom: 19.151926040649414);
-
   @override
   void initState() {
     super.initState();
@@ -90,7 +84,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     futures.add(VehicleAPI().fetchMaintenancesFor(vehicle).then((data) {
       setState(() {
         _maintenance = data;
-        _maintenance.sort((a, b) => a.date.compareTo(b.date));
+        _maintenance.sort((a, b) => b.date.compareTo(a.date));
         _refreshMaintenance.refreshCompleted();
       });
     }).catchError((Object error) {
@@ -101,7 +95,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     futures.add(VehicleAPI().fetchRefuelingsFor(vehicle).then((data) {
       setState(() {
         _refuelings = data;
-        _refuelings.sort((a, b) => a.date.compareTo(b.date));
+        _refuelings.sort((a, b) => b.date.compareTo(a.date));
         _refreshRefuelings.refreshCompleted();
       });
     }).catchError((Object error) {
@@ -112,7 +106,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     futures.add(VehicleAPI().fetchTripsFor(vehicle).then((data) {
       setState(() {
         _trips = data;
-        _trips.sort((a, b) => a.endDate.compareTo(b.endDate));
+        _trips.sort((a, b) => b.endDate.compareTo(a.endDate));
         _refreshTrips.refreshCompleted();
       });
     }).catchError((Object error) {
@@ -127,14 +121,14 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
 
   Widget _buildRowForTrip(int i) {
     return new ListTile(
-      subtitle: new Text("${_trips[i].id}"),
       title: new Text("${_trips[i].beginOdometer} - ${_trips[i].endOdometer}"),
+      subtitle: new Text("${_trips[i].id} - date: ${_trips[i].endDate}"),
       onTap: () {
         print('object');
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => TripScreen(trip: _trips[i])));
+                builder: (context) => TripScreen(_trips[i], vehicle)));
       },
     );
   }
@@ -191,7 +185,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                 floatingActionButton: FloatingActionButton.extended(
                   onPressed: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TripScreen()));
+                        MaterialPageRoute(builder: (context) => TripScreen(Trip(), vehicle)));
                   },
                   label: Text('Přidat Jízdu'),
                   icon: Icon(Icons.directions_car),

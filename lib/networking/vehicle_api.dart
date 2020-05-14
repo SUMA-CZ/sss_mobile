@@ -38,7 +38,35 @@ class VehicleAPI {
   Client client = HttpClientWithInterceptor.build(interceptors: [
     AuthInterceptor(),
   ]);
-  
+
+  Future<Vehicle> saveVehicle(Vehicle vehicle, Trip trip) async {
+    try {
+      if (trip.id != null) {
+        final response =
+        await client.put("${environment['baseUrl']}/vehicles/${vehicle.id}/trips/${trip.id}", headers: {'Content-type': 'application/json', 'Accept': 'application/json'}, body: vehicle.toJson());
+        if (response.statusCode == 200) {
+          final json = jsonDecode(response.body);
+          return Vehicle.fromJson(json);
+        } else {
+          throw Exception("Error saving. \n ${response.body}");
+        }
+      } else {
+        final response = await client.post(
+            "${environment['baseUrl']}/vehicles/${vehicle.id}/trips", headers: {'Content-type': 'application/json', 'Accept': 'application/json', "Authorization": "Some token"},
+            body: json.encode(trip.toJson()));
+        if (response.statusCode == 201) {
+          final json = jsonDecode(response.body);
+          return Vehicle.fromJson(json);
+        } else {
+          throw Exception("Error saving. \n ${response.body}");
+        }
+      }
+    } catch (e) {
+      print(e);
+      throw e;
+    }
+  }
+
   Future<List<Vehicle>> fetchVehicles() async {
     var vehicles = <Vehicle>[];
     try {
@@ -96,8 +124,7 @@ class VehicleAPI {
   Future<List<Trip>> fetchTripsFor(Vehicle vehicle) async {
     var data = <Trip>[];
     try {
-      final response = await client.get(
-          "${environment['baseUrl']}/vehicles/${vehicle.id}/trips");
+      final response = await client.get("${environment['baseUrl']}/vehicles/${vehicle.id}/trips");
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         for (var j in json) {

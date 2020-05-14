@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:sss_mobile/networking/vehicle_factory.dart';
-import 'package:sss_mobile/string.dart';
-import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sss_mobile/models/vehicle.dart';
+import 'package:sss_mobile/networking/vehicle_api.dart';
+import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
+import 'package:sss_mobile/string.dart';
 
 class VehicleListScreenState extends State<VehicleListScreen> {
   RefreshController _refreshController = RefreshController(initialRefresh: true);
