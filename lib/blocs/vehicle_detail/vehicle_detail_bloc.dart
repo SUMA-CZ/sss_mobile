@@ -1,26 +1,24 @@
-import 'package:bloc/bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sss_mobile/models/vehicle.dart';
+import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail.dart';
 import 'package:sss_mobile/repositories/vehicle_repo.dart';
-import 'package:sss_mobile/vehicle_list/vehicle_list_event.dart';
-import 'package:sss_mobile/vehicle_list/vehicle_list_state.dart';
 
-
-class VehicleListBloc extends Bloc<VehicleListEvent, VehicleListState> {
+class VehicleDetailBloc extends Bloc<VehicleDetailEvent, VehicleDetailState> {
   final VehicleRepository vehicleRepository;
 
-  VehicleListBloc({@required this.vehicleRepository}) : assert(vehicleRepository != null);
+  VehicleDetailBloc({@required this.vehicleRepository}) : assert(vehicleRepository != null);
 
   @override
-  VehicleListState get initialState => VehicleListEmpty();
+  VehicleDetailState get initialState => VehicleDetailLoading();
 
   @override
-  Stream<VehicleListState> mapEventToState(VehicleListEvent event) async* {
-    if (event is FetchVehiclesList) {
-      yield VehicleListLoading();
+  Stream<VehicleDetailState> mapEventToState(VehicleDetailEvent event) async* {
+    if (event is ShowVehicle) {
+      yield VehicleDetailLoading();
       try {
         final List<Vehicle> vehicles = await vehicleRepository.updateVehicles();
         yield VehicleListLoaded(vehicles: vehicles);
+
       } catch (_) {
         yield VehicleListError();
       }

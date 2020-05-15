@@ -3,7 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
-import 'package:sss_mobile/vehicle_list/vehicle_list.dart';
+
+import 'vehicle_list.dart';
 
 class Vehicles extends StatelessWidget {
   final RefreshController _refreshController = RefreshController(initialRefresh: false);

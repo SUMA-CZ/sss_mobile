@@ -2,17 +2,17 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
-import 'package:sss_mobile/login/login_page.dart';
 import 'package:sss_mobile/repositories/user_repo.dart';
 import 'package:sss_mobile/repositories/vehicle_repo.dart';
 import 'package:sss_mobile/screens/loading_indicator.dart';
 import 'package:sss_mobile/screens/splash_screen.dart';
-import 'package:sss_mobile/vehicle_list/vehicle_list_bloc.dart';
-import 'package:sss_mobile/vehicle_list/vehicle_list_page.dart';
 
 import 'auth/auth_bloc.dart';
 import 'auth/auth_events.dart';
 import 'auth/auth_state.dart';
+import 'blocs/login/login_page.dart';
+import 'blocs/vehicle_list/vehicle_list_bloc.dart';
+import 'blocs/vehicle_list/vehicle_list_page.dart';
 
 class SimpleBlocDelegate extends BlocDelegate {
   @override
