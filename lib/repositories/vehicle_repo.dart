@@ -14,13 +14,7 @@ class VehicleRepository {
     this.vehicles = await vehicleAPI.fetchVehicles();
     this.vehicles.forEach((element) async {
       element.trips = await vehicleAPI.fetchTripsFor(element);
-    });
-
-    this.vehicles.forEach((element) async {
       element.refueling = await vehicleAPI.fetchRefuelingsFor(element);
-    });
-
-    this.vehicles.forEach((element) async {
       element.maintenance = await vehicleAPI.fetchMaintenancesFor(element);
     });
 

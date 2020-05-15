@@ -3,15 +3,11 @@ import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 
-/// This allows the `User` class to access private members in
-/// the generated file. The value for this is *.g.dart, where
-/// the star denotes the source file name.
 part 'vehicle.g.dart';
 
-/// An annotation for the code generator to know that this class needs the
-/// JSON serialization logic to be generated.
-@JsonSerializable()
+const companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
 
+@JsonSerializable()
 class Vehicle {
   Vehicle();
 
@@ -42,6 +38,7 @@ class Vehicle {
   @JsonKey(name: 'FuelStatus')
   int fuelStatus;
 
+
   List<Trip> trips;
   List<Maintenance> maintenance;
   List<Refueling> refueling;
@@ -56,4 +53,8 @@ class Vehicle {
   /// to JSON. The implementation simply calls the private, generated
   /// helper method `_$UserToJson`.
   Map<String, dynamic> toJson() => _$VehicleToJson(this);
+
+  bool companyVehicle() {
+    return companySPZ.contains(spz);
+  }
 }

@@ -7,8 +7,8 @@ import 'package:sss_mobile/repositories/user_repo.dart';
 import 'package:sss_mobile/repositories/vehicle_repo.dart';
 import 'package:sss_mobile/screens/loading_indicator.dart';
 import 'package:sss_mobile/screens/splash_screen.dart';
-import 'package:sss_mobile/vehicles/vehicle_bloc.dart';
-import 'package:sss_mobile/vehicles/vehicles.dart';
+import 'package:sss_mobile/vehicle_list/vehicle_list_bloc.dart';
+import 'package:sss_mobile/vehicle_list/vehicle_list_page.dart';
 
 import 'auth/auth_bloc.dart';
 import 'auth/auth_events.dart';
@@ -63,7 +63,7 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            return BlocProvider(create: (context) => VehicleBloc(vehicleRepository: vehicleRepository), child: Vehicles());
+            return BlocProvider(create: (context) => VehicleListBloc(vehicleRepository: vehicleRepository), child: Vehicles());
           }
           if (state is AuthenticationUnauthenticated) {
             return LoginPage(userRepository: userRepository);
