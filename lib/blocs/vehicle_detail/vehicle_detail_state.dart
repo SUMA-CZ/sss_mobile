@@ -14,35 +14,13 @@ abstract class VehicleDetailState extends Equatable {
 
 class VehicleDetailLoading extends VehicleDetailState {}
 
-class VehicleDetailTripsEmpty extends VehicleDetailState {}
+class VehicleDetailLoaded extends VehicleDetailState {
+  final Vehicle vehicle;
 
-class VehicleDetailTripsLoaded extends VehicleDetailState {
-  final List<Trip> trips;
-
-  const VehicleDetailTripsLoaded({@required this.trips}) : assert(trips != null);
+  const VehicleDetailLoaded({@required this.vehicle}) : assert(vehicle != null);
 
   @override
-  List<Object> get props => [trips];
+  List<Object> get props => [vehicle];
 }
 
-class VehicleDetailMaintenanceEmpty extends VehicleDetailState {}
-
-class VehicleDetailMaintenanceLoaded extends VehicleDetailState {
-  final List<Maintenance> maintenances;
-
-  const VehicleDetailMaintenanceLoaded({@required this.maintenances}) : assert(maintenances != null);
-
-  @override
-  List<Object> get props => [maintenances];
-}
-
-class VehicleDetailRefuelingsEmpty extends VehicleDetailState {}
-
-class VehicleDetailRefuelingsLoaded extends VehicleDetailState {
-  final List<Refueling> refuelings;
-
-  const VehicleDetailRefuelingsLoaded({@required this.refuelings}) : assert(refuelings != null);
-
-  @override
-  List<Object> get props => [refuelings];
-}
+class VehicleDetailError extends VehicleDetailState {}

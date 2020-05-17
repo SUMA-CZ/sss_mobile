@@ -6,7 +6,7 @@
 //import 'package:sss_mobile/auth/auth_bloc.dart';
 //import 'package:sss_mobile/auth/auth_events.dart';
 //import 'package:sss_mobile/models/vehicle.dart';
-//import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
+//import 'package:sss_mobile/screens/vehicle_detail_page.dart';
 //import 'package:sss_mobile/string.dart';
 //
 //class VehicleListScreenState extends State<VehicleListScreen> {

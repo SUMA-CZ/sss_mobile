@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:sss_mobile/apis/vehicle_api.dart';
+import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail.dart';
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/screens/vehicle_detail_screen.dart';
+import 'package:sss_mobile/repositories/vehicle_repo.dart';
+import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail_page.dart';
+import 'package:sss_mobile/string.dart';
 
 import 'vehicle_list.dart';
 
@@ -14,7 +18,20 @@ class Vehicles extends StatelessWidget {
       subtitle: new Text("${data[i].spz}"),
       title: new Text("${data[i].name}"),
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(data[i])));
+        Navigator.push(context, MaterialPageRoute(
+          builder: (BuildContext context) {
+
+            var provider =  BlocProvider(create: (context) => VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI())), child: VehicleDetailScreen());
+
+            VehicleDetailBloc bloc = VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()));
+            bloc.add(ShowVehicle(vehicle: data[i]));
+            bloc.close();
+
+            return provider;
+
+            BlocProvider.of<VehicleDetailBloc>(context).add(ShowVehicle(vehicle: data[i]));
+          },
+        ));
       },
     );
   }
@@ -25,7 +42,7 @@ class Vehicles extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Flutter Weather'),
+          title: Text(Strings.appTitle),
           actions: <Widget>[
             Padding(
                 padding: EdgeInsets.only(right: 20.0),
@@ -47,7 +64,6 @@ class Vehicles extends StatelessWidget {
           bottom: TabBar(
             tabs: [Tab(icon: Icon(Icons.domain), text: "Company Vehicles"), Tab(icon: Icon(Icons.person), text: "Personal Vehicles")],
           ),
-
         ),
         body: Center(
           child: BlocBuilder<VehicleListBloc, VehicleListState>(
@@ -72,17 +88,13 @@ class Vehicles extends StatelessWidget {
                     children: [
                       new ListView.builder(
                           padding: const EdgeInsets.all(16.0),
-                          itemCount: vehicles
-                              .where((v) => v.companyVehicle())
-                              .length,
+                          itemCount: vehicles.where((v) => v.companyVehicle()).length,
                           itemBuilder: (BuildContext context, int position) {
                             return _buildRow(context, position, vehicles.where((v) => v.companyVehicle()).toList());
                           }),
                       new ListView.builder(
                           padding: const EdgeInsets.all(16.0),
-                          itemCount: vehicles
-                              .where((v) => !v.companyVehicle())
-                              .length,
+                          itemCount: vehicles.where((v) => !v.companyVehicle()).length,
                           itemBuilder: (BuildContext context, int position) {
                             return _buildRow(context, position, vehicles.where((v) => !v.companyVehicle()).toList());
                           }),

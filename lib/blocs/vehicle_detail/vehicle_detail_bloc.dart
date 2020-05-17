@@ -16,21 +16,10 @@ class VehicleDetailBloc extends Bloc<VehicleDetailEvent, VehicleDetailState> {
     if (event is ShowVehicle) {
       yield VehicleDetailLoading();
       try {
-        final List<Vehicle> vehicles = await vehicleRepository.updateVehicles();
-        yield VehicleListLoaded(vehicles: vehicles);
+        yield VehicleDetailLoaded(vehicle: event.vehicle);
 
       } catch (_) {
-        yield VehicleListError();
-      }
-    }
-
-    if (event is TestVehicleList) {
-      yield VehicleListLoading();
-      try {
-        await Future.delayed(Duration(seconds: 2));
-        yield VehicleListLoaded(vehicles: []);
-      } catch (_) {
-        yield VehicleListError();
+        yield VehicleDetailError();
       }
     }
   }
