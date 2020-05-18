@@ -39,14 +39,14 @@ class VehicleAPI {
     AuthInterceptor(),
   ]);
 
-  Future<Vehicle> saveVehicle(Vehicle vehicle, Trip trip) async {
+  Future<Trip> saveTrip(Vehicle vehicle, Trip trip) async {
     try {
       if (trip.id != null) {
         final response =
         await client.put("${environment['baseUrl']}/vehicles/${vehicle.id}/trips/${trip.id}", headers: {'Content-type': 'application/json', 'Accept': 'application/json'}, body: vehicle.toJson());
         if (response.statusCode == 200) {
           final json = jsonDecode(response.body);
-          return Vehicle.fromJson(json);
+          return Trip.fromJson(json);
         } else {
           throw Exception("Error saving. \n ${response.body}");
         }
@@ -56,7 +56,7 @@ class VehicleAPI {
             body: json.encode(trip.toJson()));
         if (response.statusCode == 201) {
           final json = jsonDecode(response.body);
-          return Vehicle.fromJson(json);
+          return Trip.fromJson(json);
         } else {
           throw Exception("Error saving. \n ${response.body}");
         }
@@ -138,4 +138,5 @@ class VehicleAPI {
     }
     return data;
   }
+
 }

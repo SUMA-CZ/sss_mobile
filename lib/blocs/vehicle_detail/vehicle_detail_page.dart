@@ -2,14 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sss_mobile/apis/vehicle_api.dart';
+import 'package:sss_mobile/blocs/trip/trip_bloc.dart';
+import 'package:sss_mobile/blocs/trip/trip_event.dart';
+import 'package:sss_mobile/blocs/trip/trip_screen.dart';
 import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/screens/trip_screen.dart';
+import 'package:sss_mobile/repositories/vehicle_repo.dart';
 
-class VehicleDetailScreen extends StatelessWidget {
+class VehicleDetailPage extends StatelessWidget {
   Trip lastTripWithLocation(Vehicle vehicle) {
     if (vehicle.trips != null) {
       for (Trip trip in vehicle.trips) {
@@ -39,8 +43,15 @@ class VehicleDetailScreen extends StatelessWidget {
       title: new Text("${trip.beginOdometer} - ${trip.endOdometer}"),
       subtitle: new Text("${trip.id} - date: ${trip.endDate}"),
       onTap: () {
-        print('object');
-        Navigator.push(context, MaterialPageRoute(builder: (context) => TripScreen(trip, vehicle)));
+        Navigator.push(context, MaterialPageRoute(
+          builder: (BuildContext context) {
+            return BlocProvider(
+                create: (context) =>
+                TripBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()))
+                  ..add(ShowTrip(trip, vehicle)),
+                child: TripPage(trip, vehicle));
+          },
+        ));
       },
     );
   }
@@ -157,7 +168,15 @@ class VehicleDetailScreen extends StatelessWidget {
                     body: buildTrips(context, state),
                     floatingActionButton: FloatingActionButton.extended(
                       onPressed: () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => TripScreen(Trip(), _vehicle)));
+                        Navigator.push(context, MaterialPageRoute(
+                          builder: (BuildContext context) {
+                            return BlocProvider(
+                                create: (context) =>
+                                TripBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()))
+                                  ..add(ShowTrip(Trip(), _vehicle)),
+                                child: TripPage(Trip(), _vehicle));
+                          },
+                        ));
                       },
                       label: Text('Přidat Jízdu'),
                       icon: Icon(Icons.directions_car),

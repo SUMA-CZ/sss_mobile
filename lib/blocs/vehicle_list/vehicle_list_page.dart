@@ -24,7 +24,7 @@ class Vehicles extends StatelessWidget {
                 create: (context) =>
                 VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()))
                   ..add(ShowVehicle(vehicle: data[i])),
-                child: VehicleDetailScreen());
+                child: VehicleDetailPage());
           },
         ));
       },

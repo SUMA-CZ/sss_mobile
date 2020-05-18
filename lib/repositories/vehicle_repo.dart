@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
+import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 
 class VehicleRepository {
@@ -21,5 +22,9 @@ class VehicleRepository {
     vehicle.refueling = await vehicleAPI.fetchRefuelingsFor(vehicle);
     vehicle.maintenance = await vehicleAPI.fetchMaintenancesFor(vehicle);
     return vehicle;
+  }
+
+  Future<Trip> saveTrip(Trip trip, Vehicle vehicle) async {
+    return await vehicleAPI.saveTrip(vehicle, trip);
   }
 }
