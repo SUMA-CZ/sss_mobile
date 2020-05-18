@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
 import 'package:sss_mobile/blocs/trip/trip_bloc.dart';
 import 'package:sss_mobile/blocs/trip/trip_state.dart';
@@ -50,6 +51,12 @@ class _TripPageState extends State<TripPage> {
     return BlocBuilder<TripBloc, TripState>(builder: (context, state) {
       if (state is TripInitial) {
         this.trip = state.trip;
+        var now = new DateTime.now();
+        var formatter = new DateFormat('dd.M.yyyy');
+        String formatted = formatter.format(now);
+        beginDateController.text = formatted;
+//        endDateController.text = trip.endDate.toIso8601String();
+
         return Scaffold(
             appBar: AppBar(title: trip.id != null ? Text('Upravit jízdu') : Text('Nová jízda')),
             body: Container(
