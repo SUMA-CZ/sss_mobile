@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail.dart';
+import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/repositories/vehicle_repo.dart';
 
 class VehicleDetailBloc extends Bloc<VehicleDetailEvent, VehicleDetailState> {
@@ -17,9 +18,18 @@ class VehicleDetailBloc extends Bloc<VehicleDetailEvent, VehicleDetailState> {
       yield VehicleDetailLoading();
       try {
         yield VehicleDetailLoaded(vehicle: event.vehicle);
+      } catch (e) {
+        yield VehicleDetailError(message: e.toString());
+      }
+    }
 
-      } catch (_) {
-        yield VehicleDetailError();
+    if (event is FullyLoadVehicle) {
+      yield VehicleDetailFullyLoading();
+      try {
+        final Vehicle vehicle = await vehicleRepository.fetchFullVehicle(event.vehicle);
+        yield VehicleDetailFullyLoaded(vehicle: vehicle);
+      } catch (e) {
+        yield VehicleDetailError(message: e.toString());
       }
     }
   }

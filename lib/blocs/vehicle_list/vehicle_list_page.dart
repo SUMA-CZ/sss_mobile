@@ -20,10 +20,11 @@ class Vehicles extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (BuildContext context) {
-            VehicleDetailBloc bloc = VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()));
-            bloc.add(ShowVehicle(vehicle: data[i]));
-            var provider = BlocProvider(create: (context) => bloc, child: VehicleDetailScreen());
-            return provider;
+            return BlocProvider(
+                create: (context) =>
+                VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()))
+                  ..add(ShowVehicle(vehicle: data[i])),
+                child: VehicleDetailScreen());
           },
         ));
       },
@@ -56,7 +57,10 @@ class Vehicles extends StatelessWidget {
                 )),
           ],
           bottom: TabBar(
-            tabs: [Tab(icon: Icon(Icons.domain), text: "Company Vehicles"), Tab(icon: Icon(Icons.person), text: "Personal Vehicles")],
+            tabs: [
+              Tab(icon: Icon(Icons.domain), text: "Company Vehicles"),
+              Tab(icon: Icon(Icons.person), text: "Personal Vehicles")
+            ],
           ),
         ),
         body: Center(

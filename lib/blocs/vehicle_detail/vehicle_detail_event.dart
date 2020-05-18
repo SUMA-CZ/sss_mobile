@@ -15,3 +15,13 @@ class ShowVehicle extends VehicleDetailEvent {
   List<Object> get props => [vehicle];
 
 }
+
+class FullyLoadVehicle extends VehicleDetailEvent {
+  final Vehicle vehicle;
+
+  const FullyLoadVehicle({@required this.vehicle});
+
+  @override
+  List<Object> get props => [vehicle];
+
+}

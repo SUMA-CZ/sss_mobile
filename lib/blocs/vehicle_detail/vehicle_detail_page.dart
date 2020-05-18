@@ -95,6 +95,42 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
     );
   }
 
+  Widget buildTrips(BuildContext context, VehicleDetailState state) {
+    if (state is VehicleDetailFullyLoaded) {
+      return new ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: state.vehicle.trips.length,
+          itemBuilder: (BuildContext context, int position) {
+            return _buildRowForTrip(state.vehicle.trips[position], state.vehicle);
+          });
+    }
+    return Center(child: CircularProgressIndicator());
+  }
+
+  Widget buildRefuelings(BuildContext context, VehicleDetailState state) {
+    if (state is VehicleDetailFullyLoaded) {
+      return new ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: state.vehicle.trips.length,
+          itemBuilder: (BuildContext context, int position) {
+            return _buildRowForRefueling(state.vehicle.refueling[position]);
+          });
+    }
+    return Center(child: CircularProgressIndicator());
+  }
+
+  Widget buildMaintenances(BuildContext context, VehicleDetailState state) {
+    if (state is VehicleDetailFullyLoaded) {
+      return new ListView.builder(
+          padding: const EdgeInsets.all(16.0),
+          itemCount: state.vehicle.maintenance.length,
+          itemBuilder: (BuildContext context, int position) {
+            return _buildRowForMaintenance(state.vehicle.maintenance[position]);
+          });
+    }
+    return Center(child: CircularProgressIndicator());
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -102,7 +138,12 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            tabs: [Tab(icon: Icon(Icons.directions_car)), Tab(icon: Icon(Icons.local_gas_station)), Tab(icon: Icon(Icons.build)), Tab(icon: Icon(Icons.map))],
+            tabs: [
+              Tab(icon: Icon(Icons.directions_car)),
+              Tab(icon: Icon(Icons.local_gas_station)),
+              Tab(icon: Icon(Icons.build)),
+              Tab(icon: Icon(Icons.map))
+            ],
           ),
           title: Text('vehicle.name'),
         ),
@@ -112,14 +153,15 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
           }
 
           if (state is VehicleDetailError) {
-            return Center(child: Text('Nastala chyba'));
+            return Center(child: Text(state.message));
           }
 
-          if (state is VehicleDetailLoaded) {
+          if (state is VehicleDetailStateWithVehicle) {
+            if (state is VehicleDetailLoaded) {
+              BlocProvider.of<VehicleDetailBloc>(context).add(FullyLoadVehicle(vehicle: state.vehicle));
+            }
+
             var _vehicle = state.vehicle;
-            var _trips = state.vehicle.trips;
-            var _refuelings = state.vehicle.refueling;
-            var _maintenances = state.vehicle.maintenance;
 
             return TabBarView(
               physics: NeverScrollableScrollPhysics(),
@@ -131,12 +173,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                       header: WaterDropHeader(),
                       controller: _refreshTrips,
 //                  onRefresh: BlocProvider.of<VehicleListBloc>(context).add(FetchVehiclesList()),
-                      child: new ListView.builder(
-                          padding: const EdgeInsets.all(16.0),
-                          itemCount: _trips.length,
-                          itemBuilder: (BuildContext context, int position) {
-                            return _buildRowForTrip(_trips[position], _vehicle);
-                          }),
+                      child: buildTrips(context, state),
                     ),
                     floatingActionButton: FloatingActionButton.extended(
                       onPressed: () {
@@ -152,12 +189,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                       header: WaterDropHeader(),
                       controller: _refreshRefuelings,
 //                  onRefresh: _loadData,
-                      child: new ListView.builder(
-                          padding: const EdgeInsets.all(16.0),
-                          itemCount: _refuelings.length,
-                          itemBuilder: (BuildContext context, int position) {
-                            return _buildRowForRefueling(_refuelings[position]);
-                          }),
+                      child: buildRefuelings(context, state),
                     ),
                     floatingActionButton: FloatingActionButton.extended(
                       onPressed: () => print('Add Fueling'),
@@ -171,12 +203,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                     header: WaterDropHeader(),
                     controller: _refreshMaintenance,
 //                onRefresh: _loadData,
-                    child: new ListView.builder(
-                        padding: const EdgeInsets.all(16.0),
-                        itemCount: _maintenances.length,
-                        itemBuilder: (BuildContext context, int position) {
-                          return _buildRowForMaintenance(_maintenances[position]);
-                        }),
+                    child: buildMaintenances(context, state),
                   ),
                   floatingActionButton: FloatingActionButton.extended(
                     onPressed: () => print('Add Service'),
@@ -202,7 +229,8 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
                           ));
                         });
 
-                        controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(target: lastTripPos, zoom: 16)));
+                        controller.animateCamera(
+                            CameraUpdate.newCameraPosition(CameraPosition(target: lastTripPos, zoom: 16)));
                       },
                       markers: _markers),
                 )
@@ -210,7 +238,7 @@ class VehicleDetailScreenState extends State<VehicleDetailScreen> {
             );
           }
 
-          return null;
+          return Container();
         }),
       ),
     );

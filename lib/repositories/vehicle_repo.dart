@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
 import 'package:sss_mobile/models/vehicle.dart';
@@ -12,12 +13,13 @@ class VehicleRepository {
 
   Future<List<Vehicle>> updateVehicles() async {
     this.vehicles = await vehicleAPI.fetchVehicles();
-    for (Vehicle vehicle in vehicles) {
-      vehicle.trips = await vehicleAPI.fetchTripsFor(vehicle);
-      vehicle.refueling = await vehicleAPI.fetchRefuelingsFor(vehicle);
-      vehicle.maintenance = await vehicleAPI.fetchMaintenancesFor(vehicle);
-    }
-
     return this.vehicles;
+  }
+
+  Future<Vehicle> fetchFullVehicle(Vehicle vehicle) async {
+    vehicle.trips = await vehicleAPI.fetchTripsFor(vehicle);
+    vehicle.refueling = await vehicleAPI.fetchRefuelingsFor(vehicle);
+    vehicle.maintenance = await vehicleAPI.fetchMaintenancesFor(vehicle);
+    return vehicle;
   }
 }
