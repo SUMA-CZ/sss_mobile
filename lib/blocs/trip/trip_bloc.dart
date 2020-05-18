@@ -16,11 +16,11 @@ class TripBloc extends Bloc<TripEvent, TripState> {
   @override
   Stream<TripState> mapEventToState(TripEvent event) async* {
     if (event is ShowTrip) {
-      yield TripInitial(event.trip);
+      yield TripEditing(event.trip);
     }
 
     if (event is SaveTrip) {
-      yield TripSaving();
+      yield TripSaving(event.trip);
       try {
         final Trip trip = await vehicleRepository.saveTrip(event.trip, event.vehicle);
         yield TripSuccess();

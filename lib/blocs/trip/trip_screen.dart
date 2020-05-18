@@ -5,18 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
 import 'package:sss_mobile/blocs/trip/trip_bloc.dart';
+import 'package:sss_mobile/blocs/trip/trip_event.dart';
 import 'package:sss_mobile/blocs/trip/trip_state.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 
 class TripPage extends StatefulWidget {
-  final Trip trip;
-  final Vehicle vehicle;
-
-  TripPage(this.trip, this.vehicle);
 
   @override
-  _TripPageState createState() => _TripPageState(trip, vehicle);
+  _TripPageState createState() => _TripPageState();
 }
 
 class _TripPageState extends State<TripPage> {
@@ -25,7 +22,7 @@ class _TripPageState extends State<TripPage> {
   Trip trip = Trip();
   Vehicle vehicle;
 
-  _TripPageState(this.trip, this.vehicle);
+  _TripPageState();
 
   var beginDateController = TextEditingController();
   var endDateController = TextEditingController();
@@ -36,12 +33,13 @@ class _TripPageState extends State<TripPage> {
 
     if (picked != null)
       setState(() {
+        var formatter = new DateFormat('dd.M.yyyy');
         if (begin) {
           trip.beginDate = picked;
-          beginDateController.text = trip.beginDate.toString();
+          beginDateController.text = formatter.format(trip.beginDate);
         } else {
           trip.endDate = picked;
-          endDateController.text = trip.endDate.toString();
+          endDateController.text = formatter.format(trip.endDate);
         }
       });
   }
@@ -49,20 +47,27 @@ class _TripPageState extends State<TripPage> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TripBloc, TripState>(builder: (context, state) {
-      if (state is TripInitial) {
+      if (state is TripSuccess) {
+        Navigator.of(context).pop();
+      }
+
+      if (state is TripWithData) {
         this.trip = state.trip;
-        var now = new DateTime.now();
         var formatter = new DateFormat('dd.M.yyyy');
-        String formatted = formatter.format(now);
-        beginDateController.text = formatted;
-//        endDateController.text = trip.endDate.toIso8601String();
+        if (trip.beginDate != null) {
+          beginDateController.text = formatter.format(trip.beginDate);
+        }
+
+        if (trip.endDate != null) {
+          endDateController.text = formatter.format(trip.endDate);
+        }
+      }
 
         return Scaffold(
             appBar: AppBar(title: trip.id != null ? Text('Upravit jízdu') : Text('Nová jízda')),
             body: Container(
                 child: Builder(
-                    builder: (context) =>
-                        Form(
+                    builder: (context) => Form(
                           key: _formKey,
                           child: Container(
                             padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -77,6 +82,12 @@ class _TripPageState extends State<TripPage> {
                                       keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
                                       decoration: InputDecoration(labelText: 'Počáteční stav km'),
                                       validator: (value) {
+                                        try {
+                                          int.parse(value);
+                                        } catch (_) {
+                                          return 'Neplatná hodnota';
+                                        }
+
                                         if (value.isEmpty) {
                                           return 'Zadejte prosím hodnotu';
                                         }
@@ -95,6 +106,12 @@ class _TripPageState extends State<TripPage> {
                                       keyboardType: TextInputType.numberWithOptions(decimal: true, signed: false),
                                       decoration: InputDecoration(labelText: 'Konečný stav km'),
                                       validator: (value) {
+                                        try {
+                                          int.parse(value);
+                                        } catch (_) {
+                                          return 'Neplatná hodnota';
+                                        }
+
                                         if (value.isEmpty) {
                                           return 'Zadejte prosím hodnotu';
                                         }
@@ -185,26 +202,34 @@ class _TripPageState extends State<TripPage> {
                                   onPressed: () {
                                     if (_formKey.currentState.validate()) {
                                       _formKey.currentState.save();
-                                      Scaffold.of(context).showSnackBar(SnackBar(content: Text('Ukládání...')));
-                                      VehicleAPI()
-                                          .saveTrip(vehicle, trip)
-                                          .then((value) => {Navigator.pop(context)}, onError: (error) =>
-                                      {
-                                        Scaffold.of(context).showSnackBar(
-                                            SnackBar(content: Text('Záznam se nepodařilo uložit')))
-                                      });
+
+                                      BlocListener<TripBloc, TripState>(
+                                          listener: (context, state) {
+                                            if (state is TripSaving) {
+                                              Scaffold.of(context).showSnackBar(
+                                                SnackBar(
+                                                  content: Text('Ukládání....'),
+                                                  backgroundColor: Colors.red,
+                                                ),
+                                              );
+                                            }
+                                          });
+
+                                      BlocListener<TripBloc, TripState>(
+                                          listener: (context, state) {
+                                            if (state is TripError) {
+                                              showDialog(context: context, child: Text(state.message));
+                                            }
+                                          });
+
+                                      BlocProvider.of<TripBloc>(context).add(SaveTrip(trip, vehicle));
                                     }
                                   },
                                   child: Text('Uložit'))
                             ]),
                           ),
-                        )
-                )
-            )
-        );
-      }
-
-      return Text('fells');
+                        ))));
+      
     });
   }
 }

@@ -16,15 +16,38 @@ class TripError extends TripState {
 
 class TripUndefined extends TripState {}
 
-class TripInitial extends TripState {
+class TripEditing extends TripWithData {
   final Trip trip;
 
-  const TripInitial(this.trip);
+  const TripEditing(this.trip) : super(trip);
 
   @override
   List<Object> get props => [trip];
 }
 
-class TripSaving extends TripState {}
+class TripSaving extends TripWithData {
+  final Trip trip;
+
+  const TripSaving(this.trip) : super(trip);
+
+  @override
+  List<Object> get props => [trip];
+}
+
+class TripWithData extends TripState {
+  final Trip trip;
+
+  const TripWithData(this.trip);
+
+  @override
+  List<Object> get props => [trip];
+}
+
+
+
+
+
+
+
 
 class TripSuccess extends TripState {}

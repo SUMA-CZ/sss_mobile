@@ -49,7 +49,7 @@ class VehicleDetailPage extends StatelessWidget {
                 create: (context) =>
                 TripBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()))
                   ..add(ShowTrip(trip, vehicle)),
-                child: TripPage(trip, vehicle));
+                child: TripPage());
           },
         ));
       },
@@ -168,14 +168,22 @@ class VehicleDetailPage extends StatelessWidget {
                     body: buildTrips(context, state),
                     floatingActionButton: FloatingActionButton.extended(
                       onPressed: () {
+                        var trip = Trip();
+                        trip.beginOdometer = _vehicle.trips.first.endOdometer;
+                        trip.endOdometer = _vehicle.trips.first.endOdometer;
+                        trip.beginDate = DateTime.now();
+                        trip.endDate = DateTime.now();
+                        trip.officialTrip = true;
+
+
                         Navigator.push(context, MaterialPageRoute(
                           builder: (BuildContext context) {
                             return BlocProvider(
                                 create: (context) =>
                                 TripBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()))
-                                  ..add(ShowTrip(Trip(), _vehicle)),
-                                child: TripPage(Trip(), _vehicle));
-                          },
+                                  ..add(ShowTrip(trip, _vehicle)),
+                                child: TripPage());
+                          }, fullscreenDialog: true
                         ));
                       },
                       label: Text('Přidat Jízdu'),
