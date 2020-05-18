@@ -12,11 +12,11 @@ class VehicleRepository {
 
   Future<List<Vehicle>> updateVehicles() async {
     this.vehicles = await vehicleAPI.fetchVehicles();
-    this.vehicles.forEach((element) async {
-      element.trips = await vehicleAPI.fetchTripsFor(element);
-      element.refueling = await vehicleAPI.fetchRefuelingsFor(element);
-      element.maintenance = await vehicleAPI.fetchMaintenancesFor(element);
-    });
+    for (Vehicle vehicle in vehicles) {
+      vehicle.trips = await vehicleAPI.fetchTripsFor(vehicle);
+      vehicle.refueling = await vehicleAPI.fetchRefuelingsFor(vehicle);
+      vehicle.maintenance = await vehicleAPI.fetchMaintenancesFor(vehicle);
+    }
 
     return this.vehicles;
   }

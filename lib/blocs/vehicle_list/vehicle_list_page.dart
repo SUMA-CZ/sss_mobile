@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
 import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail.dart';
+import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail_page.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/repositories/vehicle_repo.dart';
-import 'package:sss_mobile/blocs/vehicle_detail/vehicle_detail_page.dart';
 import 'package:sss_mobile/string.dart';
 
 import 'vehicle_list.dart';
@@ -20,16 +20,10 @@ class Vehicles extends StatelessWidget {
       onTap: () {
         Navigator.push(context, MaterialPageRoute(
           builder: (BuildContext context) {
-
-            var provider =  BlocProvider(create: (context) => VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI())), child: VehicleDetailScreen());
-
             VehicleDetailBloc bloc = VehicleDetailBloc(vehicleRepository: VehicleRepository(vehicleAPI: VehicleAPI()));
             bloc.add(ShowVehicle(vehicle: data[i]));
-            bloc.close();
-
+            var provider = BlocProvider(create: (context) => bloc, child: VehicleDetailScreen());
             return provider;
-
-            BlocProvider.of<VehicleDetailBloc>(context).add(ShowVehicle(vehicle: data[i]));
           },
         ));
       },
