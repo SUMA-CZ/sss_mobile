@@ -1,15 +1,19 @@
 import 'dart:convert';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:http_interceptor/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
 import 'package:http_interceptor/models/response_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sss_mobile/auth/auth.dart';
+import 'package:sss_mobile/blocs/login/login_bloc.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
+import 'package:sss_mobile/repositories/user_repo.dart';
 
 import '../networking/env.dart';
 
@@ -22,6 +26,9 @@ class AuthInterceptor implements InterceptorContract {
       if (token == "") {
         // TODO: fix me
         print("Navigate to login screen");
+
+        AuthenticationBloc(userRepository: UserRepository()).add(LoggedOut());
+
       }
       data.headers["Authorization"] = "Bearer $token";
     } catch (e) {
