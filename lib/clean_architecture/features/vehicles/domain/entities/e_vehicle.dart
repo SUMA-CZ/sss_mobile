@@ -7,7 +7,7 @@ class EVehicle extends Equatable {
   final String vin;
   final String name;
   final String note;
-  final int odometer;
+  final double odometer;
   final double latitude;
   final double longitude;
   final int fuelLevel;

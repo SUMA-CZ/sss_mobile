@@ -1,5 +1,11 @@
 # sss_mobile
 
+## TDD
+
+ -  Can JSON Serialization be used when there sis model and entitiy?
+   - I do get the point but what if the object is same?
+   
+
 Mobile SSS, mainly SCM
 
 ## JSON Serialization
