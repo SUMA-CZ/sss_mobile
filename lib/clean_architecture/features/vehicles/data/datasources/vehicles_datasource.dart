@@ -2,18 +2,14 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_trip_model.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehicle_model.dart';
 
 abstract class VehiclesRemoteDataSource {
-  /// Calls the http://numbersapi.com/{number} endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
   Future<List<VehicleModel>> getVehicles();
-
-  /// Calls the http://numbersapi.com/random endpoint.
-  ///
-  /// Throws a [ServerException] for all error codes.
-// Future<TripModel> getTripsForVehicle(int vehicleID);
+  Future<List<ETripModel>> getTripsForVehicleID(int vehicleID);
+  Future<List<ETripModel>> getRefuelingsForVehicleID(int vehicleID);
+  Future<List<ETripModel>> getMaintenancesForVehicleID(int vehicleID);
 }
 
 class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
@@ -39,4 +35,22 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
   @override
   Future<List<VehicleModel>> getVehicles() =>
       _getVehiclesFromURL('https://sss.suma.guru/api/vehicles');
+
+  @override
+  Future<List<ETripModel>> getMaintenancesForVehicleID(int vehicleID) {
+    // TODO: implement getMaintenancesForVehicleID
+    return null;
+  }
+
+  @override
+  Future<List<ETripModel>> getRefuelingsForVehicleID(int vehicleID) {
+    // TODO: implement getRefuelingsForVehicleID
+    return null;
+  }
+
+  @override
+  Future<List<ETripModel>> getTripsForVehicleID(int vehicleID) {
+    // TODO: implement getTripsForVehicleID
+    return null;
+  }
 }

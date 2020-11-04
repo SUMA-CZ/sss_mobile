@@ -6,6 +6,9 @@ import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/datasources/vehicles_datasource.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_maintenance_model.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_refueling_model.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_trip_model.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehicle_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -75,10 +78,12 @@ void main() {
   });
 
   group('getTripsForVehicle', () {
-    var eVehicles = <VehicleModel>[];
-    for (var j in json.decode(fixture('vehicles.json'))) {
-      eVehicles.add(VehicleModel.fromJson(j));
+    var eTrips = <ETripModel>[];
+    for (var j in json.decode(fixture('trips.json'))) {
+      eTrips.add(ETripModel.fromJson(j));
     }
+
+    final vehicleID = 16;
 
     test(
       '''should perform a GET request on a URL /vehicles''',
@@ -86,9 +91,9 @@ void main() {
         // arrange
         setUpMockHttpClientSuccess200();
         // act
-        dataSource.getVehicles();
+        dataSource.getTripsForVehicleID(vehicleID);
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles'));
+        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/trips'));
       },
     );
 
@@ -98,9 +103,9 @@ void main() {
         // arrange
         setUpMockHttpClientSuccess200();
         // act
-        final result = await dataSource.getVehicles();
+        final result = await dataSource.getTripsForVehicleID(vehicleID);
         // assert
-        expect(result, equals(eVehicles));
+        expect(result, equals(eTrips));
       },
     );
 
@@ -110,9 +115,99 @@ void main() {
         // arrange
         setUpMockHttpClientFailure404();
         // act
-        final call = dataSource.getVehicles;
+        final call = dataSource.getTripsForVehicleID;
         // assert
-        expect(() => call(), throwsA(TypeMatcher<ServerException>()));
+        expect(() => call(vehicleID), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('getRefuelingsForVehicle', () {
+    var eRefuelingModels = <ERefuelingModel>[];
+    for (var j in json.decode(fixture('refuelings.json'))) {
+      eRefuelingModels.add(ERefuelingModel.fromJson(j));
+    }
+
+    final vehicleID = 16;
+
+    test(
+      '''should perform a GET request on a URL /vehicles''',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        dataSource.getRefuelingsForVehicleID(vehicleID);
+        // assert
+        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/refuelings'));
+      },
+    );
+
+    test(
+      'should return List<Vehicles> when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        final result = await dataSource.getRefuelingsForVehicleID(vehicleID);
+        // assert
+        expect(result, equals(eRefuelingModels));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 404 or other',
+      () async {
+        // arrange
+        setUpMockHttpClientFailure404();
+        // act
+        final call = dataSource.getRefuelingsForVehicleID;
+        // assert
+        expect(() => call(vehicleID), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('getMaintenancesForVehicle', () {
+    var eMaintenanceModels = <EMaintenanceModel>[];
+    for (var j in json.decode(fixture('maintenances.json'))) {
+      eMaintenanceModels.add(EMaintenanceModel.fromJson(j));
+    }
+
+    final vehicleID = 16;
+
+    test(
+      '''should perform a GET request on a URL /vehicles''',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        dataSource.getMaintenancesForVehicleID(vehicleID);
+        // assert
+        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/trips'));
+      },
+    );
+
+    test(
+      'should return List<Vehicles> when the response code is 200 (success)',
+      () async {
+        // arrange
+        setUpMockHttpClientSuccess200();
+        // act
+        final result = await dataSource.getMaintenancesForVehicleID(vehicleID);
+        // assert
+        expect(result, equals(eMaintenanceModels));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 404 or other',
+      () async {
+        // arrange
+        setUpMockHttpClientFailure404();
+        // act
+        final call = dataSource.getMaintenancesForVehicleID;
+        // assert
+        expect(() => call(vehicleID), throwsA(TypeMatcher<ServerException>()));
       },
     );
   });

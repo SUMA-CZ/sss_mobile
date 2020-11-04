@@ -1,12 +1,12 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sss_mobile/models/user.dart';
 
 import 'e_user.dart';
 
 part 'e_maintenance.g.dart';
 
 @JsonSerializable()
-class EMaintenance {
+class EMaintenance extends Equatable {
   EMaintenance();
 
   @JsonKey(name: 'Id')
@@ -39,13 +39,11 @@ class EMaintenance {
   @JsonKey(name: 'ScanURL')
   String scanURL;
 
-  /// A necessary factory constructor for creating a new User instance
-  /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.
-  /// The constructor is named after the source class, in this case, User.
   factory EMaintenance.fromJson(Map<String, dynamic> json) => _$EMaintenanceFromJson(json);
 
-  /// `toJson` is the convention for a class to declare support for serialization
-  /// to JSON. The implementation simply calls the private, generated
-  /// helper method `_$UserToJson`.
   Map<String, dynamic> toJson() => _$EMaintenanceToJson(this);
+
+  @override
+  List<Object> get props =>
+      [id, date, state, price, description, note, maintenanceLocationId, vatRateId, user, scanURL];
 }

@@ -1,0 +1,42 @@
+[
+  {
+    "Id": 399,
+    "Date": "2019-05-13T00:00:00",
+    "OdometerState": 0,
+    "PriceIncludingVAT": 1.0,
+    "FuelBulk": 1.0,
+    "OfficialJourney": true,
+    "Note": null,
+    "ReceiptNumber": "2",
+    "FuelType": "Natural 95",
+    "User": {
+      "Id": "41be89d0-16e4-4133-a941-f6c98273bed7",
+      "Email": "tomas.sykora@ajty.cz",
+      "Name": "Syky"
+    },
+    "VatRate": "21%",
+    "Currency": "CZK",
+    "VehicleId": 16,
+    "ScanURL": "https://sss.suma.guru/api/scans/532"
+  },
+  {
+    "Id": 399,
+    "Date": "2019-05-13T00:00:00",
+    "OdometerState": 0,
+    "PriceIncludingVAT": 1.0,
+    "FuelBulk": 1.0,
+    "OfficialJourney": true,
+    "Note": null,
+    "ReceiptNumber": "2",
+    "FuelType": "Natural 95",
+    "User": {
+      "Id": "41be89d0-16e4-4133-a941-f6c98273bed7",
+      "Email": "tomas.sykora@ajty.cz",
+      "Name": "Syky"
+    },
+    "VatRate": "21%",
+    "Currency": "CZK",
+    "VehicleId": 16,
+    "ScanURL": "https://sss.suma.guru/api/scans/532"
+  }
+]

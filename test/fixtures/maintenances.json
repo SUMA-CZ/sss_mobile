@@ -1,0 +1,34 @@
+[
+  {
+    "Id": 5,
+    "Date": "2017-07-11T00:00:00",
+    "State": "po servisu",
+    "Price": 0.0,
+    "Description": "servis/opravy nahlasenych zavad - vymena chladice, svicek,kabelu.",
+    "Note": null,
+    "MaintenanceLocationId": 3,
+    "VATRateId": 1,
+    "User": {
+      "Id": "ada7c020-b0cf-4968-aced-d8d67a4d38ce",
+      "Email": "jakub.jonak@sumanet.cz",
+      "Name": "Jakub Jonak"
+    },
+    "ScanURL": "https://sss.suma.guru/api/scans/95"
+  },
+  {
+    "Id": 5,
+    "Date": "2017-07-11T00:00:00",
+    "State": "po servisu",
+    "Price": 0.0,
+    "Description": "servis/opravy nahlasenych zavad - vymena chladice, svicek,kabelu.",
+    "Note": null,
+    "MaintenanceLocationId": 3,
+    "VATRateId": 1,
+    "User": {
+      "Id": "ada7c020-b0cf-4968-aced-d8d67a4d38ce",
+      "Email": "jakub.jonak@sumanet.cz",
+      "Name": "Jakub Jonak"
+    },
+    "ScanURL": "https://sss.suma.guru/api/scans/95"
+  }
+]
