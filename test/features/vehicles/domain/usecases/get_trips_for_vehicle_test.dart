@@ -17,8 +17,16 @@ void main() {
   });
 
   final tTrips = [
-    ETrip(id: 1, beginOdometer: 0, endOdometer: 1, officialTrip: true),
-    ETrip(id: 2, beginOdometer: 1, endOdometer: 25, officialTrip: false)
+    ETrip()
+      ..id = 1
+      ..beginOdometer = 1
+      ..endOdometer = 2
+      ..officialTrip = true,
+    ETrip()
+      ..id = 2
+      ..beginOdometer = 1
+      ..endOdometer = 2
+      ..officialTrip = true,
   ];
 
   final vehicleID = 1;

@@ -1,32 +1,53 @@
-import 'package:equatable/equatable.dart';
-import 'package:meta/meta.dart';
+import 'package:json_annotation/json_annotation.dart';
 
-class ETrip extends Equatable {
-  final int id;
-  final int beginOdometer;
-  final int endOdometer;
-  final bool officialTrip;
-  final String parkingNote;
-  final String note;
-  final double latitude;
-  final double longitude;
-  final int fuelStatus;
-  final DateTime beginDate;
-  final DateTime endDate;
+import 'e_user.dart';
 
-  ETrip(
-      {@required this.id,
-      @required this.beginOdometer,
-      @required this.endOdometer,
-      @required this.officialTrip,
-      this.parkingNote,
-      this.note,
-      this.latitude,
-      this.longitude,
-      this.fuelStatus,
-      this.beginDate,
-      this.endDate});
+/// This allows the `User` class to access private members in
+/// the generated file. The value for this is *.g.dart, where
+/// the star denotes the source file name.
+part 'e_trip.g.dart';
 
-  @override
-  List<Object> get props => [id];
+@JsonSerializable()
+class ETrip {
+  ETrip();
+
+  @JsonKey(name: 'Id')
+  int id;
+
+  @JsonKey(name: 'InitialOdometer')
+  int beginOdometer;
+
+  @JsonKey(name: 'FinalOdometer')
+  int endOdometer;
+
+  @JsonKey(name: 'OfficialJourney')
+  bool officialTrip;
+
+  @JsonKey(name: 'ParkingNote')
+  String parkingNote;
+
+  @JsonKey(name: 'Note')
+  String note;
+
+  @JsonKey(name: 'Latitude')
+  double latitude;
+
+  @JsonKey(name: 'Longtitude')
+  double longitude;
+
+  @JsonKey(name: 'FuelStatus')
+  int fuelStatus;
+
+  @JsonKey(name: 'FromDate')
+  DateTime beginDate;
+
+  @JsonKey(name: 'ToDate')
+  DateTime endDate;
+
+  @JsonKey(name: 'User')
+  EUser user;
+
+  factory ETrip.fromJson(Map<String, dynamic> json) => _$ETripFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ETripToJson(this);
 }

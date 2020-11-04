@@ -2,11 +2,11 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sss_mobile/models/user.dart';
 
-part 'refueling.g.dart';
+part 'e_refueling.g.dart';
 
 @JsonSerializable()
-class Refueling extends Equatable {
-  Refueling();
+class ERefueling extends Equatable {
+  ERefueling();
 
   @JsonKey(name: 'Id')
   int id;
@@ -54,7 +54,7 @@ class Refueling extends Equatable {
   // TODO: implement props
   List<Object> get props => [id];
 
-  factory Refueling.fromJson(Map<String, dynamic> json) => _$RefuelingFromJson(json);
+  factory ERefueling.fromJson(Map<String, dynamic> json) => _$ERefuelingFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RefuelingToJson(this);
+  Map<String, dynamic> toJson() => _$ERefuelingToJson(this);
 }

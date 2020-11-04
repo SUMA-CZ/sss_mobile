@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:http_interceptor/interceptor_contract.dart';
@@ -8,7 +7,6 @@ import 'package:http_interceptor/models/request_data.dart';
 import 'package:http_interceptor/models/response_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/auth/auth.dart';
-import 'package:sss_mobile/blocs/login/login_bloc.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
@@ -28,7 +26,6 @@ class AuthInterceptor implements InterceptorContract {
         print("Navigate to login screen");
 
         AuthenticationBloc(userRepository: UserRepository()).add(LoggedOut());
-
       }
       data.headers["Authorization"] = "Bearer $token";
     } catch (e) {
@@ -49,8 +46,10 @@ class VehicleAPI {
   Future<Trip> saveTrip(Vehicle vehicle, Trip trip) async {
     try {
       if (trip.id != null) {
-        final response =
-        await client.put("${environment['baseUrl']}/vehicles/${vehicle.id}/trips/${trip.id}", headers: {'Content-type': 'application/json', 'Accept': 'application/json'}, body: vehicle.toJson());
+        final response = await client.put(
+            "${environment['baseUrl']}/vehicles/${vehicle.id}/trips/${trip.id}",
+            headers: {'Content-type': 'application/json', 'Accept': 'application/json'},
+            body: vehicle.toJson());
         if (response.statusCode == 200) {
           final json = jsonDecode(response.body);
           return Trip.fromJson(json);
@@ -58,8 +57,12 @@ class VehicleAPI {
           throw Exception("Error saving. \n ${response.body}");
         }
       } else {
-        final response = await client.post(
-            "${environment['baseUrl']}/vehicles/${vehicle.id}/trips", headers: {'Content-type': 'application/json', 'Accept': 'application/json', "Authorization": "Some token"},
+        final response = await client.post("${environment['baseUrl']}/vehicles/${vehicle.id}/trips",
+            headers: {
+              'Content-type': 'application/json',
+              'Accept': 'application/json',
+              "Authorization": "Some token"
+            },
             body: json.encode(trip.toJson()));
         if (response.statusCode == 201) {
           final json = jsonDecode(response.body);
@@ -95,7 +98,8 @@ class VehicleAPI {
   Future<List<Maintenance>> fetchMaintenancesFor(Vehicle vehicle) async {
     var maintenances = <Maintenance>[];
     try {
-      final response = await client.get("${environment['baseUrl']}/vehicles/${vehicle.id}/maintenances");
+      final response =
+          await client.get("${environment['baseUrl']}/vehicles/${vehicle.id}/maintenances");
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         for (var j in json) {
@@ -113,11 +117,12 @@ class VehicleAPI {
   Future<List<Refueling>> fetchRefuelingsFor(Vehicle vehicle) async {
     var data = <Refueling>[];
     try {
-      final response = await client.get("${environment['baseUrl']}/vehicles/${vehicle.id}/refuelings");
+      final response =
+          await client.get("${environment['baseUrl']}/vehicles/${vehicle.id}/refuelings");
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         for (var j in json) {
-          data.add(Refueling.fromJson(j));
+          // data.add(Refueling.fromJson(j));
         }
       } else {
         throw Exception("Error while fetching. \n ${response.body}");
@@ -145,5 +150,4 @@ class VehicleAPI {
     }
     return data;
   }
-
 }
