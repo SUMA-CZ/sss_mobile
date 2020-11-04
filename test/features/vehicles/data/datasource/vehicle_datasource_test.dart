@@ -24,9 +24,24 @@ void main() {
     dataSource = VehiclesRemoteDataSourceImpl(client: mockHttpClient);
   });
 
-  void setUpMockHttpClientSuccess200() {
+  void setUpMockHttpClientSuccess200ForVehicles() {
     when(mockHttpClient.get(any, headers: anyNamed('headers')))
         .thenAnswer((_) async => http.Response(fixture('vehicles.json'), 200));
+  }
+
+  void setUpMockHttpClientSuccess200ForTrips() {
+    when(mockHttpClient.get(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(fixture('trips.json'), 200));
+  }
+
+  void setUpMockHttpClientSuccess200ForRefueling() {
+    when(mockHttpClient.get(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(fixture('refuelings.json'), 200));
+  }
+
+  void setUpMockHttpClientSuccess200ForMaintenances() {
+    when(mockHttpClient.get(any, headers: anyNamed('headers')))
+        .thenAnswer((_) async => http.Response(fixture('maintenances.json'), 200));
   }
 
   void setUpMockHttpClientFailure404() {
@@ -44,7 +59,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForVehicles();
         // act
         dataSource.getVehicles();
         // assert
@@ -56,7 +71,7 @@ void main() {
       'should return List<Vehicles> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForVehicles();
         // act
         final result = await dataSource.getVehicles();
         // assert
@@ -89,7 +104,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForTrips();
         // act
         dataSource.getTripsForVehicleID(vehicleID);
         // assert
@@ -98,10 +113,10 @@ void main() {
     );
 
     test(
-      'should return List<Vehicles> when the response code is 200 (success)',
+      'should return List<TripModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForTrips();
         // act
         final result = await dataSource.getTripsForVehicleID(vehicleID);
         // assert
@@ -134,7 +149,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForRefueling();
         // act
         dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
@@ -143,10 +158,10 @@ void main() {
     );
 
     test(
-      'should return List<Vehicles> when the response code is 200 (success)',
+      'should return List<RefuelingModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForRefueling();
         // act
         final result = await dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
@@ -176,22 +191,22 @@ void main() {
     final vehicleID = 16;
 
     test(
-      '''should perform a GET request on a URL /vehicles''',
+      '''should perform a GET request on a URL /vehicles/{id}/trips''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForMaintenances();
         // act
         dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/trips'));
+        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/maintenances'));
       },
     );
 
     test(
-      'should return List<Vehicles> when the response code is 200 (success)',
+      'should return List<MaintenanceModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200();
+        setUpMockHttpClientSuccess200ForMaintenances();
         // act
         final result = await dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert

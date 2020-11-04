@@ -1,7 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_user.dart';
-import 'package:sss_mobile/models/user.dart';
 
 part 'e_refueling.g.dart';
 
@@ -52,8 +51,22 @@ class ERefueling extends Equatable {
   String scanURL;
 
   @override
-  // TODO: implement props
-  List<Object> get props => [id];
+  List<Object> get props => [
+        id,
+        date,
+        odometer,
+        price,
+        vatRate,
+        currency,
+        vehicleId,
+        fuelAmount,
+        official,
+        note,
+        receiptNo,
+        fuelType,
+        user,
+        scanURL
+      ];
 
   factory ERefueling.fromJson(Map<String, dynamic> json) => _$ERefuelingFromJson(json);
 
