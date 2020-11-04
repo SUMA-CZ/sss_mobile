@@ -6,7 +6,7 @@ part of 'token.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Token _$TokenFromJson(Map<String, dynamic> json) {
+Token _$TokenFromJson(Map json) {
   return Token()..accessToken = json['AccessToken'] as String;
 }
 

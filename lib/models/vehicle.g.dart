@@ -6,7 +6,7 @@ part of 'vehicle.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
+Vehicle _$VehicleFromJson(Map json) {
   return Vehicle()
     ..id = json['Id'] as int
     ..vin = json['VIN'] as String
@@ -18,16 +18,25 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) {
     ..longitude = (json['Longtitude'] as num)?.toDouble()
     ..fuelStatus = json['FuelStatus'] as int
     ..trips = (json['trips'] as List)
-        ?.map(
-            (e) => e == null ? null : Trip.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : Trip.fromJson((e as Map)?.map(
+                (k, e) => MapEntry(k as String, e),
+              )))
         ?.toList()
     ..maintenance = (json['maintenance'] as List)
-        ?.map((e) =>
-            e == null ? null : Maintenance.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : Maintenance.fromJson((e as Map)?.map(
+                (k, e) => MapEntry(k as String, e),
+              )))
         ?.toList()
     ..refueling = (json['refueling'] as List)
-        ?.map((e) =>
-            e == null ? null : Refueling.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => e == null
+            ? null
+            : Refueling.fromJson((e as Map)?.map(
+                (k, e) => MapEntry(k as String, e),
+              )))
         ?.toList();
 }
 
@@ -41,7 +50,7 @@ Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
       'Latitude': instance.latitude,
       'Longtitude': instance.longitude,
       'FuelStatus': instance.fuelStatus,
-      'trips': instance.trips,
-      'maintenance': instance.maintenance,
-      'refueling': instance.refueling,
+      'trips': instance.trips?.map((e) => e?.toJson())?.toList(),
+      'maintenance': instance.maintenance?.map((e) => e?.toJson())?.toList(),
+      'refueling': instance.refueling?.map((e) => e?.toJson())?.toList(),
     };

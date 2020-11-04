@@ -6,7 +6,7 @@ part of 'e_user_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EUserModel _$EUserModelFromJson(Map<String, dynamic> json) {
+EUserModel _$EUserModelFromJson(Map json) {
   return EUserModel()
     ..id = json['Id'] as String
     ..vin = json['Email'] as String

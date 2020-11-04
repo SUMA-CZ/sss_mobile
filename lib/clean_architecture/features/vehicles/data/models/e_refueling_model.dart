@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_refueling.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_user.dart';
 
 part 'e_refueling_model.g.dart';
 

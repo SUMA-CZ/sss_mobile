@@ -1,3 +1,4 @@
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'e_user.dart';
@@ -7,8 +8,8 @@ import 'e_user.dart';
 /// the star denotes the source file name.
 part 'e_trip.g.dart';
 
-@JsonSerializable()
-class ETrip {
+@JsonSerializable(explicitToJson: true)
+class ETrip extends Equatable {
   ETrip();
 
   @JsonKey(name: 'Id')
@@ -50,4 +51,20 @@ class ETrip {
   factory ETrip.fromJson(Map<String, dynamic> json) => _$ETripFromJson(json);
 
   Map<String, dynamic> toJson() => _$ETripToJson(this);
+
+  @override
+  List<Object> get props => [
+        id,
+        beginDate,
+        endOdometer,
+        officialTrip,
+        parkingNote,
+        note,
+        latitude,
+        longitude,
+        fuelStatus,
+        beginDate,
+        endDate,
+        user
+      ];
 }

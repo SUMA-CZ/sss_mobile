@@ -1,5 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_user.dart';
 import 'package:sss_mobile/models/user.dart';
 
 part 'e_refueling.g.dart';
@@ -45,7 +46,7 @@ class ERefueling extends Equatable {
   String fuelType;
 
   @JsonKey(name: 'User')
-  User user;
+  EUser user;
 
   @JsonKey(name: 'ScanURL')
   String scanURL;

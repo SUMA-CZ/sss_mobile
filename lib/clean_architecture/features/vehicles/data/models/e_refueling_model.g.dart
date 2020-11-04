@@ -6,7 +6,7 @@ part of 'e_refueling_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ERefuelingModel _$ERefuelingModelFromJson(Map<String, dynamic> json) {
+ERefuelingModel _$ERefuelingModelFromJson(Map json) {
   return ERefuelingModel()
     ..id = json['Id'] as int
     ..date =
@@ -23,7 +23,9 @@ ERefuelingModel _$ERefuelingModelFromJson(Map<String, dynamic> json) {
     ..fuelType = json['FuelType'] as String
     ..user = json['User'] == null
         ? null
-        : User.fromJson(json['User'] as Map<String, dynamic>)
+        : EUser.fromJson((json['User'] as Map)?.map(
+            (k, e) => MapEntry(k as String, e),
+          ))
     ..scanURL = json['ScanURL'] as String;
 }
 
@@ -41,6 +43,6 @@ Map<String, dynamic> _$ERefuelingModelToJson(ERefuelingModel instance) =>
       'Note': instance.note,
       'ReceiptNumber': instance.receiptNo,
       'FuelType': instance.fuelType,
-      'User': instance.user,
+      'User': instance.user?.toJson(),
       'ScanURL': instance.scanURL,
     };

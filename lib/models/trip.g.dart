@@ -6,7 +6,7 @@ part of 'trip.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Trip _$TripFromJson(Map<String, dynamic> json) {
+Trip _$TripFromJson(Map json) {
   return Trip()
     ..id = json['Id'] as int
     ..beginOdometer = json['InitialOdometer'] as int
@@ -24,7 +24,9 @@ Trip _$TripFromJson(Map<String, dynamic> json) {
         json['ToDate'] == null ? null : DateTime.parse(json['ToDate'] as String)
     ..user = json['User'] == null
         ? null
-        : User.fromJson(json['User'] as Map<String, dynamic>);
+        : User.fromJson((json['User'] as Map)?.map(
+            (k, e) => MapEntry(k as String, e),
+          ));
 }
 
 Map<String, dynamic> _$TripToJson(Trip instance) => <String, dynamic>{
@@ -39,5 +41,5 @@ Map<String, dynamic> _$TripToJson(Trip instance) => <String, dynamic>{
       'FuelStatus': instance.fuelStatus,
       'FromDate': instance.beginDate?.toIso8601String(),
       'ToDate': instance.endDate?.toIso8601String(),
-      'User': instance.user,
+      'User': instance.user?.toJson(),
     };

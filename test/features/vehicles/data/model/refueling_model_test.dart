@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_refueling_model.dart';
-import 'package:sss_mobile/models/refueling.dart';
-import 'package:sss_mobile/models/user.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_refueling.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_user.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -21,7 +21,7 @@ void main() {
     ..note = null
     ..receiptNo = "2"
     ..fuelType = "Natural 95"
-    ..user = (User()
+    ..user = (EUser()
       ..id = "41be89d0-16e4-4133-a941-f6c98273bed7"
       ..vin = "tomas.sykora@ajty.cz"
       ..name = "Syky")
@@ -31,7 +31,7 @@ void main() {
     'should be a subclass of Vehicle entity',
     () async {
       // assert
-      expect(tRefuelingModel, isA<Refueling>());
+      expect(tRefuelingModel, isA<ERefueling>());
     },
   );
 

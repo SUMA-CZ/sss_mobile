@@ -6,7 +6,7 @@ part of 'e_trip.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ETrip _$ETripFromJson(Map<String, dynamic> json) {
+ETrip _$ETripFromJson(Map json) {
   return ETrip()
     ..id = json['Id'] as int
     ..beginOdometer = json['InitialOdometer'] as int
@@ -24,7 +24,9 @@ ETrip _$ETripFromJson(Map<String, dynamic> json) {
         json['ToDate'] == null ? null : DateTime.parse(json['ToDate'] as String)
     ..user = json['User'] == null
         ? null
-        : EUser.fromJson(json['User'] as Map<String, dynamic>);
+        : EUser.fromJson((json['User'] as Map)?.map(
+            (k, e) => MapEntry(k as String, e),
+          ));
 }
 
 Map<String, dynamic> _$ETripToJson(ETrip instance) => <String, dynamic>{
@@ -39,5 +41,5 @@ Map<String, dynamic> _$ETripToJson(ETrip instance) => <String, dynamic>{
       'FuelStatus': instance.fuelStatus,
       'FromDate': instance.beginDate?.toIso8601String(),
       'ToDate': instance.endDate?.toIso8601String(),
-      'User': instance.user,
+      'User': instance.user?.toJson(),
     };

@@ -6,7 +6,7 @@ part of 'maintenance.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Maintenance _$MaintenanceFromJson(Map<String, dynamic> json) {
+Maintenance _$MaintenanceFromJson(Map json) {
   return Maintenance()
     ..id = json['Id'] as int
     ..date =
@@ -19,7 +19,9 @@ Maintenance _$MaintenanceFromJson(Map<String, dynamic> json) {
     ..vatRateId = json['VATRateId'] as int
     ..user = json['User'] == null
         ? null
-        : User.fromJson(json['User'] as Map<String, dynamic>)
+        : User.fromJson((json['User'] as Map)?.map(
+            (k, e) => MapEntry(k as String, e),
+          ))
     ..scanURL = json['ScanURL'] as String;
 }
 
@@ -33,6 +35,6 @@ Map<String, dynamic> _$MaintenanceToJson(Maintenance instance) =>
       'Note': instance.note,
       'MaintenanceLocationId': instance.maintenanceLocationId,
       'VATRateId': instance.vatRateId,
-      'User': instance.user,
+      'User': instance.user?.toJson(),
       'ScanURL': instance.scanURL,
     };
