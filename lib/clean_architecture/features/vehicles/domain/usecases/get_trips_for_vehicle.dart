@@ -13,7 +13,7 @@ class GetTripsForVehicle implements UseCase<List<ETrip>, Params> {
 
   @override
   Future<Either<Failure, List<ETrip>>> call(Params params) async {
-    return await repository.getTripsForVehicles(params.vehicleID);
+    return await repository.getTripsForVehicleID(params.vehicleID);
   }
 }
 

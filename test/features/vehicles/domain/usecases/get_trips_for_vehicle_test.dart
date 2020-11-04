@@ -35,12 +35,12 @@ void main() {
     'should get trips for vehicle from repository',
     () async {
       // arrange
-      when(repository.getTripsForVehicles(any)).thenAnswer((_) async => Right(tTrips));
+      when(repository.getTripsForVehicleID(any)).thenAnswer((_) async => Right(tTrips));
       // act
       final result = await usecase(Params(vehicleID: vehicleID));
       // assert
       expect(result, Right(tTrips));
-      verify(repository.getTripsForVehicles(vehicleID));
+      verify(repository.getTripsForVehicleID(vehicleID));
       verifyNoMoreInteractions(repository);
     },
   );
