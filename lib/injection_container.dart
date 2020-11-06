@@ -1,5 +1,7 @@
 import 'package:get_it/get_it.dart';
+import 'package:http/http.dart';
 import 'package:http_interceptor/http_client_with_interceptor.dart';
+import 'package:http_interceptor/http_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/clean_architecture/core/network/interceptor.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
@@ -31,8 +33,9 @@ Future<void> init() async {
       () => VehiclesRemoteDataSourceImpl(client: g()));
 
   /// External
+
+  g.registerLazySingleton<InterceptorContract>(() => AuthorizationInterceptor());
+  g.registerLazySingleton<Client>(() => HttpClientWithInterceptor.build(interceptors: [g()]));
   final sharedPreferences = await SharedPreferences.getInstance();
-  g.registerLazySingleton(() => sharedPreferences);
-  g.registerLazySingleton(() => AuthorizationInterceptor());
-  g.registerLazySingleton(() => HttpClientWithInterceptor.build(interceptors: [g()]));
+  g.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }
