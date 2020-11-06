@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/pages/vehicles_page.dart';
 import 'package:sss_mobile/repositories/user_repo.dart';
 import 'package:sss_mobile/repositories/vehicle_repo.dart';
 import 'package:sss_mobile/screens/loading_indicator.dart';
@@ -10,10 +12,11 @@ import 'auth/auth_bloc.dart';
 import 'auth/auth_events.dart';
 import 'auth/auth_state.dart';
 import 'blocs/login/login_page.dart';
-import 'blocs/vehicle_list/vehicle_list_bloc.dart';
-import 'blocs/vehicle_list/vehicle_list_page.dart';
+import 'injection_container.dart' as di;
 
-void main() {
+void main() async {
+  await di.init();
+
   final userRepository = UserRepository();
   final vehicleRepository = VehicleRepository(vehicleAPI: VehicleAPI());
 
@@ -40,8 +43,10 @@ class App extends StatelessWidget {
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
             return BlocProvider(
-                create: (context) => VehicleListBloc(vehicleRepository: vehicleRepository),
-                child: Vehicles());
+              create: (BuildContext context) => di.g<GetVehiclesBloc>(),
+              child: VehiclesPage(),
+            );
+            // return BlocProvider(create: () => ,) VehiclesPage();
           }
           if (state is AuthenticationUnauthenticated) {
             return LoginPage(userRepository: userRepository);
