@@ -11,3 +11,5 @@ class ServerFailure extends Failure {
 
   ServerFailure({this.message});
 }
+
+class SharedPreferencesFailure extends Failure {}
