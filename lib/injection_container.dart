@@ -1,5 +1,9 @@
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
+import 'package:http_interceptor/http_client_with_interceptor.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sss_mobile/clean_architecture/core/network/interceptor.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
+import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/datasources/vehicles_datasource.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/repositories/vehicle_repository_impl.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/repositories/vehicle_repository.dart';
@@ -20,12 +24,15 @@ Future<void> init() async {
 
   /// Repository
   g.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: g()));
+  g.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(prefs: g()));
 
   /// Data sources
   g.registerLazySingleton<VehiclesRemoteDataSource>(
       () => VehiclesRemoteDataSourceImpl(client: g()));
 
   /// External
-
-  g.registerLazySingleton(() => http.Client());
+  final sharedPreferences = await SharedPreferences.getInstance();
+  g.registerLazySingleton(() => sharedPreferences);
+  g.registerLazySingleton(() => AuthorizationInterceptor());
+  g.registerLazySingleton(() => HttpClientWithInterceptor.build(interceptors: [g()]));
 }
