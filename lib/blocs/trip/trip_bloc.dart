@@ -8,10 +8,9 @@ import 'package:sss_mobile/repositories/vehicle_repo.dart';
 class TripBloc extends Bloc<TripEvent, TripState> {
   final VehicleRepository vehicleRepository;
 
-  TripBloc({@required this.vehicleRepository}) : assert(vehicleRepository != null);
-
-  @override
-  TripState get initialState => TripUndefined();
+  TripBloc({@required this.vehicleRepository})
+      : assert(vehicleRepository != null),
+        super(TripUndefined());
 
   @override
   Stream<TripState> mapEventToState(TripEvent event) async* {

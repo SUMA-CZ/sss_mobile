@@ -7,10 +7,9 @@ import 'package:sss_mobile/repositories/vehicle_repo.dart';
 class VehicleDetailBloc extends Bloc<VehicleDetailEvent, VehicleDetailState> {
   final VehicleRepository vehicleRepository;
 
-  VehicleDetailBloc({@required this.vehicleRepository}) : assert(vehicleRepository != null);
-
-  @override
-  VehicleDetailState get initialState => VehicleDetailLoading();
+  VehicleDetailBloc({@required this.vehicleRepository})
+      : assert(vehicleRepository != null),
+        super(VehicleDetailLoading());
 
   @override
   Stream<VehicleDetailState> mapEventToState(VehicleDetailEvent event) async* {

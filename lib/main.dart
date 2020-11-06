@@ -1,4 +1,3 @@
-import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
@@ -14,37 +13,14 @@ import 'blocs/login/login_page.dart';
 import 'blocs/vehicle_list/vehicle_list_bloc.dart';
 import 'blocs/vehicle_list/vehicle_list_page.dart';
 
-class SimpleBlocDelegate extends BlocDelegate {
-  @override
-  void onEvent(Bloc bloc, Object event) {
-    print(event);
-    super.onEvent(bloc, event);
-  }
-
-  @override
-  void onTransition(Bloc bloc, Transition transition) {
-    print(transition);
-    super.onTransition(bloc, transition);
-  }
-
-  @override
-  void onError(Bloc bloc, Object error, StackTrace stackTrace) {
-    print(error);
-    super.onError(bloc, error, stackTrace);
-  }
-}
-
 void main() {
-  BlocSupervisor.delegate = SimpleBlocDelegate();
   final userRepository = UserRepository();
   final vehicleRepository = VehicleRepository(vehicleAPI: VehicleAPI());
-
 
   runApp(
     BlocProvider<AuthenticationBloc>(
       create: (context) {
-        return AuthenticationBloc(userRepository: userRepository)
-          ..add(AppStarted());
+        return AuthenticationBloc(userRepository: userRepository)..add(AppStarted());
       },
       child: App(userRepository: userRepository, vehicleRepository: vehicleRepository),
     ),
@@ -63,7 +39,9 @@ class App extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            return BlocProvider(create: (context) => VehicleListBloc(vehicleRepository: vehicleRepository), child: Vehicles());
+            return BlocProvider(
+                create: (context) => VehicleListBloc(vehicleRepository: vehicleRepository),
+                child: Vehicles());
           }
           if (state is AuthenticationUnauthenticated) {
             return LoginPage(userRepository: userRepository);
