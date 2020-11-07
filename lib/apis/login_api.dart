@@ -1,15 +1,15 @@
 import 'dart:convert';
 
 import 'package:http/http.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_credentitials_model.dart';
 import 'package:sss_mobile/models/token.dart';
-import 'package:sss_mobile/models/user_creds.dart';
 
 import '../clean_architecture/core/env.dart';
 
 class LoginAPI {
   Client client = Client();
 
-  Future<Token> login(UserCreds creds) async {
+  Future<Token> login(EUserCredentialsModel creds) async {
     var token = Token();
     try {
       final response =

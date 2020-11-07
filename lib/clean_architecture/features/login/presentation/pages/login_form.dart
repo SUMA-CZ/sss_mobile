@@ -1,7 +1,8 @@
 // home_material.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import './login.dart';
+
+import '../bloc/login.dart';
 
 class LoginForm extends StatefulWidget {
   @override
@@ -51,7 +52,9 @@ class LoginFormState extends State<LoginForm> {
                     decoration: InputDecoration(labelText: 'Přihlašovací email'),
                     controller: _usernameController,
                     validator: (value) {
-                      if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(value)) {
+                      if (!RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                          .hasMatch(value)) {
                         return 'Neplatný email';
                       }
                       return null;
@@ -73,7 +76,8 @@ class LoginFormState extends State<LoginForm> {
                         state is! LoginLoading ? _onLoginButtonPressed() : null;
                       }
                     },
-                    child: state is LoginLoading ? CircularProgressIndicator() : Text('Přihlásit se'),
+                    child:
+                        state is LoginLoading ? CircularProgressIndicator() : Text('Přihlásit se'),
                   ),
                 ],
               ),

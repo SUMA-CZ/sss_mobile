@@ -8,11 +8,11 @@ import 'package:sss_mobile/repositories/vehicle_repo.dart';
 import 'package:sss_mobile/screens/loading_indicator.dart';
 import 'package:sss_mobile/screens/splash_screen.dart';
 
-import 'blocs/login/login_page.dart';
 import 'clean_architecture/core/authorization/auth_bloc.dart';
 import 'clean_architecture/core/authorization/auth_events.dart';
 import 'clean_architecture/core/authorization/auth_state.dart';
 import 'clean_architecture/core/bloc/log_bloc_observer.dart';
+import 'clean_architecture/features/login/presentation/pages/login_page.dart';
 import 'injection_container.dart' as di;
 
 void main() async {

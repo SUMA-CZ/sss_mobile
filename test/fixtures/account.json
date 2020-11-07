@@ -1,0 +1,6 @@
+{
+  "Authorization": "Bearer",
+  "AccessToken": "secret-token",
+  "ExpiresUtc": "2020-12-08T19:14:34+00:00",
+  "IssuedUtc": "2020-11-07T19:14:34+00:00"
+}

@@ -1,8 +1,8 @@
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/apis/login_api.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_credentitials_model.dart';
 import 'package:sss_mobile/models/token.dart';
-import 'package:sss_mobile/models/user_creds.dart';
 
 class UserRepository {
   static const KEY = 'TOKEN';
@@ -11,7 +11,8 @@ class UserRepository {
     @required String username,
     @required String password,
   }) async {
-    Token token = await LoginAPI().login(UserCreds(username, password));
+    Token token =
+        await LoginAPI().login(EUserCredentialsModel(username: username, password: password));
     return token.accessToken;
   }
 
