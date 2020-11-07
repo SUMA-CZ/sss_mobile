@@ -20,15 +20,14 @@ void main() async {
   Bloc.observer = LogBlocObserver();
   await di.init();
 
-  final userRepository = UserRepository();
   final vehicleRepository = VehicleRepository(vehicleAPI: VehicleAPI());
 
   runApp(
     BlocProvider<AuthenticationBloc>(
       create: (context) {
-        return AuthenticationBloc(userRepository: userRepository)..add(AppStarted());
+        return AuthenticationBloc(userRepository: di.g())..add(AppStarted());
       },
-      child: App(userRepository: userRepository, vehicleRepository: vehicleRepository),
+      child: App(userRepository: di.g(), vehicleRepository: vehicleRepository),
     ),
   );
 }

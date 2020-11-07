@@ -6,12 +6,10 @@ import 'package:http_interceptor/interceptor_contract.dart';
 import 'package:http_interceptor/models/request_data.dart';
 import 'package:http_interceptor/models/response_data.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sss_mobile/clean_architecture/core/authorization/auth.dart';
 import 'package:sss_mobile/models/maintenance.dart';
 import 'package:sss_mobile/models/refueling.dart';
 import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
-import 'package:sss_mobile/repositories/user_repo.dart';
 
 import '../clean_architecture/core/env.dart';
 
@@ -25,7 +23,7 @@ class AuthInterceptor implements InterceptorContract {
         // TODO: fix me
         print("Navigate to login screen");
 
-        AuthenticationBloc(userRepository: UserRepository()).add(LoggedOut());
+        // AuthenticationBloc(userRepository: UserRepository()).add(LoggedOut());
       }
       data.headers["Authorization"] = "Bearer $token";
     } catch (e) {

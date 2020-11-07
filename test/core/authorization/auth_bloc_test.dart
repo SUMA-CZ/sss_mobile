@@ -54,7 +54,7 @@ void main() {
       final expected = [AuthenticationLoading(), AuthenticationAuthenticated()];
       expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
       // act
-      bloc.add(LoggedIn());
+      bloc.add(LoggedIn(token: 'null'));
       await untilCalled(mockUserRepository.persistToken(any)).timeout(Duration(seconds: 2));
       verify(mockUserRepository.persistToken(any));
     },
