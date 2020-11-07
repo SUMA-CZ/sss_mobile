@@ -12,10 +12,12 @@ import 'auth/auth_bloc.dart';
 import 'auth/auth_events.dart';
 import 'auth/auth_state.dart';
 import 'blocs/login/login_page.dart';
+import 'clean_architecture/core/bloc/log_bloc_observer.dart';
 import 'injection_container.dart' as di;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  Bloc.observer = LogBlocObserver();
   await di.init();
 
   final userRepository = UserRepository();
@@ -44,7 +46,8 @@ class App extends StatelessWidget {
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
             return BlocProvider(
-              create: (BuildContext context) => di.g<GetVehiclesBloc>(),
+              create: (BuildContext context) =>
+                  di.g<GetVehiclesBloc>()..add(GetVehiclesEventGetVehicles()),
               child: VehiclesPage(),
             );
             // return BlocProvider(create: () => ,) VehiclesPage();

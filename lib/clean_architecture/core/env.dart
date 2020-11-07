@@ -1,7 +1,7 @@
 const bool isProduction = bool.fromEnvironment('dart.vm.product');
 
 const testConfig = {
-  'baseUrl': 'https://sss.sumanet.cz/api',
+  'baseUrl': 'https://sss.suma.guru/api',
 };
 
 const productionConfig = {

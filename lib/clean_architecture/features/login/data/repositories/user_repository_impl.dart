@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/clean_architecture/core/error/failure.dart';
 import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 
-const SP_ACCESS_TOKEN = 'SP_ACCESS_TOKEN';
+const SP_ACCESS_TOKEN = 'TOKEN';
 
 class UserRepositoryImpl extends UserRepository {
   final SharedPreferences prefs;

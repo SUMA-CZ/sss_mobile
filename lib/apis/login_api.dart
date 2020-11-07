@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:sss_mobile/models/token.dart';
 import 'package:sss_mobile/models/user_creds.dart';
 
-import '../networking/env.dart';
+import '../clean_architecture/core/env.dart';
 
 class LoginAPI {
   Client client = Client();
@@ -12,8 +12,8 @@ class LoginAPI {
   Future<Token> login(UserCreds creds) async {
     var token = Token();
     try {
-      final response = await client.post(
-          "${environment['baseUrl']}/Account/Login", body: creds.toJson());
+      final response =
+          await client.post("${environment['baseUrl']}/Account/Login", body: creds.toJson());
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         token = Token.fromJson(json);

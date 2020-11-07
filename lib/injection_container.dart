@@ -34,7 +34,7 @@ Future<void> init() async {
 
   /// External
 
-  g.registerLazySingleton<InterceptorContract>(() => AuthorizationInterceptor());
+  g.registerLazySingleton<InterceptorContract>(() => AuthorizationInterceptor(userRepository: g()));
   g.registerLazySingleton<Client>(() => HttpClientWithInterceptor.build(interceptors: [g()]));
   final sharedPreferences = await SharedPreferences.getInstance();
   g.registerLazySingleton<SharedPreferences>(() => sharedPreferences);

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sss_mobile/auth/auth_bloc.dart';
 import 'package:sss_mobile/auth/auth_events.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_vehicle.dart';
@@ -9,7 +8,7 @@ import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/blo
 import '../../../../../string.dart';
 
 class VehiclesPage extends StatelessWidget {
-  RefreshController _refreshController = RefreshController(initialRefresh: true);
+  final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
 
   @override
   Widget build(BuildContext context) {
@@ -38,32 +37,22 @@ class VehiclesPage extends StatelessWidget {
           body: BlocBuilder<GetVehiclesBloc, GetVehiclesState>(
             builder: (context, state) {
               if (state is GetVehiclesStateLoaded) {
-                return SmartRefresher(
-                    enablePullDown: true,
-                    enablePullUp: true,
-                    header: WaterDropHeader(),
-                    controller: _refreshController,
-                    onRefresh: () => {
-                          BlocProvider.of<GetVehiclesBloc>(context)
-                              .add(GetVehiclesEventGetVehicles())
-                        },
-                    child: TabBarView(
-                      children: [
-                        new ListView.builder(
-                            padding: const EdgeInsets.all(16.0),
-                            itemCount:
-                                state.vehicles.where((v) => _companySPZ.contains(v.spz)).length,
-                            itemBuilder: (BuildContext context, int position) {
-                              return _buildCompanyVehicleRow(position, state.vehicles);
-                            }),
-                        new ListView.builder(
-                            padding: const EdgeInsets.all(16.0),
-                            itemCount: state.vehicles.length,
-                            itemBuilder: (BuildContext context, int position) {
-                              return _buildPersonalVehicleRow(position, state.vehicles);
-                            }),
-                      ],
-                    ));
+                return TabBarView(
+                  children: [
+                    new ListView.builder(
+                        padding: const EdgeInsets.all(16.0),
+                        itemCount: state.vehicles.where((v) => _companySPZ.contains(v.spz)).length,
+                        itemBuilder: (BuildContext context, int position) {
+                          return _buildCompanyVehicleRow(position, state.vehicles);
+                        }),
+                    new ListView.builder(
+                        padding: const EdgeInsets.all(16.0),
+                        itemCount: state.vehicles.length,
+                        itemBuilder: (BuildContext context, int position) {
+                          return _buildPersonalVehicleRow(position, state.vehicles);
+                        }),
+                  ],
+                );
               }
 
               if (state is GetVehiclesStateError) {
@@ -72,13 +61,11 @@ class VehiclesPage extends StatelessWidget {
                 );
               }
 
-              return CircularProgressIndicator();
+              return Center(child: CircularProgressIndicator());
             },
           )),
     );
   }
-
-  final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
 
   Widget _buildCompanyVehicleRow(int i, List<EVehicle> _vehicles) {
     var filtered = _vehicles.where((v) => _companySPZ.contains(v.spz)).toList();

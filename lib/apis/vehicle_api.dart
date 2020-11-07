@@ -13,7 +13,7 @@ import 'package:sss_mobile/models/trip.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/repositories/user_repo.dart';
 
-import '../networking/env.dart';
+import '../clean_architecture/core/env.dart';
 
 class AuthInterceptor implements InterceptorContract {
   @override
