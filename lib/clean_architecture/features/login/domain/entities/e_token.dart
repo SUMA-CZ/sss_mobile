@@ -1,11 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:meta/meta.dart';
 
 part 'e_token.g.dart';
 
 @JsonSerializable()
-class EToken extends Equatable{
-  EToken();
+class EToken extends Equatable {
+  EToken({@required this.accessToken});
 
   @JsonKey(name: 'AccessToken')
   String accessToken;
@@ -15,6 +16,5 @@ class EToken extends Equatable{
   Map<String, dynamic> toJson() => _$ETokenToJson(this);
 
   @override
-  // TODO: implement props
   List<Object> get props => [accessToken];
 }

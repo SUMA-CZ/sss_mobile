@@ -3,18 +3,25 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/clean_architecture/core/error/failure.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/models/e_token_model.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_credentitials_model.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
 import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 
+class MockAccountDataSource extends Mock implements AccountDataSource {}
+
 void main() {
   UserRepository repo;
   MockSharedPreferences mockSharedPreferences;
+  MockAccountDataSource mockAccountDataSource;
 
   setUp(() async {
     mockSharedPreferences = MockSharedPreferences();
-    repo = UserRepositoryImpl(prefs: mockSharedPreferences);
+    mockAccountDataSource = MockAccountDataSource();
+    repo = UserRepositoryImpl(prefs: mockSharedPreferences, dataSource: mockAccountDataSource);
   });
 
   final tToken = 'token';
@@ -84,4 +91,35 @@ void main() {
       expect(result, Left(SharedPreferencesFailure()));
     },
   );
+
+  test(
+    'should return token when authentication is 200',
+    () async {
+      // arrange
+      final tTokenModel = ETokenModel(token: 'secret-token');
+      final tCreds = EUserCredentialsModel(username: 'null', password: 'null');
+
+      when(mockAccountDataSource.authenticate(any)).thenAnswer((_) async => tTokenModel);
+      when(mockSharedPreferences.setString(SP_ACCESS_TOKEN, any)).thenAnswer((_) async => true);
+      // act
+      final result = await repo.authenticate(tCreds);
+      // assert
+      verify(mockSharedPreferences.setString(SP_ACCESS_TOKEN, tTokenModel.accessToken));
+      expect(result, Right(tTokenModel));
+    },
+  );
+
+  // test(
+  //   'should return failure when 401',
+  //   () async {
+  //     // arrange
+  //
+  //     when(mockSharedPreferences.setString(SP_ACCESS_TOKEN, any)).thenAnswer((_) async => false);
+  //     // act
+  //     final result = await repo.persistToken('token');
+  //     // assert
+  //     verify(mockSharedPreferences.remove(SP_ACCESS_TOKEN));
+  //     expect(result, Left(SharedPreferencesFailure()));
+  //   },
+  // );
 }

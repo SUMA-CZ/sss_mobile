@@ -4,6 +4,7 @@ import 'package:http_interceptor/http_client_with_interceptor.dart';
 import 'package:http_interceptor/http_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/clean_architecture/core/network/authorization_interceptor.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
 import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/datasources/vehicles_datasource.dart';
@@ -26,11 +27,13 @@ Future<void> init() async {
 
   /// Repository
   g.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: g()));
-  g.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(prefs: g()));
+  g.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(prefs: g(), dataSource: g()));
 
   /// Data sources
   g.registerLazySingleton<VehiclesRemoteDataSource>(
       () => VehiclesRemoteDataSourceImpl(client: g()));
+
+  g.registerLazySingleton<AccountDataSource>(() => AccountDataSourceImpl(client: g()));
 
   /// External
 

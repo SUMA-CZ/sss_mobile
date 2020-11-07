@@ -13,3 +13,5 @@ class ServerFailure extends Failure {
 }
 
 class SharedPreferencesFailure extends Failure {}
+
+class FailureAuthentication extends Failure {}
