@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:sss_mobile/apis/vehicle_api.dart';
-import 'package:sss_mobile/auth/auth_bloc.dart';
-import 'package:sss_mobile/auth/auth_events.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_bloc.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_events.dart';
 import 'package:sss_mobile/models/vehicle.dart';
 import 'package:sss_mobile/string.dart';
 

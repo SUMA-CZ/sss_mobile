@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sss_mobile/auth/auth_bloc.dart';
-import 'package:sss_mobile/auth/auth_events.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_bloc.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_events.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_vehicle.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 

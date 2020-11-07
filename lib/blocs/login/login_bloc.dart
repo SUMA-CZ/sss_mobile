@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sss_mobile/auth/auth.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth.dart';
 import 'package:sss_mobile/repositories/user_repo.dart';
 
 import 'login_events.dart';

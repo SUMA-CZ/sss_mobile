@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:sss_mobile/auth/auth_state.dart';
-import 'package:sss_mobile/repositories/user_repo.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_state.dart';
+import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 
 import 'auth_events.dart';
 
@@ -15,9 +15,7 @@ class AuthenticationBloc extends Bloc<AuthenticationEvent, AuthenticationState> 
   @override
   Stream<AuthenticationState> mapEventToState(AuthenticationEvent event) async* {
     if (event is AppStarted) {
-      final bool hasToken = await userRepository.hasToken();
-
-      if (hasToken) {
+      if (userRepository.hasToken()) {
         yield AuthenticationAuthenticated();
       } else {
         yield AuthenticationUnauthenticated();
