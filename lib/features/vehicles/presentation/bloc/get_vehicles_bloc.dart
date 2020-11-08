@@ -29,8 +29,8 @@ class GetVehiclesBloc extends Bloc<GetVehiclesEvent, GetVehiclesState> {
   }
 
   Stream<GetVehiclesState> _eitherLoadedOrErrorState(
-      Either<Failure, List<EVehicle>> failureOrTrivia) async* {
-    yield failureOrTrivia.fold(
+      Either<Failure, List<EVehicle>> failureOrVehicles) async* {
+    yield failureOrVehicles.fold(
       (failure) => GetVehiclesStateError(message: _mapFailureToMessage(failure)),
       (vehicles) => GetVehiclesStateLoaded(vehicles: vehicles),
     );

@@ -5,19 +5,19 @@ import 'package:meta/meta.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
 import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
-import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
+import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
 
 import 'login_events.dart';
 import 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  final UserRepository userRepository;
+  final Authenticate authenticate;
   final AuthenticationBloc authenticationBloc;
 
   LoginBloc({
-    @required this.userRepository,
+    @required this.authenticate,
     @required this.authenticationBloc,
-  })  : assert(userRepository != null),
+  })  : assert(authenticate != null),
         assert(authenticationBloc != null),
         super(LoginInitial());
 
@@ -27,11 +27,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        final either = await userRepository.authenticate(
+        final either = await authenticate(
             EUserCredentialsModel(username: event.username, password: event.password));
 
         yield either.fold((l) {
-          return LoginFailure(error: 'null');
+          return LoginFailure(error: 'Authentication Failed');
         }, (r) {
           authenticationBloc.add(LoggedIn(token: r.accessToken));
           return LoginInitial();

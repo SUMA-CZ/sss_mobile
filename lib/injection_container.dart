@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
+import 'package:sss_mobile/features/login/presentation/bloc/login.dart';
 
 import 'core/authorization/auth_bloc.dart';
 import 'features/login/data/datasources/account_datasource.dart';
@@ -15,35 +16,20 @@ import 'features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
 final sl = GetIt.instance;
 
-class SCMInterceptor extends Interceptor {
-  UserRepository repo;
-
-  SCMInterceptor({@required this.repo});
-
-  @override
-  Future onRequest(RequestOptions options) async {
-    repo.accessToken().fold((l) {
-      print('No Token');
-    }, (r) {
-      options.headers["Authorization"] = 'Bearer $r';
-    });
-
-    return options;
-  }
-}
-
 Future<void> init() async {
   /// Features - Vehicles
   /// Bloc
   /// Always new instance on a call -- factory
   sl.registerFactory(() => GetVehiclesBloc(getVehicles: sl()));
+  sl.registerFactory(() => LoginBloc(authenticate: sl(), authenticationBloc: sl()));
 
   /// Auth
-  sl.registerFactory(() => AuthenticationBloc(userRepository: sl()));
+  sl.registerLazySingleton(() => AuthenticationBloc(userRepository: sl()));
 
   /// Features
   /// Usecases -- can be singleton, no streams can stay in memory
   sl.registerLazySingleton(() => GetVehicles(sl()));
+  sl.registerLazySingleton(() => Authenticate(sl()));
 
   /// Repository
   sl.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: sl()));
