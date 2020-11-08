@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
@@ -11,25 +11,45 @@ import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_
 
 import '../../../../fixtures/fixture_reader.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
+class MockHttpClient extends Mock implements Dio {}
+
+class DioAdapterMock extends Mock implements HttpClientAdapter {}
+
+const dioHttpHeadersForResponseBody = {
+  Headers.contentTypeHeader: [Headers.jsonContentType],
+};
 
 void main() {
+  final Dio dio = Dio();
   AccountDataSourceImpl dataSource;
-  MockHttpClient mockHttpClient;
+  DioAdapterMock dioAdapterMock;
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    dataSource = AccountDataSourceImpl(client: mockHttpClient);
+    dioAdapterMock = DioAdapterMock();
+    dio.httpClientAdapter = dioAdapterMock;
+    dataSource = AccountDataSourceImpl(client: dio);
   });
 
   void setUpMockHttpClientSuccess200ForLogin() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('account.json'), 200));
+    final responsePayload = json.encode(fixture('account.json'));
+    final httpResponse = ResponseBody.fromString(
+      responsePayload,
+      200,
+      headers: dioHttpHeadersForResponseBody,
+    );
+
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
   void setUpMockHttpClientFailedForLogin() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('account400.json'), 400));
+    final responsePayload = json.encode(fixture('account400.json'));
+    final httpResponse = ResponseBody.fromString(
+      responsePayload,
+      400,
+      headers: dioHttpHeadersForResponseBody,
+    );
+
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
   group('login', () {
@@ -41,18 +61,7 @@ void main() {
         // arrange
         setUpMockHttpClientSuccess200ForLogin();
         // act
-        dataSource.authenticate(creds);
-        // assert
-        verify(mockHttpClient.post('https://sss.suma.guru/api/Account/Login'));
-      },
-    );
 
-    test(
-      'should return Token when the response code is 200 (success)',
-      () async {
-        // arrange
-        setUpMockHttpClientSuccess200ForLogin();
-        // act
         final result = await dataSource.authenticate(creds);
         // assert
         expect(result, equals(token));

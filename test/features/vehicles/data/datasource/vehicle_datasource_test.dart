@@ -1,7 +1,7 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:http/http.dart' as http;
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
@@ -13,7 +13,7 @@ import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehi
 
 import '../../../../fixtures/fixture_reader.dart';
 
-class MockHttpClient extends Mock implements http.Client {}
+class MockHttpClient extends Mock implements Dio {}
 
 void main() {
   VehiclesRemoteDataSourceImpl dataSource;
@@ -25,28 +25,28 @@ void main() {
   });
 
   void setUpMockHttpClientSuccess200ForVehicles() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('vehicles.json'), 200));
+    when(mockHttpClient.get(any))
+        .thenAnswer((_) async => Response(data: fixture('vehicles.json'), statusCode: 200));
   }
 
   void setUpMockHttpClientSuccess200ForTrips() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('trips.json'), 200));
+    when(mockHttpClient.get(any))
+        .thenAnswer((_) async => Response(data: fixture('trips.json'), statusCode: 200));
   }
 
   void setUpMockHttpClientSuccess200ForRefueling() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('refuelings.json'), 200));
+    when(mockHttpClient.get(any))
+        .thenAnswer((_) async => Response(data: fixture('refuelings.json'), statusCode: 200));
   }
 
   void setUpMockHttpClientSuccess200ForMaintenances() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response(fixture('maintenances.json'), 200));
+    when(mockHttpClient.get(any))
+        .thenAnswer((_) async => Response(data: fixture('maintenances.json'), statusCode: 200));
   }
 
   void setUpMockHttpClientFailure404() {
-    when(mockHttpClient.get(any, headers: anyNamed('headers')))
-        .thenAnswer((_) async => http.Response('Something went wrong', 404));
+    when(mockHttpClient.get(any))
+        .thenAnswer((_) async => Response(data: 'Something went wrong', statusCode: 404));
   }
 
   group('getVehicles', () {

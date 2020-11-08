@@ -1,5 +1,5 @@
+import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
@@ -39,11 +39,18 @@ Future<void> init() async {
 
   /// External
 
-  // sl.registerLazySingleton<InterceptorContract>(
-  //     () => AuthorizationInterceptor(userRepository: sl()));
+  // sl.registerSingleton<InterceptorContract>(AuthorizationInterceptor(userRepository: sl()));
+
   // sl.registerLazySingleton<http.Client>(
   //     () => HttpClientWithInterceptor.build(interceptors: [sl()]));
-  sl.registerLazySingleton(() => http.Client());
+
+  // Client client = HttpClientWithInterceptor.build(interceptors: [sl()]);
+
+  // sl.registerLazySingleton<HttpClientWithInterceptor>(() => client);
+
+  Dio dio = new Dio();
+
+  // sl.registerLazySingleton(() => Client());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }

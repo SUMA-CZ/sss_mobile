@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart';
 import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_maintenance_model.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_refueling_model.dart';
@@ -18,7 +18,7 @@ abstract class VehiclesRemoteDataSource {
 }
 
 class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
-  final http.Client client;
+  final Dio client;
 
   VehiclesRemoteDataSourceImpl({this.client});
 
@@ -42,7 +42,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     List<VehicleModel> vehicles = <VehicleModel>[];
     final response = await client.get(url);
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
+      final json = jsonDecode(response.data);
       for (var j in json) {
         vehicles.add(VehicleModel.fromJson(j));
       }
@@ -57,7 +57,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     List<ERefuelingModel> refuelings = <ERefuelingModel>[];
     final response = await client.get(url);
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
+      final json = jsonDecode(response.data);
       for (var j in json) {
         refuelings.add(ERefuelingModel.fromJson(j));
       }
@@ -72,7 +72,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     List<ETripModel> trips = <ETripModel>[];
     final response = await client.get(url);
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
+      final json = jsonDecode(response.data);
       for (var j in json) {
         trips.add(ETripModel.fromJson(j));
       }
@@ -87,7 +87,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     List<EMaintenanceModel> maintenances = <EMaintenanceModel>[];
     final response = await client.get(url);
     if (response.statusCode == 200) {
-      final json = jsonDecode(response.body);
+      final json = jsonDecode(response.data);
       for (var j in json) {
         maintenances.add(EMaintenanceModel.fromJson(j));
       }

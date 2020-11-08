@@ -23,7 +23,7 @@ void main() {
   });
 
   test('Initial State should be loading', () {
-    expect(bloc.state, equals(GetVehiclesStateLoading()));
+    expect(bloc.state, equals(GetVehiclesInitial()));
   });
 
   group('getVehicles', () {
