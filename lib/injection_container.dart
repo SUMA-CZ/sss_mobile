@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
@@ -13,6 +14,26 @@ import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/blo
 import 'clean_architecture/core/authorization/auth_bloc.dart';
 
 final sl = GetIt.instance;
+
+class SCMInterceptor extends Interceptor {
+  UserRepository repo;
+
+  SCMInterceptor({@required this.repo});
+
+  @override
+  Future onRequest(RequestOptions options) async {
+    final prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString(SP_ACCESS_TOKEN);
+
+    repo.accessToken().fold((l) {
+      print('No Token');
+    }, (r) {
+      options.headers["Authorization"] = 'Bearer $r';
+    });
+
+    return options;
+  }
+}
 
 Future<void> init() async {
   /// Features - Vehicles
@@ -38,19 +59,7 @@ Future<void> init() async {
   sl.registerLazySingleton<AccountDataSource>(() => AccountDataSourceImpl(client: sl()));
 
   /// External
-
-  // sl.registerSingleton<InterceptorContract>(AuthorizationInterceptor(userRepository: sl()));
-
-  // sl.registerLazySingleton<http.Client>(
-  //     () => HttpClientWithInterceptor.build(interceptors: [sl()]));
-
-  // Client client = HttpClientWithInterceptor.build(interceptors: [sl()]);
-
-  // sl.registerLazySingleton<HttpClientWithInterceptor>(() => client);
-
-  Dio dio = new Dio();
-
-  // sl.registerLazySingleton(() => Client());
   final sharedPreferences = await SharedPreferences.getInstance();
   sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  sl.registerLazySingleton(() => Dio());
 }

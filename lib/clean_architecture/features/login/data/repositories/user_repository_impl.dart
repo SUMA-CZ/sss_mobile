@@ -18,8 +18,9 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Either<Failure, String> accessToken() {
+    print(prefs.hashCode);
     String token = prefs.getString(SP_ACCESS_TOKEN);
-    if (token != null && token != "") {
+    if (token != null) {
       return Right(token);
     } else {
       return Left(SharedPreferencesFailure());
@@ -44,7 +45,10 @@ class UserRepositoryImpl extends UserRepository {
   @override
   Future<Either<Failure, String>> persistToken(String token) async {
     try {
-      if (await prefs.setString(SP_ACCESS_TOKEN, token)) {
+      final saved = await prefs.setString(SP_ACCESS_TOKEN, token);
+
+      assert(accessToken().isRight());
+      if (saved) {
         return Right(token);
       } else {
         return Left(SharedPreferencesFailure());

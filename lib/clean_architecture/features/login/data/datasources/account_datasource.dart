@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -24,9 +23,7 @@ class AccountDataSourceImpl implements AccountDataSource {
   Future<ETokenModel> _authenticate(String url, Map<String, dynamic> payload) async {
     try {
       final response = await client.post(url, data: payload);
-      if (response.statusCode == 200) {
-        return ETokenModel.fromJson(jsonDecode(response.data));
-      }
+      return ETokenModel.fromJson(response.data);
     } catch (e) {
       throw ServerException();
     }

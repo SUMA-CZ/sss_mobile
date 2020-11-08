@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
@@ -45,5 +46,6 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   Bloc.observer = LogBlocObserver();
+  di.sl<Dio>().interceptors.add(di.SCMInterceptor(repo: di.sl<UserRepository>()));
   runApp(SCMApp());
 }

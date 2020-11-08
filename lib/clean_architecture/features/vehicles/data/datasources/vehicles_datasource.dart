@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:dio/dio.dart';
 import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_maintenance_model.dart';
@@ -39,62 +37,55 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
       _getTripsForVehicleID('https://sss.suma.guru/api/vehicles/${vehicleID}/trips');
 
   Future<List<VehicleModel>> _getVehiclesFromURL(String url) async {
-    List<VehicleModel> vehicles = <VehicleModel>[];
-    final response = await client.get(url);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.data);
-      for (var j in json) {
+    try {
+      List<VehicleModel> vehicles = <VehicleModel>[];
+      final response = await client.get(url);
+      for (var j in response.data) {
         vehicles.add(VehicleModel.fromJson(j));
       }
-    } else {
+      return vehicles;
+    } catch (e) {
       throw ServerException();
     }
-
-    return vehicles;
   }
 
   Future<List<ERefuelingModel>> _getRefuelingsForVehicleID(String url) async {
-    List<ERefuelingModel> refuelings = <ERefuelingModel>[];
-    final response = await client.get(url);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.data);
-      for (var j in json) {
+    try {
+      List<ERefuelingModel> refuelings = <ERefuelingModel>[];
+      final response = await client.get(url);
+      for (var j in response.data) {
         refuelings.add(ERefuelingModel.fromJson(j));
       }
-    } else {
+      return refuelings;
+    } catch (e) {
       throw ServerException();
     }
-
-    return refuelings;
   }
 
   Future<List<ETripModel>> _getTripsForVehicleID(String url) async {
-    List<ETripModel> trips = <ETripModel>[];
-    final response = await client.get(url);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.data);
-      for (var j in json) {
+    try {
+      List<ETripModel> trips = <ETripModel>[];
+      final response = await client.get(url);
+
+      for (var j in response.data) {
         trips.add(ETripModel.fromJson(j));
       }
-    } else {
+      return trips;
+    } catch (e) {
       throw ServerException();
     }
-
-    return trips;
   }
 
   Future<List<EMaintenanceModel>> _getMaintenancesForVehicleID(String url) async {
-    List<EMaintenanceModel> maintenances = <EMaintenanceModel>[];
-    final response = await client.get(url);
-    if (response.statusCode == 200) {
-      final json = jsonDecode(response.data);
-      for (var j in json) {
+    try {
+      List<EMaintenanceModel> maintenances = <EMaintenanceModel>[];
+      final response = await client.get(url);
+      for (var j in response.data) {
         maintenances.add(EMaintenanceModel.fromJson(j));
       }
-    } else {
+      return maintenances;
+    } catch (e) {
       throw ServerException();
     }
-
-    return maintenances;
   }
 }

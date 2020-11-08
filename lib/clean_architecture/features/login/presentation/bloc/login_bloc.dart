@@ -32,7 +32,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield either.fold((l) {
           return LoginFailure(error: 'null');
         }, (r) {
-          authenticationBloc.add(LoggedIn(token: ''));
+          authenticationBloc.add(LoggedIn(token: r.accessToken));
           return LoginInitial();
         });
       } catch (error) {

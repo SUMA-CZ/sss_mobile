@@ -109,17 +109,20 @@ void main() {
     },
   );
 
-  // test(
-  //   'should return failure when 401',
-  //   () async {
-  //     // arrange
-  //
-  //     when(mockSharedPreferences.setString(SP_ACCESS_TOKEN, any)).thenAnswer((_) async => false);
-  //     // act
-  //     final result = await repo.persistToken('token');
-  //     // assert
-  //     verify(mockSharedPreferences.remove(SP_ACCESS_TOKEN));
-  //     expect(result, Left(SharedPreferencesFailure()));
-  //   },
-  // );
+  test(
+    'should return saved',
+    () async {
+      // arrange
+
+      when(mockSharedPreferences.setString(SP_ACCESS_TOKEN, 'token')).thenAnswer((_) async => true);
+      when(mockSharedPreferences.getString(SP_ACCESS_TOKEN)).thenReturn('token');
+      // act
+      await repo.persistToken('token');
+      repo.accessToken().fold((l) {
+        expect(true, false);
+      }, (r) {
+        expect(r, 'token');
+      });
+    },
+  );
 }
