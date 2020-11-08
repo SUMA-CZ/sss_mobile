@@ -67,7 +67,7 @@ void main() {
   );
 
   test(
-    'should return Failure when there is not a cached value',
+    'should touch setString when persisting token',
     () async {
       // arrange
       when(mockSharedPreferences.setString(SP_ACCESS_TOKEN, any)).thenAnswer((_) async => true);

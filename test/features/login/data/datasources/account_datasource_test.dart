@@ -11,8 +11,6 @@ import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_
 
 import '../../../../fixtures/fixture_reader.dart';
 
-class MockHttpClient extends Mock implements Dio {}
-
 class DioAdapterMock extends Mock implements HttpClientAdapter {}
 
 const dioHttpHeadersForResponseBody = {
@@ -31,7 +29,7 @@ void main() {
   });
 
   void setUpMockHttpClientSuccess200ForLogin() {
-    final responsePayload = json.encode(fixture('account.json'));
+    final responsePayload = fixture('account.json');
     final httpResponse = ResponseBody.fromString(
       responsePayload,
       200,
@@ -42,7 +40,7 @@ void main() {
   }
 
   void setUpMockHttpClientFailedForLogin() {
-    final responsePayload = json.encode(fixture('account400.json'));
+    final responsePayload = fixture('account400.json');
     final httpResponse = ResponseBody.fromString(
       responsePayload,
       400,

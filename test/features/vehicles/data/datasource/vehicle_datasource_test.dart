@@ -13,40 +13,59 @@ import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehi
 
 import '../../../../fixtures/fixture_reader.dart';
 
-class MockHttpClient extends Mock implements Dio {}
+class DioAdapterMock extends Mock implements HttpClientAdapter {}
+
+const dioHttpHeadersForResponseBody = {
+  Headers.contentTypeHeader: [Headers.jsonContentType],
+};
 
 void main() {
+  final Dio dio = Dio();
   VehiclesRemoteDataSourceImpl dataSource;
-  MockHttpClient mockHttpClient;
+  DioAdapterMock dioAdapterMock;
 
   setUp(() {
-    mockHttpClient = MockHttpClient();
-    dataSource = VehiclesRemoteDataSourceImpl(client: mockHttpClient);
+    dioAdapterMock = DioAdapterMock();
+    dio.httpClientAdapter = dioAdapterMock;
+    dataSource = VehiclesRemoteDataSourceImpl(client: dio);
   });
 
-  void setUpMockHttpClientSuccess200ForVehicles() {
-    when(mockHttpClient.get(any))
-        .thenAnswer((_) async => Response(data: fixture('vehicles.json'), statusCode: 200));
+  void _setHTTP200WithJsonFile(String filename) {
+    final responsePayload = fixture(filename);
+    final httpResponse = ResponseBody.fromString(
+      responsePayload,
+      200,
+      headers: dioHttpHeadersForResponseBody,
+    );
+
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
-  void setUpMockHttpClientSuccess200ForTrips() {
-    when(mockHttpClient.get(any))
-        .thenAnswer((_) async => Response(data: fixture('trips.json'), statusCode: 200));
+  void setHTTP200Vehicles() {
+    _setHTTP200WithJsonFile('vehicles.json');
   }
 
-  void setUpMockHttpClientSuccess200ForRefueling() {
-    when(mockHttpClient.get(any))
-        .thenAnswer((_) async => Response(data: fixture('refuelings.json'), statusCode: 200));
+  void setHTTP200Trips() {
+    _setHTTP200WithJsonFile('trips.json');
   }
 
-  void setUpMockHttpClientSuccess200ForMaintenances() {
-    when(mockHttpClient.get(any))
-        .thenAnswer((_) async => Response(data: fixture('maintenances.json'), statusCode: 200));
+  void setHTTP200Refueling() {
+    _setHTTP200WithJsonFile('refuelings.json');
   }
 
-  void setUpMockHttpClientFailure404() {
-    when(mockHttpClient.get(any))
-        .thenAnswer((_) async => Response(data: 'Something went wrong', statusCode: 404));
+  void setHTTP200Maintenances() {
+    _setHTTP200WithJsonFile('maintenances.json');
+  }
+
+  void setHTTP400() {
+    final responsePayload = json.encode({'error': 'error'});
+    final httpResponse = ResponseBody.fromString(
+      responsePayload,
+      400,
+      headers: dioHttpHeadersForResponseBody,
+    );
+
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
   group('getVehicles', () {
@@ -59,11 +78,11 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForVehicles();
+        setHTTP200Vehicles();
         // act
         dataSource.getVehicles();
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles'));
+        // verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles'));
       },
     );
 
@@ -71,7 +90,7 @@ void main() {
       'should return List<Vehicles> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForVehicles();
+        setHTTP200Vehicles();
         // act
         final result = await dataSource.getVehicles();
         // assert
@@ -83,7 +102,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setUpMockHttpClientFailure404();
+        setHTTP400();
         // act
         final call = dataSource.getVehicles;
         // assert
@@ -104,11 +123,11 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForTrips();
+        setHTTP200Trips();
         // act
         dataSource.getTripsForVehicleID(vehicleID);
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/trips'));
+        // verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/trips'));
       },
     );
 
@@ -116,7 +135,7 @@ void main() {
       'should return List<TripModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForTrips();
+        setHTTP200Trips();
         // act
         final result = await dataSource.getTripsForVehicleID(vehicleID);
         // assert
@@ -128,7 +147,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setUpMockHttpClientFailure404();
+        setHTTP400();
         // act
         final call = dataSource.getTripsForVehicleID;
         // assert
@@ -149,11 +168,11 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForRefueling();
+        setHTTP200Refueling();
         // act
         dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/refuelings'));
+        // verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/refuelings'));
       },
     );
 
@@ -161,7 +180,7 @@ void main() {
       'should return List<RefuelingModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForRefueling();
+        setHTTP200Refueling();
         // act
         final result = await dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
@@ -173,7 +192,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setUpMockHttpClientFailure404();
+        setHTTP400();
         // act
         final call = dataSource.getRefuelingsForVehicleID;
         // assert
@@ -194,11 +213,11 @@ void main() {
       '''should perform a GET request on a URL /vehicles/{id}/trips''',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForMaintenances();
+        setHTTP200Maintenances();
         // act
         dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/maintenances'));
+        // verify(dioAdapterMock.fetch('https://sss.suma.guru/api/vehicles/${vehicleID}/maintenances'));
       },
     );
 
@@ -206,7 +225,7 @@ void main() {
       'should return List<MaintenanceModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setUpMockHttpClientSuccess200ForMaintenances();
+        setHTTP200Maintenances();
         // act
         final result = await dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert
@@ -218,7 +237,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setUpMockHttpClientFailure404();
+        setHTTP400();
         // act
         final call = dataSource.getMaintenancesForVehicleID;
         // assert
