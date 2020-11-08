@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehicle_model.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -20,7 +20,7 @@ void main() {
 
   test(
     'should be a subclass of Vehicle entity',
-        () async {
+    () async {
       // assert
       expect(tVehicleModel, isA<EVehicle>());
     },
@@ -29,7 +29,7 @@ void main() {
   group('fromJson', () {
     test(
       'should return a valid model when the JSON number is an integer',
-          () async {
+      () async {
         // arrange
         final Map<String, dynamic> jsonMap = json.decode(fixture('vehicle.json'));
         // act
@@ -43,7 +43,7 @@ void main() {
   group('toJson', () {
     test(
       'should return a JSON map containing the proper data',
-          () async {
+      () async {
         // act
         final result = tVehicleModel.toJson();
         // assert
@@ -66,7 +66,7 @@ void main() {
   group('toJson and fromJson', () {
     test(
       'should return a JSON map containing the proper data',
-          () async {
+      () async {
         // arrange
         final Map<String, dynamic> jsonMap = json.decode(fixture('vehicle.json'));
 

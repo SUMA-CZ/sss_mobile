@@ -3,11 +3,11 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/clean_architecture/core/error/failure.dart';
-import 'package:sss_mobile/clean_architecture/core/usecases/usecase.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehicle_model.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/usecases/get_vehicles.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'package:sss_mobile/core/error/failure.dart';
+import 'package:sss_mobile/core/usecases/usecase.dart';
+import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
+import 'package:sss_mobile/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 

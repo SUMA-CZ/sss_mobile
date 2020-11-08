@@ -1,7 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/clean_architecture/core/authorization/auth.dart';
-import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
+import 'package:sss_mobile/core/authorization/auth_bloc.dart';
+import 'package:sss_mobile/core/authorization/auth_events.dart';
+import 'package:sss_mobile/core/authorization/auth_state.dart';
+import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 
 class MockUserRepository extends Mock implements UserRepository {}
 

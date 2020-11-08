@@ -2,16 +2,16 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
-import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/datasources/vehicles_datasource.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/repositories/vehicle_repository_impl.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/repositories/vehicle_repository.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/usecases/get_vehicles.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
-import 'clean_architecture/core/authorization/auth_bloc.dart';
+import 'core/authorization/auth_bloc.dart';
+import 'features/login/data/datasources/account_datasource.dart';
+import 'features/login/data/repositories/user_repository_impl.dart';
+import 'features/login/domain/repositories/user_repository.dart';
+import 'features/vehicles/data/datasources/vehicles_datasource.dart';
+import 'features/vehicles/data/repositories/vehicle_repository_impl.dart';
+import 'features/vehicles/domain/repositories/vehicle_repository.dart';
+import 'features/vehicles/domain/usecases/get_vehicles.dart';
+import 'features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -22,9 +22,6 @@ class SCMInterceptor extends Interceptor {
 
   @override
   Future onRequest(RequestOptions options) async {
-    final prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString(SP_ACCESS_TOKEN);
-
     repo.accessToken().fold((l) {
       print('No Token');
     }, (r) {

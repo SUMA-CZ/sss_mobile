@@ -2,15 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/A_old_bloc/screens/splash_screen.dart';
-import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
-import 'package:sss_mobile/clean_architecture/features/login/presentation/pages/login_page.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/pages/vehicles_page.dart';
 
-import 'clean_architecture/core/authorization/auth_bloc.dart';
-import 'clean_architecture/core/authorization/auth_events.dart';
-import 'clean_architecture/core/authorization/auth_state.dart';
-import 'clean_architecture/core/bloc/log_bloc_observer.dart';
-import 'clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'core/authorization/auth_bloc.dart';
+import 'core/authorization/auth_events.dart';
+import 'core/authorization/auth_state.dart';
+import 'core/bloc/log_bloc_observer.dart';
+import 'features/login/domain/repositories/user_repository.dart';
+import 'features/login/presentation/pages/login_page.dart';
+import 'features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'features/vehicles/presentation/pages/vehicles_page.dart';
 import 'injection_container.dart' as di;
 
 class SCMApp extends StatelessWidget {

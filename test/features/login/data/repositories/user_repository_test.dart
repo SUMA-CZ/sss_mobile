@@ -2,12 +2,12 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sss_mobile/clean_architecture/core/error/failure.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/models/e_token_model.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_credentitials_model.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
-import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
+import 'package:sss_mobile/core/error/failure.dart';
+import 'package:sss_mobile/features/login/data/datasources/account_datasource.dart';
+import 'package:sss_mobile/features/login/data/models/e_token_model.dart';
+import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/data/repositories/user_repository_impl.dart';
+import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 
 class MockSharedPreferences extends Mock implements SharedPreferences {}
 

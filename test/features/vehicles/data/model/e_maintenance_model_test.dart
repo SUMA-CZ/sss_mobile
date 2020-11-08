@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_maintenance_model.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_maintenance.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_user.dart';
+import 'package:sss_mobile/features/vehicles/data/models/e_maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/e_maintenance.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/e_user.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 

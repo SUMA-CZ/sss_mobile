@@ -4,12 +4,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/datasources/vehicles_datasource.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_maintenance_model.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_refueling_model.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/e_trip_model.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/data/models/vehicle_model.dart';
+import 'package:sss_mobile/core/error/exception.dart';
+import 'package:sss_mobile/features/vehicles/data/datasources/vehicles_datasource.dart';
+import 'package:sss_mobile/features/vehicles/data/models/e_maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/e_refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/e_trip_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 

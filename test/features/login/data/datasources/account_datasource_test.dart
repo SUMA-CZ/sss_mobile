@@ -4,10 +4,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/clean_architecture/core/error/exception.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/models/e_token_model.dart';
-import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/core/error/exception.dart';
+import 'package:sss_mobile/features/login/data/datasources/account_datasource.dart';
+import 'package:sss_mobile/features/login/data/models/e_token_model.dart';
+import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 

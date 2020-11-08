@@ -1,10 +1,10 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/clean_architecture/core/usecases/usecase.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_vehicle.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/repositories/vehicle_repository.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/domain/usecases/get_vehicles.dart';
+import 'package:sss_mobile/core/usecases/usecase.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
 
 class MockVehicleRepository extends Mock implements VehicleRepository {}
 
