@@ -1,9 +1,6 @@
 import 'package:get_it/get_it.dart';
-import 'package:http/http.dart';
-import 'package:http_interceptor/http_client_with_interceptor.dart';
-import 'package:http_interceptor/http_interceptor.dart';
+import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:sss_mobile/clean_architecture/core/network/authorization_interceptor.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/datasources/account_datasource.dart';
 import 'package:sss_mobile/clean_architecture/features/login/data/repositories/user_repository_impl.dart';
 import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
@@ -13,32 +10,40 @@ import 'package:sss_mobile/clean_architecture/features/vehicles/domain/repositor
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/usecases/get_vehicles.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
-final g = GetIt.instance;
+import 'clean_architecture/core/authorization/auth_bloc.dart';
+
+final sl = GetIt.instance;
 
 Future<void> init() async {
   /// Features - Vehicles
   /// Bloc
   /// Always new instance on a call -- factory
-  g.registerFactory(() => GetVehiclesBloc(getVehicles: g()));
+  sl.registerFactory(() => GetVehiclesBloc(getVehicles: sl()));
+
+  /// Auth
+  sl.registerFactory(() => AuthenticationBloc(userRepository: sl()));
 
   /// Features
   /// Usecases -- can be singleton, no streams can stay in memory
-  g.registerLazySingleton(() => GetVehicles(g()));
+  sl.registerLazySingleton(() => GetVehicles(sl()));
 
   /// Repository
-  g.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: g()));
-  g.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(prefs: g(), dataSource: g()));
+  sl.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: sl()));
+  sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(prefs: sl(), dataSource: sl()));
 
   /// Data sources
-  g.registerLazySingleton<VehiclesRemoteDataSource>(
-      () => VehiclesRemoteDataSourceImpl(client: g()));
+  sl.registerLazySingleton<VehiclesRemoteDataSource>(
+      () => VehiclesRemoteDataSourceImpl(client: sl()));
 
-  g.registerLazySingleton<AccountDataSource>(() => AccountDataSourceImpl(client: g()));
+  sl.registerLazySingleton<AccountDataSource>(() => AccountDataSourceImpl(client: sl()));
 
   /// External
 
-  g.registerLazySingleton<InterceptorContract>(() => AuthorizationInterceptor(userRepository: g()));
-  g.registerLazySingleton<Client>(() => HttpClientWithInterceptor.build(interceptors: [g()]));
+  // sl.registerLazySingleton<InterceptorContract>(
+  //     () => AuthorizationInterceptor(userRepository: sl()));
+  // sl.registerLazySingleton<http.Client>(
+  //     () => HttpClientWithInterceptor.build(interceptors: [sl()]));
+  sl.registerLazySingleton(() => http.Client());
   final sharedPreferences = await SharedPreferences.getInstance();
-  g.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
+  sl.registerLazySingleton<SharedPreferences>(() => sharedPreferences);
 }

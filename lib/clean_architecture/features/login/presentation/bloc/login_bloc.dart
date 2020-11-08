@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/clean_architecture/core/authorization/auth.dart';
-import 'package:sss_mobile/repositories/user_repo.dart';
+import 'package:sss_mobile/clean_architecture/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 
 import 'login_events.dart';
 import 'login_state.dart';
@@ -25,13 +26,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       yield LoginLoading();
 
       try {
-        final token = await userRepository.authenticate(
-          username: event.username,
-          password: event.password,
-        );
+        final either = await userRepository.authenticate(
+            EUserCredentialsModel(username: event.username, password: event.password));
 
-        authenticationBloc.add(LoggedIn(token: token));
-        yield LoginInitial();
+        yield either.fold((l) {
+          return LoginFailure(error: 'null');
+        }, (r) {
+          authenticationBloc.add(LoggedIn(token: ''));
+          return LoginInitial();
+        });
       } catch (error) {
         yield LoginFailure(error: error.toString());
       }

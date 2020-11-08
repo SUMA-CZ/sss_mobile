@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/clean_architecture/core/authorization/auth_bloc.dart';
-import 'package:sss_mobile/repositories/user_repo.dart';
+import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
 
 import '../bloc/login_bloc.dart';
 import 'login_form.dart';

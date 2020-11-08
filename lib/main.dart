@@ -1,65 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sss_mobile/apis/vehicle_api.dart';
-import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'package:sss_mobile/clean_architecture/features/login/domain/repositories/user_repository.dart';
+import 'package:sss_mobile/clean_architecture/features/login/presentation/pages/login_page.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/pages/vehicles_page.dart';
-import 'package:sss_mobile/repositories/user_repo.dart';
-import 'package:sss_mobile/repositories/vehicle_repo.dart';
-import 'package:sss_mobile/screens/loading_indicator.dart';
 import 'package:sss_mobile/screens/splash_screen.dart';
 
 import 'clean_architecture/core/authorization/auth_bloc.dart';
 import 'clean_architecture/core/authorization/auth_events.dart';
 import 'clean_architecture/core/authorization/auth_state.dart';
 import 'clean_architecture/core/bloc/log_bloc_observer.dart';
-import 'clean_architecture/features/login/presentation/pages/login_page.dart';
+import 'clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 import 'injection_container.dart' as di;
+
+class SCMApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider<AuthenticationBloc>(
+        create: (BuildContext context) => di.sl<AuthenticationBloc>()..add(AppStarted()),
+        child: MaterialApp(
+          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) {
+              if (state is AuthenticationAuthenticated) {
+                BlocProvider(
+                  create: (_) => di.sl<GetVehiclesBloc>(),
+                  child: VehiclesPage(),
+                );
+              }
+              if (state is AuthenticationUnauthenticated) {
+                return LoginPage(userRepository: di.sl<UserRepository>());
+              }
+              if (state is AuthenticationLoading) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return SplashScreen();
+            },
+          ),
+        ));
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Bloc.observer = LogBlocObserver();
   await di.init();
-
-  final vehicleRepository = VehicleRepository(vehicleAPI: VehicleAPI());
-
-  runApp(
-    BlocProvider<AuthenticationBloc>(
-      create: (context) {
-        return AuthenticationBloc(userRepository: di.g())..add(AppStarted());
-      },
-      child: App(userRepository: di.g(), vehicleRepository: vehicleRepository),
-    ),
-  );
-}
-
-class App extends StatelessWidget {
-  final UserRepository userRepository;
-  final VehicleRepository vehicleRepository;
-
-  App({Key key, @required this.userRepository, @required this.vehicleRepository}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          if (state is AuthenticationAuthenticated) {
-            return BlocProvider(
-              create: (BuildContext context) =>
-                  di.g<GetVehiclesBloc>()..add(GetVehiclesEventGetVehicles()),
-              child: VehiclesPage(),
-            );
-            // return BlocProvider(create: () => ,) VehiclesPage();
-          }
-          if (state is AuthenticationUnauthenticated) {
-            return LoginPage(userRepository: userRepository);
-          }
-          if (state is AuthenticationLoading) {
-            return LoadingIndicator();
-          }
-          return SplashScreen();
-        },
-      ),
-    );
-  }
+  Bloc.observer = LogBlocObserver();
+  runApp(SCMApp());
 }
