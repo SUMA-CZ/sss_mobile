@@ -15,7 +15,7 @@ part 'get_vehicles_state.dart';
 class GetVehiclesBloc extends Bloc<GetVehiclesEvent, GetVehiclesState> {
   GetVehiclesBloc({@required this.getVehicles})
       : assert(getVehicles != null),
-        super(GetVehiclesStateLoading());
+        super(GetVehiclesInitial());
 
   final GetVehicles getVehicles;
 

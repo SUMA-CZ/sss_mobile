@@ -36,14 +36,14 @@ void main() {
     final token = ETokenModel.fromJson(json.decode(fixture('account.json')));
     final creds = EUserCredentialsModel(username: 'null', password: 'null');
     test(
-      '''should perform a GET request on a URL /account/login''',
+      '''should perform a POST request on a URL /account/login''',
       () async {
         // arrange
         setUpMockHttpClientSuccess200ForLogin();
         // act
         dataSource.authenticate(creds);
         // assert
-        verify(mockHttpClient.get('https://sss.suma.guru/api/Account/Login'));
+        verify(mockHttpClient.post('https://sss.suma.guru/api/Account/Login'));
       },
     );
 

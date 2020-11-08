@@ -76,8 +76,12 @@ class LoginFormState extends State<LoginForm> {
                         state is! LoginLoading ? _onLoginButtonPressed() : null;
                       }
                     },
-                    child:
-                        state is LoginLoading ? CircularProgressIndicator() : Text('Přihlásit se'),
+                    child: state is LoginLoading
+                        ? Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: CircularProgressIndicator(),
+                          )
+                        : Text('Přihlásit se'),
                   ),
                 ],
               ),

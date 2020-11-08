@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_bloc.dart';
+import 'package:sss_mobile/clean_architecture/core/authorization/auth_events.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/domain/entities/e_vehicle.dart';
 import 'package:sss_mobile/clean_architecture/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
@@ -20,7 +22,7 @@ class VehiclesPage extends StatelessWidget {
                     padding: EdgeInsets.only(right: 20.0),
                     child: GestureDetector(
                       onTap: () {
-                        // BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
                       },
                       child: Icon(Icons.exit_to_app),
                     )),
@@ -55,14 +57,27 @@ class VehiclesPage extends StatelessWidget {
                 }
 
                 if (state is GetVehiclesStateError) {
-                  return Center(
-                    child: Text(state.message),
-                  );
+                  return _buildErrorMessageAndRefresh(context, state.message);
                 }
 
                 return Center(child: CircularProgressIndicator());
               },
             )));
+  }
+
+  Widget _buildErrorMessageAndRefresh(BuildContext context, String message) {
+    return Center(
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(message),
+            RaisedButton(
+                child: Text('REFRESH'),
+                onPressed: () =>
+                    BlocProvider.of<GetVehiclesBloc>(context)..add(GetVehiclesEventGetVehicles()))
+          ]),
+    );
   }
 
   Widget _buildCompanyVehicleRow(int i, List<EVehicle> _vehicles) {

@@ -22,7 +22,7 @@ class AccountDataSourceImpl implements AccountDataSource {
   }
 
   Future<ETokenModel> _authenticate(String url, Map<String, dynamic> payload) async {
-    final response = await client.get(url);
+    final response = await client.post(url, body: payload);
     if (response.statusCode == 200) {
       return ETokenModel.fromJson(jsonDecode(response.body));
     } else {

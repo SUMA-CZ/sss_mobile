@@ -21,8 +21,8 @@ class SCMApp extends StatelessWidget {
           home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
               if (state is AuthenticationAuthenticated) {
-                BlocProvider(
-                  create: (_) => di.sl<GetVehiclesBloc>(),
+                return BlocProvider(
+                  create: (_) => di.sl<GetVehiclesBloc>()..add(GetVehiclesEventGetVehicles()),
                   child: VehiclesPage(),
                 );
               }
