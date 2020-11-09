@@ -1,0 +1,115 @@
+stages:
+    - test
+    - deployment
+
+before_script:
+  - source .${CI_COMMIT_REF_NAME}.env
+
+variables:
+    LC_ALL: "en_US.UTF-8"
+    LANG: "en_US.UTF-8"
+
+.android_docker_image:
+    image: cirrusci/flutter:1.22.2
+    tags:
+        - gitlab-org-docker
+
+test:
+    extends: .android_docker_image
+    stage: test
+    script:
+      - flutter test --coverage
+      - genhtml coverage/lcov.info --output=coverage
+    artifacts:
+      paths:
+        - coverage/
+      expire_in: 5 days
+
+####################### IOS ###############################
+
+ipa.testflight:
+  stage: deployment
+  before_script:
+    - cd ios/
+    - gem install bundler
+    - bundle install --path vendor/bundle
+    - flutter build ios 2>&1 || true
+    - flutter pub run environment_config:generate
+  script:
+    - bundle exec fastlane beta
+  tags:
+    - ios
+  only:
+    - dev
+
+ipa.submit_to_review:
+  stage: deployment
+  script:
+   - bundle exec fastlane production
+  when: manual
+  allow_failure: false
+  only:
+    - master
+
+####################### ANDROID ###############################
+
+apk.alpha_track:
+  stage: deployment
+  extends: .android_docker_image
+  before_script:
+    # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
+    - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
+    - cd android/
+    - gem install bundler
+    - bundle install
+    - flutter pub get
+    - flutter pub run environment_config:generate
+  script:
+    - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
+    - bundle exec fastlane upload_to_play_store_alpha
+  artifacts:
+    paths:
+      - build/app/outputs/apk/release/app-release.apk
+    expire_in: 1 day
+  only:
+    - dev
+
+
+####################### ANDROID MASTER ######################
+
+apk.prod_track:
+  stage: deployment
+  extends: .android_docker_image
+  before_script:
+    # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
+    - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
+    - cd android/
+    - gem install bundler
+    - bundle install
+    - flutter pub get
+    - flutter pub run environment_config:generate
+  script:
+    - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
+    - bundle exec fastlane upload_to_play_store_prod_track
+  artifacts:
+    paths:
+      - build/app/outputs/apk/release/app-release.apk
+    expire_in: 1 day
+  only:
+    - master
+
+apk.promote_to_production:
+    stage: deployment
+    extends: .android_docker_image
+    before_script:
+      # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
+      - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
+      - cd android/
+      - gem install bundler
+      - bundle install
+
+    script: bundle exec fastlane promote_prod_to_production
+    when: manual
+    allow_failure: false
+    only:
+      - master

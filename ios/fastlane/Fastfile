@@ -1,0 +1,52 @@
+default_platform(:ios)
+platform :ios do
+
+  keychain_ajty = 'AJTY-KEYCHAIN'
+  
+  desc "Push a new beta build to TestFlight"
+  lane :beta do
+    cocoapods
+    
+    increment_version_number(
+      xcodeproj: "Runner.xcodeproj",
+      version_number: flutter_version()["version_name"] 
+    )
+    
+    increment_build_number(
+      xcodeproj: "Runner.xcodeproj",
+      build_number: '1' #ENV["CI_PIPELINE_ID"] 
+    )
+
+    create_keychain(
+      name: keychain_ajty,
+      password: keychain_ajty
+      default_keychain: false,
+      unlock: true,
+      lock_when_sleeps: false
+    )
+    
+    match(
+      type: "appstore",
+      readonly: false,
+      keychain_name: keychain_ajty,
+      keychain_password: keychain_ajty,
+    )
+    
+    build_app(
+      workspace: "Runner.xcworkspace",
+      scheme: "Runner",
+      export_options: {
+      method: "app-store",
+        provisioningProfiles: { 
+          "cz.ajty.scm" => "match AppStore cz.ajty.scm"
+        }
+      }
+    )
+    
+    upload_to_testflight
+  end
+end
+
+after_all do |lane|
+  delete_keychain(name: keychain_ajty)
+end
