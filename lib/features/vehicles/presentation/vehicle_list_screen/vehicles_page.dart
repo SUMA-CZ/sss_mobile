@@ -3,8 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/vehicle_detail_screen.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
 
+import '../../../../injection_container.dart';
 import '../../../../string.dart';
 
 class VehiclesPage extends StatelessWidget {
@@ -44,13 +48,13 @@ class VehiclesPage extends StatelessWidget {
                           itemCount:
                               state.vehicles.where((v) => _companySPZ.contains(v.spz)).length,
                           itemBuilder: (BuildContext context, int position) {
-                            return _buildCompanyVehicleRow(position, state.vehicles);
+                            return _buildCompanyVehicleRow(context, position, state.vehicles);
                           }),
                       new ListView.builder(
                           padding: const EdgeInsets.all(16.0),
                           itemCount: state.vehicles.length,
                           itemBuilder: (BuildContext context, int position) {
-                            return _buildPersonalVehicleRow(position, state.vehicles);
+                            return _buildPersonalVehicleRow(context, position, state.vehicles);
                           }),
                     ],
                   );
@@ -80,23 +84,29 @@ class VehiclesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCompanyVehicleRow(int i, List<Vehicle> _vehicles) {
+  Widget _buildCompanyVehicleRow(BuildContext context, int i, List<Vehicle> _vehicles) {
     var filtered = _vehicles.where((v) => _companySPZ.contains(v.spz)).toList();
-    return _buildRow(i, filtered);
+    return _buildRow(context, i, filtered);
   }
 
-  Widget _buildPersonalVehicleRow(int i, List<Vehicle> _vehicles) {
+  Widget _buildPersonalVehicleRow(BuildContext context, int i, List<Vehicle> _vehicles) {
     var filtered = _vehicles.where((v) => !_companySPZ.contains(v.spz)).toList();
-    return _buildRow(i, filtered);
+    return _buildRow(context, i, filtered);
   }
 
-  Widget _buildRow(int i, List<Vehicle> data) {
+  Widget _buildRow(BuildContext context, int i, List<Vehicle> data) {
     return new ListTile(
       subtitle: new Text("${data[i].spz}"),
       title: new Text("${data[i].name}"),
       onTap: () {
-        // Navigator.push(
-        //     context, MaterialPageRoute(builder: (context) => VehicleDetailScreen(data[i])));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => BlocProvider<VehicleDetailCubit>(
+                      create: (context) => VehicleDetailCubit(
+                          vehicleRepository: sl<VehicleRepository>(), vehicle: data[i]),
+                      child: VehicleDetailScreen(),
+                    )));
       },
     );
   }
