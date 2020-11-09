@@ -31,6 +31,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             EUserCredentialsModel(username: event.username, password: event.password));
 
         yield either.fold((l) {
+          authenticationBloc.add(LoggedOut());
           return LoginFailure(error: 'Authentication Failed');
         }, (r) {
           authenticationBloc.add(LoggedIn(token: r.accessToken));
