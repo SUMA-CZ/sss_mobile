@@ -5,46 +5,66 @@ abstract class VehicleDetailState extends Equatable {
 }
 
 class VehicleDetailInitial extends VehicleDetailState {
+  final Vehicle vehicle;
+
+  VehicleDetailInitial({@required this.vehicle});
   @override
-  List<Object> get props => [];
+  List<Object> get props => [vehicle];
 }
 
-class VDSLoading extends VehicleDetailState {
-  @override
-  List<Object> get props => [];
-}
-
-class VDSError extends VehicleDetailState {
-  final String message;
-
-  VDSError(this.message);
-  @override
-  List<Object> get props => [message];
-}
-
-class VDSShowTrips extends VehicleDetailState {
+class VDSTripsLoaded extends VehicleDetailState {
   final List<Trip> trips;
 
-  VDSShowTrips(this.trips);
+  VDSTripsLoaded(this.trips);
 
   @override
   List<Object> get props => [trips];
 }
 
-class VDSShowRefueling extends VehicleDetailState {
+class VDSTripsLoading extends VehicleDetailState {
+  @override
+  List<Object> get props => [];
+}
+
+class VDSTripsError extends VehicleDetailState {
+  @override
+  List<Object> get props => [];
+}
+
+class VDSRefuelingLoaded extends VehicleDetailState {
   final List<Refueling> refuelings;
 
-  VDSShowRefueling(this.refuelings);
+  VDSRefuelingLoaded(this.refuelings);
 
   @override
   List<Object> get props => [refuelings];
 }
 
-class VDSShowMaintenances extends VehicleDetailState {
+class VDSRefuelingsLoading extends VehicleDetailState {
+  @override
+  List<Object> get props => [];
+}
+
+class VDSRefuelingsError extends VehicleDetailState {
+  @override
+  List<Object> get props => [];
+}
+
+class VDSMaintenancesLoaded extends VehicleDetailState {
   final List<Maintenance> maintenances;
 
-  VDSShowMaintenances(this.maintenances);
+  VDSMaintenancesLoaded(this.maintenances);
 
   @override
   List<Object> get props => [maintenances];
+}
+
+class VDSMaintenancesLoading extends VehicleDetailState {
+  @override
+  List<Object> get props => [];
+}
+
+class VDSMaintenancesError extends VehicleDetailState {
+  @override
+  List<Object> get props => [];
 }

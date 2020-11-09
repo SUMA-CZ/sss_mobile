@@ -66,7 +66,7 @@ void main() {
         when(mockVehicleRepository.getTripsForVehicleID(vehicle.id))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [VDSLoading(), VDSShowTrips(successEither)];
+        final expected = [VDSTripsLoading(), VDSTripsLoaded(successEither)];
 
         // assert
         expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
@@ -84,7 +84,7 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VDSLoading(), VDSError('Failed To Get Data')];
+        final expected = [VDSTripsLoading(), VDSTripsError()];
 
         // assert
         expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
@@ -117,7 +117,7 @@ void main() {
         when(mockVehicleRepository.getRefuelingsForVehicleID(vehicle.id))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [VDSLoading(), VDSShowRefueling(successEither)];
+        final expected = [VDSRefuelingsLoading(), VDSRefuelingLoaded(successEither)];
 
         // assert
         expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
@@ -135,7 +135,7 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VDSLoading(), VDSError('Failed To Get Data')];
+        final expected = [VDSRefuelingsLoading(), VDSRefuelingsError()];
 
         // assert
         expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
@@ -168,7 +168,7 @@ void main() {
         when(mockVehicleRepository.getMaintenancesForVehicleID(vehicle.id))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [VDSLoading(), VDSShowMaintenances(successEither)];
+        final expected = [VDSMaintenancesLoading(), VDSMaintenancesLoaded(successEither)];
 
         // assert
         expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
@@ -186,7 +186,7 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VDSLoading(), VDSError('Failed To Get Data')];
+        final expected = [VDSMaintenancesLoading(), VDSMaintenancesError()];
 
         // assert
         expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));

@@ -95,19 +95,28 @@ class VehiclesPage extends StatelessWidget {
   }
 
   Widget _buildRow(BuildContext context, int i, List<Vehicle> data) {
-    return new ListTile(
-      subtitle: new Text("${data[i].spz}"),
-      title: new Text("${data[i].name}"),
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => BlocProvider<VehicleDetailCubit>(
-                      create: (context) => VehicleDetailCubit(
-                          vehicleRepository: sl<VehicleRepository>(), vehicle: data[i]),
-                      child: VehicleDetailScreen(),
-                    )));
-      },
+    return Card(
+      child: ListTile(
+        leading: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [Icon(Icons.local_gas_station_outlined), Text('${data[i].fuelLevel}%')],
+        ),
+        trailing: Text(data[i].vin.trim()),
+        subtitle: new Text("${data[i].spz}"),
+        title: new Text("${data[i].name}"),
+        onTap: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocProvider<VehicleDetailCubit>(
+                        create: (context) => VehicleDetailCubit(
+                            vehicleRepository: sl<VehicleRepository>(), vehicle: data[i])
+                          ..getTrips(),
+                        child: VehicleDetailScreen(),
+                      )));
+        },
+      ),
     );
   }
 }
