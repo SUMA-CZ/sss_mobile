@@ -10,8 +10,8 @@ import 'core/bloc/log_bloc_observer.dart';
 import 'core/network/authorization_interceptor.dart';
 import 'features/login/domain/repositories/user_repository.dart';
 import 'features/login/presentation/pages/login_page.dart';
-import 'features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
-import 'features/vehicles/presentation/pages/vehicles_page.dart';
+import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
+import 'features/vehicles/presentation/vehicle_list_screen/vehicles_page.dart';
 import 'injection_container.dart' as di;
 
 class SSSMobile extends StatelessWidget {

@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
-import 'package:sss_mobile/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
 
 import '../../../../string.dart';
 

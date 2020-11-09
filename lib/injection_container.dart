@@ -12,7 +12,7 @@ import 'features/vehicles/data/datasources/vehicles_datasource.dart';
 import 'features/vehicles/data/repositories/vehicle_repository_impl.dart';
 import 'features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'features/vehicles/domain/usecases/get_vehicles.dart';
-import 'features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
+import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
 
 final sl = GetIt.instance;
 
