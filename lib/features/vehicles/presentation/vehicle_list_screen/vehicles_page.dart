@@ -52,7 +52,8 @@ class VehiclesPage extends StatelessWidget {
                           }),
                       new ListView.builder(
                           padding: const EdgeInsets.all(16.0),
-                          itemCount: state.vehicles.length,
+                          itemCount:
+                              state.vehicles.where((v) => !_companySPZ.contains(v.spz)).length,
                           itemBuilder: (BuildContext context, int position) {
                             return _buildPersonalVehicleRow(context, position, state.vehicles);
                           }),
@@ -111,9 +112,8 @@ class VehiclesPage extends StatelessWidget {
               MaterialPageRoute(
                   builder: (context) => BlocProvider<VehicleDetailCubit>(
                         create: (context) => VehicleDetailCubit(
-                            vehicleRepository: sl<VehicleRepository>(), vehicle: data[i])
-                          ..getTrips(),
-                        child: VehicleDetailScreen(),
+                            vehicleRepository: sl<VehicleRepository>(), vehicle: data[i]),
+                        child: VehicleDetailScreen(vehicle: data[i]),
                       )));
         },
       ),
