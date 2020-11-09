@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_trip_model.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_trip.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_user.dart';
+import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/user.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tTripModel = ETripModel()
+  final tTripModel = TripModel()
     ..id = 2643
     ..beginOdometer = 5
     ..endOdometer = 664343
@@ -20,7 +20,7 @@ void main() {
     ..fuelStatus = 9
     ..beginDate = DateTime.parse("2016-09-05T07:50:41.953")
     ..endDate = DateTime.parse("2016-09-05T07:50:41.953")
-    ..user = (EUser()
+    ..user = (User()
       ..id = "41be89d0-16e4-4133-a941-f6c98273bed7"
       ..vin = "tomas.sykora@ajty.cz"
       ..name = "Syky");
@@ -29,7 +29,7 @@ void main() {
     'should be a subclass of Trip entity',
     () async {
       // assert
-      expect(tTripModel, isA<ETrip>());
+      expect(tTripModel, isA<Trip>());
     },
   );
 
@@ -40,7 +40,7 @@ void main() {
         // arrange
         final Map<String, dynamic> jsonMap = json.decode(fixture('trip.json'));
         // act
-        final result = ETripModel.fromJson(jsonMap);
+        final result = TripModel.fromJson(jsonMap);
         // assert
         expect(result, tTripModel);
       },

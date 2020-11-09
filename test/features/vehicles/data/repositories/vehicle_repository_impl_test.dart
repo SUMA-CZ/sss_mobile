@@ -6,9 +6,9 @@ import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/vehicles_datasource.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_maintenance_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_refueling_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_trip_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 import 'package:sss_mobile/features/vehicles/data/repositories/vehicle_repository_impl.dart';
 
@@ -33,19 +33,19 @@ void main() {
     eVehiclesModel.add(VehicleModel.fromJson(j));
   }
 
-  var eMaintenanceModels = <EMaintenanceModel>[];
+  var eMaintenanceModels = <MaintenanceModel>[];
   for (var j in json.decode(fixture('maintenances.json'))) {
-    eMaintenanceModels.add(EMaintenanceModel.fromJson(j));
+    eMaintenanceModels.add(MaintenanceModel.fromJson(j));
   }
 
-  var eRefuelingModels = <ERefuelingModel>[];
+  var eRefuelingModels = <RefuelingModel>[];
   for (var j in json.decode(fixture('refuelings.json'))) {
-    eRefuelingModels.add(ERefuelingModel.fromJson(j));
+    eRefuelingModels.add(RefuelingModel.fromJson(j));
   }
 
-  var eTripsModel = <ETripModel>[];
+  var eTripsModel = <TripModel>[];
   for (var j in json.decode(fixture('trips.json'))) {
-    eTripsModel.add(ETripModel.fromJson(j));
+    eTripsModel.add(TripModel.fromJson(j));
   }
 
   var vehicleID = 16;

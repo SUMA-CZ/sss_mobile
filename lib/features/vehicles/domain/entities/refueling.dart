@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'e_user.dart';
+import 'user.dart';
 
-part 'e_refueling.g.dart';
+part 'refueling.g.dart';
 
 @JsonSerializable()
-class ERefueling extends Equatable {
-  ERefueling();
+class Refueling extends Equatable {
+  Refueling();
 
   @JsonKey(name: 'Id')
   int id;
@@ -46,7 +46,7 @@ class ERefueling extends Equatable {
   String fuelType;
 
   @JsonKey(name: 'User')
-  EUser user;
+  User user;
 
   @JsonKey(name: 'ScanURL')
   String scanURL;
@@ -69,7 +69,7 @@ class ERefueling extends Equatable {
         scanURL
       ];
 
-  factory ERefueling.fromJson(Map<String, dynamic> json) => _$ERefuelingFromJson(json);
+  factory Refueling.fromJson(Map<String, dynamic> json) => _$ERefuelingFromJson(json);
 
   Map<String, dynamic> toJson() => _$ERefuelingToJson(this);
 }

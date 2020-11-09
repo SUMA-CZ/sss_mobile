@@ -1,20 +1,19 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_trip.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_user.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/user.dart';
 
-part 'e_trip_model.g.dart';
+part 'user_model.g.dart';
 
 @JsonSerializable()
-class ETripModel extends ETrip {
+class UserModel extends User {
   /// A necessary factory constructor for creating a new User instance
   /// from a map. Pass the map to the generated `_$UserFromJson()` constructor.
   /// The constructor is named after the source class, in this case, User.
-  factory ETripModel.fromJson(Map<String, dynamic> json) => _$ETripModelFromJson(json);
+  factory UserModel.fromJson(Map<String, dynamic> json) => _$EUserModelFromJson(json);
 
   /// `toJson` is the convention for a class to declare support for serialization
   /// to JSON. The implementation simply calls the private, generated
   /// helper method `_$UserToJson`.
-  Map<String, dynamic> toJson() => _$ETripModelToJson(this);
+  Map<String, dynamic> toJson() => _$EUserModelToJson(this);
 
-  ETripModel();
+  UserModel();
 }

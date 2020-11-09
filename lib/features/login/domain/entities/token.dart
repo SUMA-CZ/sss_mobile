@@ -2,16 +2,16 @@ import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:meta/meta.dart';
 
-part 'e_token.g.dart';
+part 'token.g.dart';
 
 @JsonSerializable()
-class EToken extends Equatable {
-  EToken({@required this.accessToken});
+class Token extends Equatable {
+  Token({@required this.accessToken});
 
   @JsonKey(name: 'AccessToken')
   String accessToken;
 
-  factory EToken.fromJson(Map<String, dynamic> json) => _$ETokenFromJson(json);
+  factory Token.fromJson(Map<String, dynamic> json) => _$ETokenFromJson(json);
 
   Map<String, dynamic> toJson() => _$ETokenToJson(this);
 

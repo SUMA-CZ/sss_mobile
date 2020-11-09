@@ -6,9 +6,9 @@ import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/vehicles_datasource.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_maintenance_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_refueling_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_trip_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
@@ -112,9 +112,9 @@ void main() {
   });
 
   group('getTripsForVehicle', () {
-    var eTrips = <ETripModel>[];
+    var eTrips = <TripModel>[];
     for (var j in json.decode(fixture('trips.json'))) {
-      eTrips.add(ETripModel.fromJson(j));
+      eTrips.add(TripModel.fromJson(j));
     }
 
     final vehicleID = 16;
@@ -157,9 +157,9 @@ void main() {
   });
 
   group('getRefuelingsForVehicle', () {
-    var eRefuelingModels = <ERefuelingModel>[];
+    var eRefuelingModels = <RefuelingModel>[];
     for (var j in json.decode(fixture('refuelings.json'))) {
-      eRefuelingModels.add(ERefuelingModel.fromJson(j));
+      eRefuelingModels.add(RefuelingModel.fromJson(j));
     }
 
     final vehicleID = 16;
@@ -202,9 +202,9 @@ void main() {
   });
 
   group('getMaintenancesForVehicle', () {
-    var eMaintenanceModels = <EMaintenanceModel>[];
+    var eMaintenanceModels = <MaintenanceModel>[];
     for (var j in json.decode(fixture('maintenances.json'))) {
-      eMaintenanceModels.add(EMaintenanceModel.fromJson(j));
+      eMaintenanceModels.add(MaintenanceModel.fromJson(j));
     }
 
     final vehicleID = 16;

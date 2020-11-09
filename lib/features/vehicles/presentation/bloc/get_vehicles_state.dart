@@ -29,7 +29,7 @@ class GetVehiclesStateError extends GetVehiclesState {
 }
 
 class GetVehiclesStateLoaded extends GetVehiclesState {
-  final List<EVehicle> vehicles;
+  final List<Vehicle> vehicles;
 
   GetVehiclesStateLoaded({@required this.vehicles});
 

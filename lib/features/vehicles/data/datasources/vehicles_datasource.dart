@@ -1,18 +1,18 @@
 import 'package:dio/dio.dart';
 import 'package:sss_mobile/core/error/exception.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_maintenance_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_refueling_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_trip_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 
 abstract class VehiclesRemoteDataSource {
   Future<List<VehicleModel>> getVehicles();
 
-  Future<List<ETripModel>> getTripsForVehicleID(int vehicleID);
+  Future<List<TripModel>> getTripsForVehicleID(int vehicleID);
 
-  Future<List<ERefuelingModel>> getRefuelingsForVehicleID(int vehicleID);
+  Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID);
 
-  Future<List<EMaintenanceModel>> getMaintenancesForVehicleID(int vehicleID);
+  Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID);
 }
 
 class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
@@ -25,15 +25,15 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
       _getVehiclesFromURL('https://sss.suma.guru/api/vehicles');
 
   @override
-  Future<List<EMaintenanceModel>> getMaintenancesForVehicleID(int vehicleID) =>
+  Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID) =>
       _getMaintenancesForVehicleID('https://sss.suma.guru/api/vehicles/$vehicleID/maintenances');
 
   @override
-  Future<List<ERefuelingModel>> getRefuelingsForVehicleID(int vehicleID) =>
+  Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID) =>
       _getRefuelingsForVehicleID('https://sss.suma.guru/api/vehicles/$vehicleID/refuelings');
 
   @override
-  Future<List<ETripModel>> getTripsForVehicleID(int vehicleID) =>
+  Future<List<TripModel>> getTripsForVehicleID(int vehicleID) =>
       _getTripsForVehicleID('https://sss.suma.guru/api/vehicles/$vehicleID/trips');
 
   Future<List<VehicleModel>> _getVehiclesFromURL(String url) async {
@@ -49,12 +49,12 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     }
   }
 
-  Future<List<ERefuelingModel>> _getRefuelingsForVehicleID(String url) async {
+  Future<List<RefuelingModel>> _getRefuelingsForVehicleID(String url) async {
     try {
-      List<ERefuelingModel> refuelings = <ERefuelingModel>[];
+      List<RefuelingModel> refuelings = <RefuelingModel>[];
       final response = await client.get(url);
       for (var j in response.data) {
-        refuelings.add(ERefuelingModel.fromJson(j));
+        refuelings.add(RefuelingModel.fromJson(j));
       }
       return refuelings;
     } catch (e) {
@@ -62,13 +62,13 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     }
   }
 
-  Future<List<ETripModel>> _getTripsForVehicleID(String url) async {
+  Future<List<TripModel>> _getTripsForVehicleID(String url) async {
     try {
-      List<ETripModel> trips = <ETripModel>[];
+      List<TripModel> trips = <TripModel>[];
       final response = await client.get(url);
 
       for (var j in response.data) {
-        trips.add(ETripModel.fromJson(j));
+        trips.add(TripModel.fromJson(j));
       }
       return trips;
     } catch (e) {
@@ -76,12 +76,12 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
     }
   }
 
-  Future<List<EMaintenanceModel>> _getMaintenancesForVehicleID(String url) async {
+  Future<List<MaintenanceModel>> _getMaintenancesForVehicleID(String url) async {
     try {
-      List<EMaintenanceModel> maintenances = <EMaintenanceModel>[];
+      List<MaintenanceModel> maintenances = <MaintenanceModel>[];
       final response = await client.get(url);
       for (var j in response.data) {
-        maintenances.add(EMaintenanceModel.fromJson(j));
+        maintenances.add(MaintenanceModel.fromJson(j));
       }
       return maintenances;
     } catch (e) {

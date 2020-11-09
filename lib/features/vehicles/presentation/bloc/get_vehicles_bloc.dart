@@ -6,7 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
 
 part 'get_vehicles_event.dart';
@@ -29,7 +29,7 @@ class GetVehiclesBloc extends Bloc<GetVehiclesEvent, GetVehiclesState> {
   }
 
   Stream<GetVehiclesState> _eitherLoadedOrErrorState(
-      Either<Failure, List<EVehicle>> failureOrVehicles) async* {
+      Either<Failure, List<Vehicle>> failureOrVehicles) async* {
     yield failureOrVehicles.fold(
       (failure) => GetVehiclesStateError(message: _mapFailureToMessage(failure)),
       (vehicles) => GetVehiclesStateLoaded(vehicles: vehicles),

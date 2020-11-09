@@ -3,10 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/vehicles_datasource.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_maintenance.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_refueling.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_trip.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 
 class VehicleRepositoryImpl extends VehicleRepository {
@@ -15,7 +15,7 @@ class VehicleRepositoryImpl extends VehicleRepository {
   VehicleRepositoryImpl({@required this.remoteDataSource});
 
   @override
-  Future<Either<Failure, List<EVehicle>>> getVehicles() async {
+  Future<Either<Failure, List<Vehicle>>> getVehicles() async {
     try {
       final vehicleModels = await remoteDataSource.getVehicles();
       return Right(vehicleModels);
@@ -25,7 +25,7 @@ class VehicleRepositoryImpl extends VehicleRepository {
   }
 
   @override
-  Future<Either<Failure, List<EMaintenance>>> getMaintenancesForVehicleID(int vehicleID) async {
+  Future<Either<Failure, List<Maintenance>>> getMaintenancesForVehicleID(int vehicleID) async {
     try {
       final mainetenancesModels = await remoteDataSource.getMaintenancesForVehicleID(vehicleID);
       return Right(mainetenancesModels);
@@ -35,7 +35,7 @@ class VehicleRepositoryImpl extends VehicleRepository {
   }
 
   @override
-  Future<Either<Failure, List<ERefueling>>> getRefuelingsForVehicleID(int vehicleID) async {
+  Future<Either<Failure, List<Refueling>>> getRefuelingsForVehicleID(int vehicleID) async {
     try {
       final refuelingModels = await remoteDataSource.getRefuelingsForVehicleID(vehicleID);
       return Right(refuelingModels);
@@ -45,7 +45,7 @@ class VehicleRepositoryImpl extends VehicleRepository {
   }
 
   @override
-  Future<Either<Failure, List<ETrip>>> getTripsForVehicleID(int vehicleID) async {
+  Future<Either<Failure, List<Trip>>> getTripsForVehicleID(int vehicleID) async {
     try {
       final tripModels = await remoteDataSource.getTripsForVehicleID(vehicleID);
       return Right(tripModels);

@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'e_user.dart';
+import 'user.dart';
 
 /// This allows the `User` class to access private members in
 /// the generated file. The value for this is *.g.dart, where
 /// the star denotes the source file name.
-part 'e_trip.g.dart';
+part 'trip.g.dart';
 
 @JsonSerializable(explicitToJson: true)
-class ETrip extends Equatable {
-  ETrip();
+class Trip extends Equatable {
+  Trip();
 
   @JsonKey(name: 'Id')
   int id;
@@ -46,9 +46,9 @@ class ETrip extends Equatable {
   DateTime endDate;
 
   @JsonKey(name: 'User')
-  EUser user;
+  User user;
 
-  factory ETrip.fromJson(Map<String, dynamic> json) => _$ETripFromJson(json);
+  factory Trip.fromJson(Map<String, dynamic> json) => _$ETripFromJson(json);
 
   Map<String, dynamic> toJson() => _$ETripToJson(this);
 

@@ -4,7 +4,7 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
-import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
 
 import 'login_events.dart';
@@ -28,7 +28,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       try {
         final either = await authenticate(
-            EUserCredentialsModel(username: event.username, password: event.password));
+            UserCredentialsModel(username: event.username, password: event.password));
 
         yield either.fold((l) {
           authenticationBloc.add(LoggedOut());

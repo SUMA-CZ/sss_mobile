@@ -6,8 +6,8 @@ import 'package:matcher/matcher.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/features/login/data/datasources/account_datasource.dart';
-import 'package:sss_mobile/features/login/data/models/e_token_model.dart';
-import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/data/models/token_model.dart';
+import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -51,8 +51,8 @@ void main() {
   }
 
   group('login', () {
-    final token = ETokenModel.fromJson(json.decode(fixture('account.json')));
-    final creds = EUserCredentialsModel(username: 'null', password: 'null');
+    final token = TokenModel.fromJson(json.decode(fixture('account.json')));
+    final creds = UserCredentialsModel(username: 'null', password: 'null');
     test(
       '''should perform a POST request on a URL /account/login''',
       () async {

@@ -3,7 +3,7 @@ import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/login/data/datasources/account_datasource.dart';
-import 'package:sss_mobile/features/login/domain/entities/e_token.dart';
+import 'package:sss_mobile/features/login/domain/entities/token.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 
 const SP_ACCESS_TOKEN = 'TOKEN';
@@ -54,7 +54,7 @@ class UserRepositoryImpl extends UserRepository {
     }
   }
 
-  Future<Either<Failure, EToken>> authenticate(credentials) async {
+  Future<Either<Failure, Token>> authenticate(credentials) async {
     try {
       final model = await dataSource.authenticate(credentials);
       persistToken(model.accessToken);

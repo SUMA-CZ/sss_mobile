@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 
-class EVehicle extends Equatable {
+class Vehicle extends Equatable {
   final int id;
   final String spz;
   final String vin;
@@ -12,7 +12,7 @@ class EVehicle extends Equatable {
   final double longitude;
   final int fuelLevel;
 
-  EVehicle(
+  Vehicle(
       {@required this.id,
       @required this.spz,
       this.vin,

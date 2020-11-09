@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/features/login/data/models/e_token_model.dart';
-import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/data/models/token_model.dart';
+import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
 
@@ -21,8 +21,8 @@ void main() {
     usecase = Authenticate(repository);
   });
 
-  var tToken = ETokenModel.fromJson(jsonDecode(fixture('account.json')));
-  var creds = EUserCredentialsModel(password: 'a', username: 'b');
+  var tToken = TokenModel.fromJson(jsonDecode(fixture('account.json')));
+  var creds = UserCredentialsModel(password: 'a', username: 'b');
 
   test(
     'should Authenticate',

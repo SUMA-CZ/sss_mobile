@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
@@ -22,7 +22,7 @@ void main() {
     'should be a subclass of Vehicle entity',
     () async {
       // assert
-      expect(tVehicleModel, isA<EVehicle>());
+      expect(tVehicleModel, isA<Vehicle>());
     },
   );
 

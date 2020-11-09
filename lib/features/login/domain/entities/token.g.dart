@@ -1,16 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'e_token_model.dart';
+part of 'token.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ETokenModel _$ETokenModelFromJson(Map json) {
-  return ETokenModel()..accessToken = json['AccessToken'] as String;
+Token _$ETokenFromJson(Map json) {
+  return Token(
+    accessToken: json['AccessToken'] as String,
+  );
 }
 
-Map<String, dynamic> _$ETokenModelToJson(ETokenModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ETokenToJson(Token instance) => <String, dynamic>{
       'AccessToken': instance.accessToken,
     };

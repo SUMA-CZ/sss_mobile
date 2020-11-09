@@ -3,11 +3,11 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/core/error/exception.dart';
-import 'package:sss_mobile/features/login/data/models/e_token_model.dart';
-import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/data/models/token_model.dart';
+import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 
 abstract class AccountDataSource {
-  Future<ETokenModel> authenticate(EUserCredentialsModel credentials);
+  Future<TokenModel> authenticate(UserCredentialsModel credentials);
 }
 
 class AccountDataSourceImpl implements AccountDataSource {
@@ -16,14 +16,14 @@ class AccountDataSourceImpl implements AccountDataSource {
   AccountDataSourceImpl({@required this.client}) : assert(client != null);
 
   @override
-  Future<ETokenModel> authenticate(EUserCredentialsModel credentials) {
+  Future<TokenModel> authenticate(UserCredentialsModel credentials) {
     return _authenticate('https://sss.suma.guru/api/Account/Login', credentials.toJson());
   }
 
-  Future<ETokenModel> _authenticate(String url, Map<String, dynamic> payload) async {
+  Future<TokenModel> _authenticate(String url, Map<String, dynamic> payload) async {
     try {
       final response = await client.post(url, data: payload);
-      return ETokenModel.fromJson(response.data);
+      return TokenModel.fromJson(response.data);
     } catch (e) {
       throw ServerException();
     }

@@ -4,8 +4,8 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/login/data/datasources/account_datasource.dart';
-import 'package:sss_mobile/features/login/data/models/e_token_model.dart';
-import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/data/models/token_model.dart';
+import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 import 'package:sss_mobile/features/login/data/repositories/user_repository_impl.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 
@@ -96,8 +96,8 @@ void main() {
     'should return token when authentication is 200',
     () async {
       // arrange
-      final tTokenModel = ETokenModel(token: 'secret-token');
-      final tCreds = EUserCredentialsModel(username: 'null', password: 'null');
+      final tTokenModel = TokenModel(token: 'secret-token');
+      final tCreds = UserCredentialsModel(username: 'null', password: 'null');
 
       when(mockAccountDataSource.authenticate(any)).thenAnswer((_) async => tTokenModel);
       when(mockSharedPreferences.setString(SP_ACCESS_TOKEN, any)).thenAnswer((_) async => true);

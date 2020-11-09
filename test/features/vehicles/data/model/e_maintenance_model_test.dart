@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_maintenance_model.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_maintenance.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_user.dart';
+import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/user.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tMaintenanceModel = EMaintenanceModel()
+  final tMaintenanceModel = MaintenanceModel()
     ..id = 5
     ..date = DateTime.parse("2017-07-11T00:00:00")
     ..state = "po servisu"
@@ -18,7 +18,7 @@ void main() {
     ..maintenanceLocationId = 3
     ..vatRateId = 1
     ..scanURL = "https://sss.suma.guru/api/scans/95"
-    ..user = (EUser()
+    ..user = (User()
       ..id = "ada7c020-b0cf-4968-aced-d8d67a4d38ce"
       ..vin = "jakub.jonak@sumanet.cz"
       ..name = "Jakub Jonak");
@@ -27,7 +27,7 @@ void main() {
     'should be a subclass of Trip entity',
     () async {
       // assert
-      expect(tMaintenanceModel, isA<EMaintenance>());
+      expect(tMaintenanceModel, isA<Maintenance>());
     },
   );
 
@@ -38,7 +38,7 @@ void main() {
         // arrange
         final Map<String, dynamic> jsonMap = json.decode(fixture('maintenance.json'));
         // act
-        final result = EMaintenanceModel.fromJson(jsonMap);
+        final result = MaintenanceModel.fromJson(jsonMap);
         // assert
         expect(result, tMaintenanceModel);
       },

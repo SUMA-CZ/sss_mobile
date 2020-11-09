@@ -1,16 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'e_refueling_model.dart';
+part of 'refueling_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ERefuelingModel _$ERefuelingModelFromJson(Map json) {
-  return ERefuelingModel()
+RefuelingModel _$ERefuelingModelFromJson(Map json) {
+  return RefuelingModel()
     ..id = json['Id'] as int
-    ..date =
-        json['Date'] == null ? null : DateTime.parse(json['Date'] as String)
+    ..date = json['Date'] == null ? null : DateTime.parse(json['Date'] as String)
     ..odometer = json['OdometerState'] as int
     ..price = (json['PriceIncludingVAT'] as num)?.toDouble()
     ..vatRate = json['VatRate'] as String
@@ -23,14 +22,13 @@ ERefuelingModel _$ERefuelingModelFromJson(Map json) {
     ..fuelType = json['FuelType'] as String
     ..user = json['User'] == null
         ? null
-        : EUser.fromJson((json['User'] as Map)?.map(
+        : User.fromJson((json['User'] as Map)?.map(
             (k, e) => MapEntry(k as String, e),
           ))
     ..scanURL = json['ScanURL'] as String;
 }
 
-Map<String, dynamic> _$ERefuelingModelToJson(ERefuelingModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ERefuelingModelToJson(RefuelingModel instance) => <String, dynamic>{
       'Id': instance.id,
       'Date': instance.date?.toIso8601String(),
       'OdometerState': instance.odometer,

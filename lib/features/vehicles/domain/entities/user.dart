@@ -4,13 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 /// This allows the `User` class to access private members in
 /// the generated file. The value for this is *.g.dart, where
 /// the star denotes the source file name.
-part 'e_user.g.dart';
+part 'user.g.dart';
 
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
 @JsonSerializable()
-class EUser extends Equatable {
-  EUser();
+class User extends Equatable {
+  User();
 
   @JsonKey(name: 'Id')
   String id;
@@ -21,7 +21,7 @@ class EUser extends Equatable {
   @JsonKey(name: 'Name')
   String name;
 
-  factory EUser.fromJson(Map<String, dynamic> json) => _$EUserFromJson(json);
+  factory User.fromJson(Map<String, dynamic> json) => _$EUserFromJson(json);
 
   Map<String, dynamic> toJson() => _$EUserToJson(this);
 

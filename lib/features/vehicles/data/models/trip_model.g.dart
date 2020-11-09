@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'e_trip.dart';
+part of 'trip_model.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ETrip _$ETripFromJson(Map json) {
-  return ETrip()
+TripModel _$ETripModelFromJson(Map json) {
+  return TripModel()
     ..id = json['Id'] as int
     ..beginOdometer = json['InitialOdometer'] as int
     ..endOdometer = json['FinalOdometer'] as int
@@ -17,19 +17,16 @@ ETrip _$ETripFromJson(Map json) {
     ..latitude = (json['Latitude'] as num)?.toDouble()
     ..longitude = (json['Longtitude'] as num)?.toDouble()
     ..fuelStatus = json['FuelStatus'] as int
-    ..beginDate = json['FromDate'] == null
-        ? null
-        : DateTime.parse(json['FromDate'] as String)
-    ..endDate =
-        json['ToDate'] == null ? null : DateTime.parse(json['ToDate'] as String)
+    ..beginDate = json['FromDate'] == null ? null : DateTime.parse(json['FromDate'] as String)
+    ..endDate = json['ToDate'] == null ? null : DateTime.parse(json['ToDate'] as String)
     ..user = json['User'] == null
         ? null
-        : EUser.fromJson((json['User'] as Map)?.map(
+        : User.fromJson((json['User'] as Map)?.map(
             (k, e) => MapEntry(k as String, e),
           ));
 }
 
-Map<String, dynamic> _$ETripToJson(ETrip instance) => <String, dynamic>{
+Map<String, dynamic> _$ETripModelToJson(TripModel instance) => <String, dynamic>{
       'Id': instance.id,
       'InitialOdometer': instance.beginOdometer,
       'FinalOdometer': instance.endOdometer,

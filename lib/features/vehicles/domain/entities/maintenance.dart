@@ -1,13 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'e_user.dart';
+import 'user.dart';
 
-part 'e_maintenance.g.dart';
+part 'maintenance.g.dart';
 
 @JsonSerializable()
-class EMaintenance extends Equatable {
-  EMaintenance();
+class Maintenance extends Equatable {
+  Maintenance();
 
   @JsonKey(name: 'Id')
   int id;
@@ -34,12 +34,12 @@ class EMaintenance extends Equatable {
   int vatRateId;
 
   @JsonKey(name: 'User')
-  EUser user;
+  User user;
 
   @JsonKey(name: 'ScanURL')
   String scanURL;
 
-  factory EMaintenance.fromJson(Map<String, dynamic> json) => _$EMaintenanceFromJson(json);
+  factory Maintenance.fromJson(Map<String, dynamic> json) => _$EMaintenanceFromJson(json);
 
   Map<String, dynamic> toJson() => _$EMaintenanceToJson(this);
 

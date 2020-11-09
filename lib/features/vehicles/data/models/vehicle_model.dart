@@ -1,7 +1,7 @@
 import 'package:meta/meta.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 
-class VehicleModel extends EVehicle {
+class VehicleModel extends Vehicle {
   VehicleModel(
       {@required int id,
       @required String spz,

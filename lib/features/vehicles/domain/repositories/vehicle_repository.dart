@@ -1,13 +1,13 @@
 import 'package:dartz/dartz.dart';
 import 'package:sss_mobile/core/error/failure.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_maintenance.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_refueling.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_trip.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 
 abstract class VehicleRepository {
-  Future<Either<Failure, List<EVehicle>>> getVehicles();
-  Future<Either<Failure, List<ETrip>>> getTripsForVehicleID(int vehicleID);
-  Future<Either<Failure, List<ERefueling>>> getRefuelingsForVehicleID(int vehicleID);
-  Future<Either<Failure, List<EMaintenance>>> getMaintenancesForVehicleID(int vehicleID);
+  Future<Either<Failure, List<Vehicle>>> getVehicles();
+  Future<Either<Failure, List<Trip>>> getTripsForVehicleID(int vehicleID);
+  Future<Either<Failure, List<Refueling>>> getRefuelingsForVehicleID(int vehicleID);
+  Future<Either<Failure, List<Maintenance>>> getMaintenancesForVehicleID(int vehicleID);
 }

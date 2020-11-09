@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/bloc/get_vehicles_bloc.dart';
 
 import '../../../../string.dart';
@@ -80,17 +80,17 @@ class VehiclesPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCompanyVehicleRow(int i, List<EVehicle> _vehicles) {
+  Widget _buildCompanyVehicleRow(int i, List<Vehicle> _vehicles) {
     var filtered = _vehicles.where((v) => _companySPZ.contains(v.spz)).toList();
     return _buildRow(i, filtered);
   }
 
-  Widget _buildPersonalVehicleRow(int i, List<EVehicle> _vehicles) {
+  Widget _buildPersonalVehicleRow(int i, List<Vehicle> _vehicles) {
     var filtered = _vehicles.where((v) => !_companySPZ.contains(v.spz)).toList();
     return _buildRow(i, filtered);
   }
 
-  Widget _buildRow(int i, List<EVehicle> data) {
+  Widget _buildRow(int i, List<Vehicle> data) {
     return new ListTile(
       subtitle: new Text("${data[i].spz}"),
       title: new Text("${data[i].name}"),

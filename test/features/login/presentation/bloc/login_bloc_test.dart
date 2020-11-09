@@ -4,8 +4,8 @@ import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/core/authorization/auth.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/error/failure.dart';
-import 'package:sss_mobile/features/login/data/models/e_user_credentitials_model.dart';
-import 'package:sss_mobile/features/login/domain/entities/e_token.dart';
+import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
+import 'package:sss_mobile/features/login/domain/entities/token.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
 import 'package:sss_mobile/features/login/presentation/bloc/login.dart';
@@ -26,8 +26,8 @@ void main() {
     loginBloc = LoginBloc(authenticate: authenticate, authenticationBloc: authenticateBloc);
   });
 
-  final tToken = EToken(accessToken: 'access-token');
-  final tCreds = EUserCredentialsModel(password: 'passwd', username: 'user');
+  final tToken = Token(accessToken: 'access-token');
+  final tCreds = UserCredentialsModel(password: 'passwd', username: 'user');
 
   test('should get data from usecase', () async {
     when(mockUserRepository.authenticate(tCreds)).thenAnswer((_) async => Right(tToken));

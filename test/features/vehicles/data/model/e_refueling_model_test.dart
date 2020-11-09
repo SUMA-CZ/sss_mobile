@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sss_mobile/features/vehicles/data/models/e_refueling_model.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_refueling.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_user.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/user.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 void main() {
-  final tRefuelingModel = ERefuelingModel()
+  final tRefuelingModel = RefuelingModel()
     ..id = 399
     ..date = DateTime(2019, 5, 13, 0, 0, 0)
     ..odometer = 0
@@ -21,7 +21,7 @@ void main() {
     ..note = null
     ..receiptNo = "2"
     ..fuelType = "Natural 95"
-    ..user = (EUser()
+    ..user = (User()
       ..id = "41be89d0-16e4-4133-a941-f6c98273bed7"
       ..vin = "tomas.sykora@ajty.cz"
       ..name = "Syky")
@@ -31,7 +31,7 @@ void main() {
     'should be a subclass of Vehicle entity',
     () async {
       // assert
-      expect(tRefuelingModel, isA<ERefueling>());
+      expect(tRefuelingModel, isA<Refueling>());
     },
   );
 
@@ -42,7 +42,7 @@ void main() {
         // arrange
         final Map<String, dynamic> jsonMap = json.decode(fixture('refueling.json'));
         // act
-        final result = ERefuelingModel.fromJson(jsonMap);
+        final result = RefuelingModel.fromJson(jsonMap);
         // assert
         expect(result, tRefuelingModel);
       },

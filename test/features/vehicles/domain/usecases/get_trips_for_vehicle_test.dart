@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/e_trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
 
@@ -17,12 +17,12 @@ void main() {
   });
 
   final tTrips = [
-    ETrip()
+    Trip()
       ..id = 1
       ..beginOdometer = 1
       ..endOdometer = 2
       ..officialTrip = true,
-    ETrip()
+    Trip()
       ..id = 2
       ..beginOdometer = 1
       ..endOdometer = 2
