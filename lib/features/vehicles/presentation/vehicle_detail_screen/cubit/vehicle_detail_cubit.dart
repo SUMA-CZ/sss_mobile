@@ -6,7 +6,7 @@ import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
-
+import 'package:dartz/dartz.dart';
 part 'vehicle_detail_state.dart';
 
 class VehicleDetailCubit extends Cubit<VehicleDetailState> {
@@ -18,14 +18,26 @@ class VehicleDetailCubit extends Cubit<VehicleDetailState> {
   final Vehicle vehicle;
 
   void getTrips() async {
-    throw UnimplementedError();
+    emit(VDSLoading());
+    emit ((await vehicleRepository.getTripsForVehicleID(vehicle.id)).fold(
+          (failure) => VDSError('Failed To Get Data'),
+          (payload) => VDSShowTrips(payload),
+    ));
   }
 
   void getRefuelings() async {
-    throw UnimplementedError();
+    emit(VDSLoading());
+    emit ((await vehicleRepository.getRefuelingsForVehicleID(vehicle.id)).fold(
+          (failure) => VDSError('Failed To Get Data'),
+          (payload) => VDSShowRefueling(payload),
+    ));
   }
 
   void getMaintenances() async {
-    throw UnimplementedError();
+    emit(VDSLoading());
+    emit ((await vehicleRepository.getMaintenancesForVehicleID(vehicle.id)).fold(
+          (failure) => VDSError('Failed To Get Data'),
+          (payload) => VDSShowMaintenances(payload),
+    ));
   }
 }
