@@ -17,15 +17,15 @@ class VehicleDetailCubit extends Cubit<VehicleDetailState> {
   final VehicleRepository vehicleRepository;
   final Vehicle vehicle;
 
-  void _getTrips() async {
+  void getTrips() async {
     throw UnimplementedError();
   }
 
-  void _getRefuelings() async {
+  void getRefuelings() async {
     throw UnimplementedError();
   }
 
-  void _getMaintenances() async {
+  void getMaintenances() async {
     throw UnimplementedError();
   }
 }
