@@ -3,7 +3,7 @@ stages:
     - deployment
 
 before_script:
-  # - source .${CI_COMMIT_REF_NAME}.env
+   - source .${CI_COMMIT_REF_NAME}.env
 
 variables:
     LC_ALL: "en_US.UTF-8"

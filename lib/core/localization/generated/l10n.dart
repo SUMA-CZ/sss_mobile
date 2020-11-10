@@ -45,21 +45,91 @@ class S {
     );
   }
 
-  /// `Přihlásit`
+  /// `Přihlásit se`
   String get loginButton {
     return Intl.message(
-      'Přihlásit',
+      'Přihlásit se',
       name: 'loginButton',
       desc: '',
       args: [],
     );
   }
 
-  /// ``
+  /// `Email`
   String get loginEmail {
     return Intl.message(
-      '',
+      'Email',
       name: 'loginEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Neplatný email`
+  String get loginEmailInvalid {
+    return Intl.message(
+      'Neplatný email',
+      name: 'loginEmailInvalid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Heslo`
+  String get loginPassword {
+    return Intl.message(
+      'Heslo',
+      name: 'loginPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Prázdné heslo`
+  String get loginPasswordIsEmpty {
+    return Intl.message(
+      'Prázdné heslo',
+      name: 'loginPasswordIsEmpty',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Firemní vozy`
+  String get vehiclesCompanyVehicles {
+    return Intl.message(
+      'Firemní vozy',
+      name: 'vehiclesCompanyVehicles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Soukromé vozy`
+  String get vehiclesPersonalVehicles {
+    return Intl.message(
+      'Soukromé vozy',
+      name: 'vehiclesPersonalVehicles',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Zkusit znovu`
+  String get refresh {
+    return Intl.message(
+      'Zkusit znovu',
+      name: 'refresh',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `K tomuto vozidlu nebyly uloženy žádné souřadnice`
+  String get vehicleDetailNoLocation {
+    return Intl.message(
+      'K tomuto vozidlu nebyly uloženy žádné souřadnice',
+      name: 'vehicleDetailNoLocation',
       desc: '',
       args: [],
     );

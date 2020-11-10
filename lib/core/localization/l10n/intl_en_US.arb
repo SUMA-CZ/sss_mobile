@@ -2,5 +2,13 @@
   "@@locale": "en_US",
   "loginTitle" : "Login into SSS",
   "loginButton" : "Login",
-  "loginEmail" : ""
+  "loginEmail" : "Email",
+  "loginEmailInvalid": "Invalid email",
+  "loginPassword" : "Password",
+  "loginPasswordIsEmpty": "Password is empty",
+  "vehiclesCompanyVehicles" : "Company Vehicles",
+  "vehiclesPersonalVehicles" : "Personal Vehicles",
+  "refresh" : "REFRESH",
+  "vehicleDetailNoLocation" : "No location recorded"
+
 }

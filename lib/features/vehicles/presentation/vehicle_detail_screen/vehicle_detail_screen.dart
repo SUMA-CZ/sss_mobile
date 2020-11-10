@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
@@ -91,7 +92,7 @@ class VehicleDetailScreen extends StatelessWidget {
             state.vehicle.longitude == null ||
             state.vehicle.longitude == 0) {
           return Center(
-            child: Text('No location'),
+            child: Text(S.current.vehicleDetailNoLocation),
           );
         }
         LatLng pinPosition = LatLng(state.vehicle.latitude, state.vehicle.longitude);
@@ -112,7 +113,7 @@ class VehicleDetailScreen extends StatelessWidget {
         length: 4,
         child: Scaffold(
             appBar: AppBar(
-              title: Text('Vehicle Detail'),
+              title: Text(vehicle.vin.trim().toUpperCase()),
               bottom: TabBar(
                 tabs: [
                   Tab(icon: Icon(Icons.directions_car_outlined)),

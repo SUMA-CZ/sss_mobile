@@ -22,7 +22,14 @@ class MessageLookup extends MessageLookupByLibrary {
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
     "loginButton" : MessageLookupByLibrary.simpleMessage("Login"),
-    "loginEmail" : MessageLookupByLibrary.simpleMessage(""),
-    "loginTitle" : MessageLookupByLibrary.simpleMessage("Login into SSS")
+    "loginEmail" : MessageLookupByLibrary.simpleMessage("Email"),
+    "loginEmailInvalid" : MessageLookupByLibrary.simpleMessage("Invalid email"),
+    "loginPassword" : MessageLookupByLibrary.simpleMessage("Password"),
+    "loginPasswordIsEmpty" : MessageLookupByLibrary.simpleMessage("Password is empty"),
+    "loginTitle" : MessageLookupByLibrary.simpleMessage("Login into SSS"),
+    "refresh" : MessageLookupByLibrary.simpleMessage("REFRESH"),
+    "vehicleDetailNoLocation" : MessageLookupByLibrary.simpleMessage("No location recorded"),
+    "vehiclesCompanyVehicles" : MessageLookupByLibrary.simpleMessage("Company Vehicles"),
+    "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Personal Vehicles")
   };
 }

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
@@ -10,7 +11,6 @@ import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
 
 import '../../../../injection_container.dart';
-import '../../../../string.dart';
 
 class VehiclesPage extends StatelessWidget {
   final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
@@ -21,7 +21,7 @@ class VehiclesPage extends StatelessWidget {
         length: 2,
         child: Scaffold(
             appBar: new AppBar(
-              title: new Text(Strings.appTitle),
+              title: new Text(S.current.loginTitle),
               actions: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(right: 20.0),
@@ -34,8 +34,8 @@ class VehiclesPage extends StatelessWidget {
               ],
               bottom: TabBar(
                 tabs: [
-                  Tab(icon: Icon(Icons.domain), text: "Company Vehicles"),
-                  Tab(icon: Icon(Icons.person), text: "Personal Vehicles")
+                  Tab(icon: Icon(Icons.domain), text: S.current.vehiclesCompanyVehicles),
+                  Tab(icon: Icon(Icons.person), text: S.current.vehiclesPersonalVehicles)
                 ],
               ),
             ),
@@ -79,7 +79,7 @@ class VehiclesPage extends StatelessWidget {
           children: [
             Text(message),
             RaisedButton(
-                child: Text('REFRESH'),
+                child: Text(S.current.refresh),
                 onPressed: () =>
                     BlocProvider.of<GetVehiclesBloc>(context)..add(GetVehiclesEventGetVehicles()))
           ]),

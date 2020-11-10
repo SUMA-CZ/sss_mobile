@@ -1,6 +1,14 @@
 {
   "@@locale": "cs_CZ",
   "loginTitle" : "Přihlášení do SSS",
-  "loginButton" : "Přihlásit",
-  "loginEmail" : ""
+  "loginButton" : "Přihlásit se",
+  "loginEmail" : "Email",
+  "loginEmailInvalid": "Neplatný email",
+  "loginPassword" : "Heslo",
+  "loginPasswordIsEmpty": "Prázdné heslo",
+  "vehiclesCompanyVehicles" : "Firemní vozy",
+  "vehiclesPersonalVehicles" : "Soukromé vozy",
+  "refresh" : "Zkusit znovu",
+  "vehicleDetailNoLocation" : "K tomuto vozidlu nebyly uloženy žádné souřadnice"
+
 }

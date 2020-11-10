@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/screens/splash_screen.dart';
 
 import 'core/authorization/auth_bloc.dart';
@@ -18,27 +20,41 @@ import 'injection_container.dart' as di;
 class SSSMobile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<AuthenticationBloc>(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Color(0xff2d3663),
+        accentColor: Color(0xffff8f00),
+      ),
+      localizationsDelegates: [
+        S.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: S.delegate.supportedLocales,
+      home: BlocProvider<AuthenticationBloc>(
         create: (BuildContext context) => di.sl<AuthenticationBloc>()..add(AppStarted()),
-        child: MaterialApp(
-          home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              if (state is AuthenticationAuthenticated) {
-                return BlocProvider(
-                  create: (_) => di.sl<GetVehiclesBloc>()..add(GetVehiclesEventGetVehicles()),
-                  child: VehiclesPage(),
-                );
-              }
-              if (state is AuthenticationUnauthenticated) {
-                return LoginPage(userRepository: di.sl<UserRepository>());
-              }
-              if (state is AuthenticationLoading) {
-                return LoadingIndicator();
-              }
-              return SplashScreen();
-            },
-          ),
-        ));
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, state) {
+            if (state is AuthenticationAuthenticated) {
+              return BlocProvider(
+                create: (_) => di.sl<GetVehiclesBloc>()..add(GetVehiclesEventGetVehicles()),
+                child: VehiclesPage(),
+              );
+            }
+            if (state is AuthenticationUnauthenticated) {
+              return LoginPage(userRepository: di.sl<UserRepository>());
+            }
+            if (state is AuthenticationLoading) {
+              return LoadingIndicator();
+            }
+            return SplashScreen();
+          },
+        ),
+      ),
+    );
   }
 }
 

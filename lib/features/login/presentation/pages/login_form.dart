@@ -1,4 +1,3 @@
-// home_material.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
@@ -61,18 +60,18 @@ class LoginFormState extends State<LoginForm> {
                       if (!RegExp(
                               r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                           .hasMatch(value)) {
-                        return 'Neplatný email';
+                        return S.current.loginEmailInvalid;
                       }
                       return null;
                     },
                   ),
                   TextFormField(
-                      decoration: InputDecoration(labelText: 'Heslo'),
+                      decoration: InputDecoration(labelText: S.current.loginPassword),
                       controller: _passwordController,
                       obscureText: true,
                       validator: (value) {
                         if (value.isEmpty) {
-                          return 'Prazdné heslo';
+                          return S.current.loginPasswordIsEmpty;
                         }
                         return null;
                       }),
@@ -82,7 +81,7 @@ class LoginFormState extends State<LoginForm> {
                         state is! LoginLoading ? _onLoginButtonPressed() : null;
                       }
                     },
-                    child: Text('Přihlásit se'),
+                    child: Text(S.current.loginButton),
                   ),
                 ],
               ),

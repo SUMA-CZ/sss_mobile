@@ -21,8 +21,15 @@ class MessageLookup extends MessageLookupByLibrary {
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static _notInlinedMessages(_) => <String, Function> {
-    "loginButton" : MessageLookupByLibrary.simpleMessage("Přihlásit"),
-    "loginEmail" : MessageLookupByLibrary.simpleMessage(""),
-    "loginTitle" : MessageLookupByLibrary.simpleMessage("Přihlášení do SSS")
+    "loginButton" : MessageLookupByLibrary.simpleMessage("Přihlásit se"),
+    "loginEmail" : MessageLookupByLibrary.simpleMessage("Email"),
+    "loginEmailInvalid" : MessageLookupByLibrary.simpleMessage("Neplatný email"),
+    "loginPassword" : MessageLookupByLibrary.simpleMessage("Heslo"),
+    "loginPasswordIsEmpty" : MessageLookupByLibrary.simpleMessage("Prázdné heslo"),
+    "loginTitle" : MessageLookupByLibrary.simpleMessage("Přihlášení do SSS"),
+    "refresh" : MessageLookupByLibrary.simpleMessage("Zkusit znovu"),
+    "vehicleDetailNoLocation" : MessageLookupByLibrary.simpleMessage("K tomuto vozidlu nebyly uloženy žádné souřadnice"),
+    "vehiclesCompanyVehicles" : MessageLookupByLibrary.simpleMessage("Firemní vozy"),
+    "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Soukromé vozy")
   };
 }
