@@ -5,6 +5,8 @@ import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 
+import '../../../../env_config.dart';
+
 abstract class VehiclesRemoteDataSource {
   Future<List<VehicleModel>> getVehicles();
 
@@ -21,20 +23,19 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
   VehiclesRemoteDataSourceImpl({this.client});
 
   @override
-  Future<List<VehicleModel>> getVehicles() =>
-      _getVehiclesFromURL('https://sss.suma.guru/api/vehicles');
+  Future<List<VehicleModel>> getVehicles() => _getVehiclesFromURL('${EnvConfig.API_URL}/vehicles');
 
   @override
   Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID) =>
-      _getMaintenancesForVehicleID('https://sss.suma.guru/api/vehicles/$vehicleID/maintenances');
+      _getMaintenancesForVehicleID('${EnvConfig.API_URL}/vehicles/$vehicleID/maintenances');
 
   @override
   Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID) =>
-      _getRefuelingsForVehicleID('https://sss.suma.guru/api/vehicles/$vehicleID/refuelings');
+      _getRefuelingsForVehicleID('${EnvConfig.API_URL}/vehicles/$vehicleID/refuelings');
 
   @override
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID) =>
-      _getTripsForVehicleID('https://sss.suma.guru/api/vehicles/$vehicleID/trips');
+      _getTripsForVehicleID('${EnvConfig.API_URL}/vehicles/$vehicleID/trips');
 
   Future<List<VehicleModel>> _getVehiclesFromURL(String url) async {
     try {

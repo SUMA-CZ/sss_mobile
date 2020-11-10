@@ -6,6 +6,8 @@ import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/features/login/data/models/token_model.dart';
 import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 
+import '../../../../env_config.dart';
+
 abstract class AccountDataSource {
   Future<TokenModel> authenticate(UserCredentialsModel credentials);
 }
@@ -17,7 +19,7 @@ class AccountDataSourceImpl implements AccountDataSource {
 
   @override
   Future<TokenModel> authenticate(UserCredentialsModel credentials) {
-    return _authenticate('https://sss.suma.guru/api/Account/Login', credentials.toJson());
+    return _authenticate('${EnvConfig.API_URL}/Account/Login', credentials.toJson());
   }
 
   Future<TokenModel> _authenticate(String url, Map<String, dynamic> payload) async {
