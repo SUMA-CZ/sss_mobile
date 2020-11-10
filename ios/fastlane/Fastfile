@@ -19,15 +19,15 @@ platform :ios do
 
     create_keychain(
       name: keychain_ajty,
-      password: keychain_ajty
-      default_keychain: false,
-      unlock: true,
-      lock_when_sleeps: false
+      password: keychain_ajty,
+      default_keychain: 'false',
+      unlock: 'true',
+      lock_when_sleeps: 'false'
     )
     
     match(
       type: "appstore",
-      readonly: false,
+      readonly: 'false',
       keychain_name: keychain_ajty,
       keychain_password: keychain_ajty,
     )

@@ -45,8 +45,8 @@ ipa.testflight:
     - cd ios/
     - gem install bundler
     - bundle install --path vendor/bundle
-    - flutter build ios 2>&1 || true
-    - flutter pub run environment_config:generate
+    # - flutter build ios 2>&1 || true
+    # - flutter pub run environment_config:generate
   script:
     - bundle exec fastlane beta
   tags:
