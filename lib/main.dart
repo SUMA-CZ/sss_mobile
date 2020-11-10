@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sss_mobile/A_old_bloc/screens/splash_screen.dart';
+import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
+import 'package:sss_mobile/core/screens/splash_screen.dart';
 
 import 'core/authorization/auth_bloc.dart';
 import 'core/authorization/auth_events.dart';
@@ -32,9 +33,7 @@ class SSSMobile extends StatelessWidget {
                 return LoginPage(userRepository: di.sl<UserRepository>());
               }
               if (state is AuthenticationLoading) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
+                return LoadingIndicator();
               }
               return SplashScreen();
             },

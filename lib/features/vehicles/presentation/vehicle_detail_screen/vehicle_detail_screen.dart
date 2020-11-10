@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
@@ -31,9 +32,7 @@ class VehicleDetailScreen extends StatelessWidget {
           }
 
           if (state is VehicleDetailTripsLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return LoadingIndicator();
           }
 
           return Text('error');
@@ -54,9 +53,7 @@ class VehicleDetailScreen extends StatelessWidget {
           }
 
           if (state is VehicleDetailRefuelingsLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return LoadingIndicator();
           }
 
           return Text('error');
@@ -77,9 +74,7 @@ class VehicleDetailScreen extends StatelessWidget {
           }
 
           if (state is VehicleDetailMaintenancesLoading) {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
+            return LoadingIndicator();
           }
 
           return Text('error');

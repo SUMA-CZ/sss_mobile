@@ -1,6 +1,7 @@
 // home_material.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
 
 import '../bloc/login.dart';
 
@@ -42,6 +43,10 @@ class LoginFormState extends State<LoginForm> {
       },
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
+          if (state is LoginLoading) {
+            return LoadingIndicator();
+          }
+
           return Container(
             padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0),
             child: Form(
@@ -76,12 +81,7 @@ class LoginFormState extends State<LoginForm> {
                         state is! LoginLoading ? _onLoginButtonPressed() : null;
                       }
                     },
-                    child: state is LoginLoading
-                        ? Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircularProgressIndicator(),
-                          )
-                        : Text('Přihlásit se'),
+                    child: Text('Přihlásit se'),
                   ),
                 ],
               ),
