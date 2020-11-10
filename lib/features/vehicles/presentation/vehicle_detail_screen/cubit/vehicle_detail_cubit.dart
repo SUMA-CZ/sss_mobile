@@ -15,8 +15,4 @@ class VehicleDetailCubit extends Cubit<VehicleDetailState> {
 
   final VehicleRepository vehicleRepository;
   final Vehicle vehicle;
-
-  void getVehicle() async {
-    emit(VehicleDetailInitial(vehicle: vehicle));
-  }
 }
