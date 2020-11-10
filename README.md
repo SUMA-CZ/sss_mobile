@@ -21,3 +21,13 @@ Defaults are set to point to GURU.
 ## JSON Serialization
 - [Via: `json_serializable`](https://flutter.dev/docs/development/data-and-backend/json)
 - Run `flutter pub run build_runner watch` to generate models when sources change
+
+## Localization
+
+Used package: https://pub.dev/packages/intl_utils
+
+To generate run `flutter pub run intl_utils:generate`
+
+## Pub Global - Auto runner for pub run
+https://dart.dev/tools/pub/cmd/pub-global
+

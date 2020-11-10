@@ -26,6 +26,5 @@ class User extends Equatable {
   Map<String, dynamic> toJson() => _$EUserToJson(this);
 
   @override
-  // TODO: implement props
   List<Object> get props => [id, vin, name];
 }

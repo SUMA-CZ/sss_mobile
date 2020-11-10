@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 
 import '../../../../injection_container.dart' as di;
@@ -17,7 +18,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('SSS Přihlášení'),
+        title: Text(S.current.loginTitle),
       ),
       body: BlocProvider(
         create: (context) => di.sl<LoginBloc>(),

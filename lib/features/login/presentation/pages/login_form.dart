@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 
 import '../bloc/login.dart';
 
@@ -54,7 +55,7 @@ class LoginFormState extends State<LoginForm> {
               child: Column(
                 children: [
                   TextFormField(
-                    decoration: InputDecoration(labelText: 'Přihlašovací email'),
+                    decoration: InputDecoration(labelText: S.current.loginEmail),
                     controller: _usernameController,
                     validator: (value) {
                       if (!RegExp(
