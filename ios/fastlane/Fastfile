@@ -14,7 +14,7 @@ platform :ios do
     
     increment_build_number(
       xcodeproj: "Runner.xcodeproj",
-      build_number: ENV["CI_COMMIT_REF_NAME"] + '-' + ENV["CI_PIPELINE_ID"]
+      build_number: ENV["CI_PIPELINE_ID"]  + ENV["CI_COMMIT_REF_NAME"] == 'master' ? '.0' : '.99'
     )
 
     create_keychain(
