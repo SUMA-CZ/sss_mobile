@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/vehicles_datasource.dart';
+import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
@@ -56,21 +59,36 @@ class VehicleRepositoryImpl extends VehicleRepository {
 
   @override
   Future<Either<Failure, List<Maintenance>>> createMaintenanceForVehicleID(
-      int vehicleID, Maintenance maintenance) {
-    // TODO: implement createMaintenanceForVehicleID
-    throw UnimplementedError();
+      int vehicleID, MaintenanceModel maintenance) async {
+    // TODO: Fix this conversion fekal
+    try {
+      await remoteDataSource.createMaintenanceForVehicleID(vehicleID, maintenance);
+      final mainetenancesModels = await remoteDataSource.getMaintenancesForVehicleID(vehicleID);
+      return Right(mainetenancesModels);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
   Future<Either<Failure, List<Refueling>>> createRefuelingForVehicleID(
-      int vehicleID, Refueling refueling) {
-    // TODO: implement createRefuelingForVehicleID
-    throw UnimplementedError();
+      int vehicleID, RefuelingModel refueling) async {
+    try {
+      await remoteDataSource.createRefuelingForVehicleID(vehicleID, refueling);
+      final refuelingModels = await remoteDataSource.getRefuelingsForVehicleID(vehicleID);
+      return Right(refuelingModels);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 
   @override
-  Future<Either<Failure, List<Trip>>> createTripForVehicleID(int vehicleID, Trip trip) {
-    // TODO: implement createTripForVehicleID
-    throw UnimplementedError();
+  Future<Either<Failure, List<Trip>>> createTripForVehicleID(int vehicleID, TripModel trip) async {
+    try {
+      await remoteDataSource.createTripForVehicleID(vehicleID, trip);
+      return getTripsForVehicleID(vehicleID);
+    } on ServerException {
+      return Left(ServerFailure());
+    }
   }
 }

@@ -134,6 +134,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Přidat tankovaní`
+  String get addRefueling {
+    return Intl.message(
+      'Přidat tankovaní',
+      name: 'addRefueling',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Přidat jízdu`
+  String get addTrip {
+    return Intl.message(
+      'Přidat jízdu',
+      name: 'addTrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Přidat servis`
+  String get addMaintenance {
+    return Intl.message(
+      'Přidat servis',
+      name: 'addMaintenance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

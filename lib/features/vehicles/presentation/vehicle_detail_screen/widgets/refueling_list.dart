@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 
 class RefuelingList extends StatelessWidget {
@@ -8,7 +9,17 @@ class RefuelingList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildList(refuelings);
+    return Scaffold(
+      body: _buildList(refuelings),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          /// Get cubit and pass it to next page
+          // Add your onPressed code here!
+        },
+        label: Text(S.current.addRefueling),
+        icon: Icon(Icons.add_circle_outline),
+      ),
+    );
   }
 
   TableRow _buildTableRowWithPadding(String left, String right) {

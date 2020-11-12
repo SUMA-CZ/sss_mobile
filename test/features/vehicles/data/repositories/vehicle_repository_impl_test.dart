@@ -28,25 +28,29 @@ void main() {
   });
 
   // TODO: Refactor
-  var eVehiclesModel = <VehicleModel>[];
+  var tVehiclesModel = <VehicleModel>[];
   for (var j in json.decode(fixture('vehicles.json'))) {
-    eVehiclesModel.add(VehicleModel.fromJson(j));
+    tVehiclesModel.add(VehicleModel.fromJson(j));
   }
 
-  var eMaintenanceModels = <MaintenanceModel>[];
+  var tMaintenanceModels = <MaintenanceModel>[];
   for (var j in json.decode(fixture('maintenances.json'))) {
-    eMaintenanceModels.add(MaintenanceModel.fromJson(j));
+    tMaintenanceModels.add(MaintenanceModel.fromJson(j));
   }
 
-  var eRefuelingModels = <RefuelingModel>[];
+  var tRefuelingModels = <RefuelingModel>[];
   for (var j in json.decode(fixture('refuelings.json'))) {
-    eRefuelingModels.add(RefuelingModel.fromJson(j));
+    tRefuelingModels.add(RefuelingModel.fromJson(j));
   }
 
-  var eTripsModel = <TripModel>[];
+  var tTripsModel = <TripModel>[];
   for (var j in json.decode(fixture('trips.json'))) {
-    eTripsModel.add(TripModel.fromJson(j));
+    tTripsModel.add(TripModel.fromJson(j));
   }
+
+  final tOneTripModel = TripModel.fromJson(json.decode(fixture('trip.json')));
+  final tOneRefuelingModel = RefuelingModel.fromJson(json.decode(fixture('refueling.json')));
+  final tOneMaintenanceModel = MaintenanceModel.fromJson(json.decode(fixture('maintenance.json')));
 
   var vehicleID = 16;
 
@@ -55,12 +59,12 @@ void main() {
       'should return remote data when the call to remote data source is successful',
       () async {
         // arrange
-        when(mockRemoteDataSource.getVehicles()).thenAnswer((_) async => eVehiclesModel);
+        when(mockRemoteDataSource.getVehicles()).thenAnswer((_) async => tVehiclesModel);
         // act
         final result = await repository.getVehicles();
         // assert
         verify(mockRemoteDataSource.getVehicles());
-        expect(result, equals(Right(eVehiclesModel)));
+        expect(result, equals(Right(tVehiclesModel)));
       },
     );
 
@@ -84,12 +88,12 @@ void main() {
       () async {
         // arrange
         when(mockRemoteDataSource.getTripsForVehicleID(vehicleID))
-            .thenAnswer((_) async => eTripsModel);
+            .thenAnswer((_) async => tTripsModel);
         // act
         final result = await repository.getTripsForVehicleID(vehicleID);
         // assert
         verify(mockRemoteDataSource.getTripsForVehicleID(vehicleID));
-        expect(result, equals(Right(eTripsModel)));
+        expect(result, equals(Right(tTripsModel)));
       },
     );
 
@@ -113,12 +117,12 @@ void main() {
       () async {
         // arrange
         when(mockRemoteDataSource.getRefuelingsForVehicleID(vehicleID))
-            .thenAnswer((_) async => eRefuelingModels);
+            .thenAnswer((_) async => tRefuelingModels);
         // act
         final result = await repository.getRefuelingsForVehicleID(vehicleID);
         // assert
         verify(mockRemoteDataSource.getRefuelingsForVehicleID(vehicleID));
-        expect(result, equals(Right(eRefuelingModels)));
+        expect(result, equals(Right(tRefuelingModels)));
       },
     );
 
@@ -143,12 +147,12 @@ void main() {
       () async {
         // arrange
         when(mockRemoteDataSource.getMaintenancesForVehicleID(vehicleID))
-            .thenAnswer((_) async => eMaintenanceModels);
+            .thenAnswer((_) async => tMaintenanceModels);
         // act
         final result = await repository.getMaintenancesForVehicleID(vehicleID);
         // assert
         verify(mockRemoteDataSource.getMaintenancesForVehicleID(vehicleID));
-        expect(result, equals(Right(eMaintenanceModels)));
+        expect(result, equals(Right(tMaintenanceModels)));
       },
     );
 
@@ -163,6 +167,42 @@ void main() {
         // assert
         verify(mockRemoteDataSource.getMaintenancesForVehicleID(vehicleID));
         expect(result, equals(Left(ServerFailure())));
+      },
+    );
+  });
+
+  group('createTrip', () {
+    var id = 1;
+    test(
+      'should call create and get on datasource',
+      () async {
+        repository.createTripForVehicleID(id, tOneTripModel);
+        verify(mockRemoteDataSource.createTripForVehicleID(id, tOneTripModel));
+        verify(mockRemoteDataSource.getTripsForVehicleID(id));
+      },
+    );
+  });
+
+  group('createMaintenance', () {
+    var id = 1;
+    test(
+      'should call create and get on datasource',
+      () async {
+        repository.createMaintenanceForVehicleID(id, tOneMaintenanceModel);
+        verify(mockRemoteDataSource.createMaintenanceForVehicleID(id, tOneMaintenanceModel));
+        verify(mockRemoteDataSource.getMaintenancesForVehicleID(id));
+      },
+    );
+  });
+
+  group('createRefueling', () {
+    var id = 1;
+    test(
+      'should call create and get on datasource',
+      () async {
+        repository.createRefuelingForVehicleID(id, tOneRefuelingModel);
+        verify(mockRemoteDataSource.createRefuelingForVehicleID(id, tOneRefuelingModel));
+        verify(mockRemoteDataSource.getRefuelingsForVehicleID(id));
       },
     );
   });

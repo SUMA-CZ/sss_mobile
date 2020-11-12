@@ -12,15 +12,15 @@ abstract class VehiclesRemoteDataSource {
 
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID);
 
-  Future<TripModel> createTripForVehicleID(int vehicleID, TripModel tripModel);
+  Future<TripModel> createTripForVehicleID(int vehicleID, TripModel model);
 
   Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID);
 
-  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModel tripModel);
+  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModel model);
 
   Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID);
 
-  Future<MaintenanceModel> createMaintenanceForVehicleID(int vehicleID, MaintenanceModel tripModel);
+  Future<MaintenanceModel> createMaintenanceForVehicleID(int vehicleID, MaintenanceModel model);
 }
 
 class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
@@ -49,14 +49,15 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
 
   @override
   Future<MaintenanceModel> createMaintenanceForVehicleID(
-          int vehicleID, MaintenanceModel tripModel) =>
+          int vehicleID, MaintenanceModel maintenanceModel) =>
       _createMaintenanceForVehicleID(
-          '${EnvConfig.API_URL}/vehicles/$vehicleID/maintenances', tripModel.toJson());
+          '${EnvConfig.API_URL}/vehicles/$vehicleID/maintenances', maintenanceModel.toJson());
 
   @override
-  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModel tripModel) =>
+  Future<RefuelingModel> createRefuelingForVehicleID(
+          int vehicleID, RefuelingModel refuelingModel) =>
       _createRefuelingForVehicleID(
-          '${EnvConfig.API_URL}/vehicles/$vehicleID/refuelings', tripModel.toJson());
+          '${EnvConfig.API_URL}/vehicles/$vehicleID/refuelings', refuelingModel.toJson());
 
   Future<RefuelingModel> _createRefuelingForVehicleID(
       String url, Map<String, dynamic> payload) async {

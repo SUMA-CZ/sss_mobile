@@ -9,6 +9,9 @@
   "vehiclesCompanyVehicles" : "Firemní vozy",
   "vehiclesPersonalVehicles" : "Soukromé vozy",
   "refresh" : "Zkusit znovu",
-  "vehicleDetailNoLocation" : "K tomuto vozidlu nebyly uloženy žádné souřadnice"
+  "vehicleDetailNoLocation" : "K tomuto vozidlu nebyly uloženy žádné souřadnice",
+  "addRefueling" : "Přidat tankovaní",
+  "addTrip" : "Přidat jízdu",
+  "addMaintenance" : "Přidat servis"
 
 }

@@ -9,6 +9,9 @@
   "vehiclesCompanyVehicles" : "Company Vehicles",
   "vehiclesPersonalVehicles" : "Personal Vehicles",
   "refresh" : "REFRESH",
-  "vehicleDetailNoLocation" : "No location recorded"
+  "vehicleDetailNoLocation" : "No location recorded",
+  "addRefueling" : "Přidat tankovaní",
+  "addTrip" : "Přidat jízdu",
+  "addMaintenance" : "Přidat servis"
 
 }
