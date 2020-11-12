@@ -68,6 +68,26 @@ void main() {
     when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
+  setHTTP201With(String filename) {
+    final responsePayload = fixture(filename);
+    final httpResponse = ResponseBody.fromString(
+      responsePayload,
+      201,
+      headers: dioHttpHeadersForResponseBody,
+    );
+
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
+  }
+
+  setHTTP500() {
+    final httpResponse = ResponseBody.fromString(
+      '',
+      500,
+      headers: dioHttpHeadersForResponseBody,
+    );
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
+  }
+
   group('getVehicles', () {
     var eVehicles = <VehicleModel>[];
     for (var j in json.decode(fixture('vehicles.json'))) {
@@ -82,7 +102,7 @@ void main() {
         // act
         dataSource.getVehicles();
         // assert
-        // verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles'));
+        // verify(dioAdapterMock. mockHttpClient.get('https://sss.suma.guru/api/vehicles'));
       },
     );
 
@@ -242,6 +262,93 @@ void main() {
         final call = dataSource.getMaintenancesForVehicleID;
         // assert
         expect(() => call(vehicleID), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('getTripsForVehicle', () {
+    var tTrip = TripModel.fromJson(json.decode(fixture('trip.json')));
+    final vehicleID = 16;
+
+    test(
+      'should return TripModel when the response code is 201 (created)',
+      () async {
+        // arrange
+        setHTTP201With('trip.json');
+        // act
+        final result = await dataSource.createTripForVehicleID(vehicleID, tTrip);
+        // assert
+        expect(result, equals(tTrip));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.createTripForVehicleID;
+        // assert
+        expect(() => call(vehicleID, tTrip), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('createRefueling', () {
+    var tRefueling = RefuelingModel.fromJson(json.decode(fixture('refueling.json')));
+    final vehicleID = 16;
+
+    test(
+      'should return RefuelingModel when the response code is 201 (created)',
+      () async {
+        // arrange
+        setHTTP201With('refueling.json');
+        // act
+        final result = await dataSource.createRefuelingForVehicleID(vehicleID, tRefueling);
+        // assert
+        expect(result, equals(tRefueling));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.createRefuelingForVehicleID;
+        // assert
+        expect(() => call(vehicleID, tRefueling), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('createMaintenance', () {
+    var tMaintenance = MaintenanceModel.fromJson(json.decode(fixture('maintenance.json')));
+    final vehicleID = 16;
+
+    test(
+      'should return MaintenanceModel when the response code is 201 (created)',
+      () async {
+        // arrange
+        setHTTP201With('maintenance.json');
+        // act
+        final result = await dataSource.createMaintenanceForVehicleID(vehicleID, tMaintenance);
+        // assert
+        expect(result, equals(tMaintenance));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.createMaintenanceForVehicleID;
+        // assert
+        expect(() => call(vehicleID, tMaintenance), throwsA(TypeMatcher<ServerException>()));
       },
     );
   });

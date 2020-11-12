@@ -53,4 +53,24 @@ class VehicleRepositoryImpl extends VehicleRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, List<Maintenance>>> createMaintenanceForVehicleID(
+      int vehicleID, Maintenance maintenance) {
+    // TODO: implement createMaintenanceForVehicleID
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Refueling>>> createRefuelingForVehicleID(
+      int vehicleID, Refueling refueling) {
+    // TODO: implement createRefuelingForVehicleID
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Either<Failure, List<Trip>>> createTripForVehicleID(int vehicleID, Trip trip) {
+    // TODO: implement createTripForVehicleID
+    throw UnimplementedError();
+  }
 }

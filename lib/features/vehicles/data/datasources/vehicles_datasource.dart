@@ -12,9 +12,15 @@ abstract class VehiclesRemoteDataSource {
 
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID);
 
+  Future<TripModel> createTripForVehicleID(int vehicleID, TripModel tripModel);
+
   Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID);
 
+  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModel tripModel);
+
   Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID);
+
+  Future<MaintenanceModel> createMaintenanceForVehicleID(int vehicleID, MaintenanceModel tripModel);
 }
 
 class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
@@ -36,6 +42,39 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
   @override
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID) =>
       _getTripsForVehicleID('${EnvConfig.API_URL}/vehicles/$vehicleID/trips');
+
+  @override
+  Future<TripModel> createTripForVehicleID(int vehicleID, TripModel tripModel) =>
+      _createTripForVehicleID('${EnvConfig.API_URL}/vehicles/$vehicleID/trips', tripModel.toJson());
+
+  @override
+  Future<MaintenanceModel> createMaintenanceForVehicleID(
+          int vehicleID, MaintenanceModel tripModel) =>
+      _createMaintenanceForVehicleID(
+          '${EnvConfig.API_URL}/vehicles/$vehicleID/maintenances', tripModel.toJson());
+
+  @override
+  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModel tripModel) =>
+      _createRefuelingForVehicleID(
+          '${EnvConfig.API_URL}/vehicles/$vehicleID/refuelings', tripModel.toJson());
+
+  Future<RefuelingModel> _createRefuelingForVehicleID(
+      String url, Map<String, dynamic> payload) async {
+    try {
+      return RefuelingModel.fromJson((await client.post(url, data: payload)).data);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<MaintenanceModel> _createMaintenanceForVehicleID(
+      String url, Map<String, dynamic> payload) async {
+    try {
+      return MaintenanceModel.fromJson((await client.post(url, data: payload)).data);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
 
   Future<List<VehicleModel>> _getVehiclesFromURL(String url) async {
     try {
@@ -85,6 +124,14 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
         maintenances.add(MaintenanceModel.fromJson(j));
       }
       return maintenances;
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<TripModel> _createTripForVehicleID(String url, Map<String, dynamic> payload) async {
+    try {
+      return TripModel.fromJson((await client.post(url, data: payload)).data);
     } catch (e) {
       throw ServerException();
     }
