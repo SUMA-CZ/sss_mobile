@@ -12,30 +12,30 @@ variables:
 .android_docker_image:
     image: cirrusci/flutter:1.22.2
     tags:
-        - gitlab-org-docker
+        - docker
 
-# test:
-    # extends: .android_docker_image
-    # stage: test
-    # script:
-    #   - flutter test --coverage
-    #   - genhtml coverage/lcov.info --output=coverage
-    # artifacts:
-    #   paths:
-    #     - coverage/
-    #   expire_in: 5 days
+ test:
+     extends: .android_docker_image
+     stage: test
+     script:
+       - flutter test --coverage
+       - genhtml coverage/lcov.info --output=coverage
+     artifacts:
+       paths:
+         - coverage/
+       expire_in: 5 days
 
-test-ios:
-    stage: test
-    script:
-      - flutter test --coverage
-      - genhtml coverage/lcov.info --output=coverage
-    artifacts:
-      paths:
-        - coverage/
-      expire_in: 5 days
-    tags:
-      - ios
+#test-ios:
+#    stage: test
+#    script:
+#      - flutter test --coverage
+#      - genhtml coverage/lcov.info --output=coverage
+#    artifacts:
+#      paths:
+#        - coverage/
+#      expire_in: 5 days
+#    tags:
+#      - ios
 
 ####################### IOS ###############################
 

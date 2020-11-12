@@ -35,7 +35,7 @@ class TripList extends StatelessWidget {
           ],
         ),
         title: Text(data.user.name),
-        subtitle: Text(data.note),
+        subtitle: Text(data.note ?? ''),
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
