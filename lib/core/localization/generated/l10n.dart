@@ -164,6 +164,96 @@ class S {
       args: [],
     );
   }
+
+  /// `Počáteční datum`
+  String get beginDate {
+    return Intl.message(
+      'Počáteční datum',
+      name: 'beginDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Konečné datum`
+  String get endData {
+    return Intl.message(
+      'Konečné datum',
+      name: 'endData',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Počáteční stav km`
+  String get beginOdometer {
+    return Intl.message(
+      'Počáteční stav km',
+      name: 'beginOdometer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Konečný stav km`
+  String get endOdometer {
+    return Intl.message(
+      'Konečný stav km',
+      name: 'endOdometer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Pracovní cesta`
+  String get officialTrip {
+    return Intl.message(
+      'Pracovní cesta',
+      name: 'officialTrip',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Poznámka k parkování`
+  String get parkingNote {
+    return Intl.message(
+      'Poznámka k parkování',
+      name: 'parkingNote',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Účel cesty`
+  String get description {
+    return Intl.message(
+      'Účel cesty',
+      name: 'description',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Časový interval`
+  String get dateInterval {
+    return Intl.message(
+      'Časový interval',
+      name: 'dateInterval',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Množství paliva v nádrži`
+  String get fuelLevel {
+    return Intl.message(
+      'Množství paliva v nádrži',
+      name: 'fuelLevel',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

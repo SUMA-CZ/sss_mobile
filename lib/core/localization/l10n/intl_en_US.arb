@@ -12,6 +12,14 @@
   "vehicleDetailNoLocation" : "No location recorded",
   "addRefueling" : "Přidat tankovaní",
   "addTrip" : "Přidat jízdu",
-  "addMaintenance" : "Přidat servis"
-
+  "addMaintenance" : "Přidat servis",
+  "beginDate":"Begin date",
+  "endData":"End date",
+  "beginOdometer":"Begin odometer",
+  "endOdometer":"End odometer",
+  "officialTrip":"Business trip",
+  "parkingNote":"Parking note",
+  "description":"Purpose of trip",
+  "dateInterval":"Date interval",
+  "fuelLevel" : "Fuel level"
 }

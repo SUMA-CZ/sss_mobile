@@ -66,12 +66,12 @@ class TripList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                _buildTableRowWithPadding('Počáteční datum', data.beginDate.toString()),
-                _buildTableRowWithPadding('Konečné datum', data.endDate.toString()),
-                _buildTableRowWithPadding('Počáteční stav km', data.beginOdometer.toString()),
-                _buildTableRowWithPadding('Konečný stav km', data.endOdometer.toString()),
-                _buildTableRowWithPadding('Pracovní cesta', data.officialTrip ? 'Ano' : 'Ne'),
-                _buildTableRowWithPadding('Poznámka k parkování', data.parkingNote.toString()),
+                _buildTableRowWithPadding(S.current.beginDate, data.beginDate.toString()),
+                _buildTableRowWithPadding(S.current.endData, data.endDate.toString()),
+                _buildTableRowWithPadding(S.current.beginOdometer, data.beginOdometer.toString()),
+                _buildTableRowWithPadding(S.current.endOdometer, data.endOdometer.toString()),
+                _buildTableRowWithPadding(S.current.officialTrip, data.officialTrip ? 'Ano' : 'Ne'),
+                _buildTableRowWithPadding(S.current.parkingNote, data.parkingNote.toString()),
               ],
             ),
           )

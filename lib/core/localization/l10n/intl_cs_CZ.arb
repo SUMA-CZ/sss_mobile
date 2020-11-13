@@ -12,6 +12,15 @@
   "vehicleDetailNoLocation" : "K tomuto vozidlu nebyly uloženy žádné souřadnice",
   "addRefueling" : "Přidat tankovaní",
   "addTrip" : "Přidat jízdu",
-  "addMaintenance" : "Přidat servis"
+  "addMaintenance" : "Přidat servis",
+  "beginDate":"Počáteční datum",
+  "endData":"Konečné datum",
+  "beginOdometer":"Počáteční stav km",
+  "endOdometer":"Konečný stav km",
+  "officialTrip":"Pracovní cesta",
+  "parkingNote":"Poznámka k parkování",
+  "description":"Účel cesty",
+  "dateInterval":"Časový interval",
+  "fuelLevel" : "Množství paliva v nádrži"
 
 }
