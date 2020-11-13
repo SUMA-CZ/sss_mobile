@@ -86,6 +86,8 @@ class VehicleRepositoryImpl extends VehicleRepository {
   Future<Either<Failure, List<Trip>>> createTripForVehicleID(int vehicleID, TripModel trip) async {
     try {
       await remoteDataSource.createTripForVehicleID(vehicleID, trip);
+      final trips = await remoteDataSource.getTripsForVehicleID(vehicleID);
+      return Right(trips);
       return getTripsForVehicleID(vehicleID);
     } on ServerException {
       return Left(ServerFailure());

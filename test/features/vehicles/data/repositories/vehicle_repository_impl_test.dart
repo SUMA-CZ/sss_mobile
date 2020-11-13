@@ -176,7 +176,7 @@ void main() {
     test(
       'should call create and get on datasource',
       () async {
-        repository.createTripForVehicleID(id, tOneTripModel);
+        final result = repository.createTripForVehicleID(id, tOneTripModel);
         verify(mockRemoteDataSource.createTripForVehicleID(id, tOneTripModel));
         verify(mockRemoteDataSource.getTripsForVehicleID(id));
       },
