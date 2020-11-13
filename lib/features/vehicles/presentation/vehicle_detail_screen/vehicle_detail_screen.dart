@@ -95,18 +95,17 @@ class VehicleDetailScreen extends StatelessWidget {
             child: Text(S.current.vehicleDetailNoLocation),
           );
         }
-        LatLng pinPosition = LatLng(state.vehicle.latitude, state.vehicle.longitude);
-        CameraPosition initialLocation = CameraPosition(zoom: 16, bearing: 30, target: pinPosition);
-        return GoogleMap(
-            markers: [
-              Marker(markerId: MarkerId('<MARKER_ID>'), position: pinPosition, visible: true)
-            ].toSet(),
-            initialCameraPosition: initialLocation);
+        var pinPosition = LatLng(state.vehicle.latitude, state.vehicle.longitude);
+        var initialLocation = CameraPosition(zoom: 16, bearing: 30, target: pinPosition);
+        return GoogleMap(markers: {
+          Marker(markerId: MarkerId('<MARKER_ID>'), position: pinPosition, visible: true)
+        }, initialCameraPosition: initialLocation);
       }
       return Text('err');
     });
   }
 
+  @override
   Widget build(BuildContext context) {
     // return _buildTrips();
     return DefaultTabController(

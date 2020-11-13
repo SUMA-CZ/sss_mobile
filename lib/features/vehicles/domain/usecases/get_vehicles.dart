@@ -9,6 +9,7 @@ class GetVehicles implements UseCase<List<Vehicle>, NoParams> {
 
   GetVehicles(this.repository);
 
+  @override
   Future<Either<Failure, List<Vehicle>>> call(NoParams params) async {
     return await repository.getVehicles();
   }

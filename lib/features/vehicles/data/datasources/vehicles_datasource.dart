@@ -79,7 +79,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
 
   Future<List<VehicleModel>> _getVehiclesFromURL(String url) async {
     try {
-      List<VehicleModel> vehicles = <VehicleModel>[];
+      var vehicles = <VehicleModel>[];
       final response = await client.get(url);
       for (var j in response.data) {
         vehicles.add(VehicleModel.fromJson(j));
@@ -92,7 +92,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
 
   Future<List<RefuelingModel>> _getRefuelingsForVehicleID(String url) async {
     try {
-      List<RefuelingModel> refuelings = <RefuelingModel>[];
+      var refuelings = <RefuelingModel>[];
       final response = await client.get(url);
       for (var j in response.data) {
         refuelings.add(RefuelingModel.fromJson(j));
@@ -105,7 +105,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
 
   Future<List<TripModel>> _getTripsForVehicleID(String url) async {
     try {
-      List<TripModel> trips = <TripModel>[];
+      var trips = <TripModel>[];
       final response = await client.get(url);
 
       for (var j in response.data) {
@@ -119,7 +119,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
 
   Future<List<MaintenanceModel>> _getMaintenancesForVehicleID(String url) async {
     try {
-      List<MaintenanceModel> maintenances = <MaintenanceModel>[];
+      var maintenances = <MaintenanceModel>[];
       final response = await client.get(url);
       for (var j in response.data) {
         maintenances.add(MaintenanceModel.fromJson(j));

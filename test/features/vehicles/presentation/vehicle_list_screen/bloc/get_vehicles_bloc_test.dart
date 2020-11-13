@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
@@ -53,13 +54,13 @@ void main() {
           GetVehiclesStateLoading(),
           GetVehiclesStateLoaded(vehicles: tEVehicles),
         ];
-        expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+        unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
         // act
         bloc.add(GetVehiclesEventGetVehicles());
       },
     );
 
-    final String tMessage = "SERVER_FAILURE_MESSAGE";
+    final tMessage = 'SERVER_FAILURE_MESSAGE';
 
     test(
       'should emit [Loading, Error] when getting data fails',
@@ -71,7 +72,7 @@ void main() {
           GetVehiclesStateLoading(),
           GetVehiclesStateError(message: tMessage),
         ];
-        expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+        unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
         // act
         bloc.add(GetVehiclesEventGetVehicles());
       },

@@ -20,7 +20,7 @@ const dioHttpHeadersForResponseBody = {
 };
 
 void main() {
-  final Dio dio = Dio();
+  final dio = Dio();
   VehiclesRemoteDataSourceImpl dataSource;
   DioAdapterMock dioAdapterMock;
 
@@ -68,7 +68,7 @@ void main() {
     when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
-  setHTTP201With(String filename) {
+  void setHTTP201With(String filename) {
     final responsePayload = fixture(filename);
     final httpResponse = ResponseBody.fromString(
       responsePayload,
@@ -79,7 +79,7 @@ void main() {
     when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
-  setHTTP500() {
+  void setHTTP500() {
     final httpResponse = ResponseBody.fromString(
       '',
       500,
@@ -100,7 +100,7 @@ void main() {
         // arrange
         setHTTP200Vehicles();
         // act
-        dataSource.getVehicles();
+        await dataSource.getVehicles();
         // assert
         // verify(dioAdapterMock. mockHttpClient.get('https://sss.suma.guru/api/vehicles'));
       },
@@ -145,7 +145,7 @@ void main() {
         // arrange
         setHTTP200Trips();
         // act
-        dataSource.getTripsForVehicleID(vehicleID);
+        await dataSource.getTripsForVehicleID(vehicleID);
         // assert
         // verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/trips'));
       },
@@ -190,7 +190,7 @@ void main() {
         // arrange
         setHTTP200Refueling();
         // act
-        dataSource.getRefuelingsForVehicleID(vehicleID);
+        await dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
         // verify(mockHttpClient.get('https://sss.suma.guru/api/vehicles/${vehicleID}/refuelings'));
       },
@@ -235,7 +235,7 @@ void main() {
         // arrange
         setHTTP200Maintenances();
         // act
-        dataSource.getMaintenancesForVehicleID(vehicleID);
+        await dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert
         // verify(dioAdapterMock.fetch('https://sss.suma.guru/api/vehicles/${vehicleID}/maintenances'));
       },

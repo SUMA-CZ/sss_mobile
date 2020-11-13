@@ -2,8 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 
 class TripForm extends StatelessWidget {
+  final Trip lastTrip;
+
+  TripForm({@required this.lastTrip});
+
   var data;
   AutovalidateMode autovalidateMode = AutovalidateMode.always;
   bool readOnly = false;
@@ -13,7 +18,7 @@ class TripForm extends StatelessWidget {
   final ValueChanged _onChanged = (val) => print(val);
   var genderOptions = ['Male', 'Female', 'Other'];
   final _ageController = TextEditingController(text: '45');
-  bool _ageHasError = false;
+  var _ageHasError = false;
 
   @override
   Widget build(BuildContext context) {

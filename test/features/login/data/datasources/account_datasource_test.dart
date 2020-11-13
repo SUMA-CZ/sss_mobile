@@ -18,7 +18,7 @@ const dioHttpHeadersForResponseBody = {
 };
 
 void main() {
-  final Dio dio = Dio();
+  final dio = Dio();
   AccountDataSourceImpl dataSource;
   DioAdapterMock dioAdapterMock;
 

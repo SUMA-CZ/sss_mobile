@@ -5,6 +5,7 @@ import 'package:meta/meta.dart';
 part 'token.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class Token extends Equatable {
   Token({@required this.accessToken});
 

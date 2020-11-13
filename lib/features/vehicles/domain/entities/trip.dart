@@ -9,6 +9,7 @@ import 'user.dart';
 part 'trip.g.dart';
 
 @JsonSerializable(explicitToJson: true)
+// ignore: must_be_immutable
 class Trip extends Equatable {
   Trip();
 

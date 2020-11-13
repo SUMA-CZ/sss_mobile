@@ -10,6 +10,7 @@ class Authenticate implements UseCase<Token, UserCredentials> {
 
   Authenticate(this.repository);
 
+  @override
   Future<Either<Failure, Token>> call(UserCredentials creds) async {
     return await repository.authenticate(creds);
   }

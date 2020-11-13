@@ -13,15 +13,15 @@ import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bl
 import '../../../../injection_container.dart';
 
 class VehiclesPage extends StatelessWidget {
-  final _companySPZ = ["5A54291", "1AC8423", "2AM7900", "6AB7175", "6AD2452", "6AE2712", "5A48356"];
+  final _companySPZ = ['5A54291', '1AC8423', '2AM7900', '6AB7175', '6AD2452', '6AE2712', '5A48356'];
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
         length: 2,
         child: Scaffold(
-            appBar: new AppBar(
-              title: new Text(S.current.loginTitle),
+            appBar: AppBar(
+              title: Text(S.current.loginTitle),
               actions: <Widget>[
                 Padding(
                     padding: EdgeInsets.only(right: 20.0),
@@ -44,14 +44,14 @@ class VehiclesPage extends StatelessWidget {
                 if (state is GetVehiclesStateLoaded) {
                   return TabBarView(
                     children: [
-                      new ListView.builder(
+                      ListView.builder(
                           padding: const EdgeInsets.all(16.0),
                           itemCount:
                               state.vehicles.where((v) => _companySPZ.contains(v.spz)).length,
                           itemBuilder: (BuildContext context, int position) {
                             return _buildCompanyVehicleRow(context, position, state.vehicles);
                           }),
-                      new ListView.builder(
+                      ListView.builder(
                           padding: const EdgeInsets.all(16.0),
                           itemCount:
                               state.vehicles.where((v) => !_companySPZ.contains(v.spz)).length,
@@ -105,8 +105,8 @@ class VehiclesPage extends StatelessWidget {
           children: [Icon(Icons.local_gas_station_outlined), Text('${data[i].fuelLevel}%')],
         ),
         trailing: Text(data[i].vin.trim()),
-        subtitle: new Text("${data[i].spz}"),
-        title: new Text("${data[i].name}"),
+        subtitle: Text('${data[i].spz}'),
+        title: Text('${data[i].name}'),
         onTap: () {
           Navigator.push(
               context,

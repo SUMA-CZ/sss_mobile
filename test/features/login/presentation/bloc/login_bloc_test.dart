@@ -1,6 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/authorization/auth.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/error/failure.dart';
@@ -53,8 +54,10 @@ void main() {
     final result = await authenticate(tCreds);
 
     // assert
-    expectLater(loginBloc, emitsInOrder(expectedForLoginBloc)).timeout(Duration(seconds: 2));
-    expectLater(authenticateBloc, emitsInOrder(expectedForAuthBloc)).timeout(Duration(seconds: 2));
+    unawaited(
+        expectLater(loginBloc, emitsInOrder(expectedForLoginBloc)).timeout(Duration(seconds: 2)));
+    unawaited(expectLater(authenticateBloc, emitsInOrder(expectedForAuthBloc))
+        .timeout(Duration(seconds: 2)));
     expect(result, Right(tToken));
   });
 
@@ -72,8 +75,10 @@ void main() {
     final result = await authenticate(tCreds);
 
     // assert
-    expectLater(loginBloc, emitsInOrder(expectedForLoginBloc)).timeout(Duration(seconds: 2));
-    expectLater(authenticateBloc, emitsInOrder(expectedForAuthBloc)).timeout(Duration(seconds: 2));
+    unawaited(
+        expectLater(loginBloc, emitsInOrder(expectedForLoginBloc)).timeout(Duration(seconds: 2)));
+    unawaited(expectLater(authenticateBloc, emitsInOrder(expectedForAuthBloc))
+        .timeout(Duration(seconds: 2)));
     expect(result, Left(FailureAuthentication()));
   });
 }

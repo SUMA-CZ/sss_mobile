@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:meta/meta.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
@@ -7,7 +8,7 @@ import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_
 part 'vehicle_detail_refuelings_state.dart';
 
 class VehicleDetailRefuelingsCubit extends Cubit<VehicleDetailRefuelingsState> {
-  VehicleDetailRefuelingsCubit({this.usecase, this.vehicle})
+  VehicleDetailRefuelingsCubit({@required this.usecase, @required this.vehicle})
       : assert(usecase != null, vehicle != null),
         super(VehicleDetailRefuelingsInitial());
 

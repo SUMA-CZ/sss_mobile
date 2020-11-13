@@ -48,15 +48,15 @@ void main() {
         final result = tVehicleModel.toJson();
         // assert
         final expectedMap = {
-          "Id": 4,
-          "SPZ": "5A54291",
-          "VIN": "F2",
-          "Name": "Ford Fusion2",
-          "Note": "\r\n\r\n2.4.2020 letni pneu",
-          "Odometer": 168795,
-          "Latitude": 0.0,
-          "Longtitude": 0.0,
-          "FuelStatus": 100
+          'Id': 4,
+          'SPZ': '5A54291',
+          'VIN': 'F2',
+          'Name': 'Ford Fusion2',
+          'Note': '\r\n\r\n2.4.2020 letni pneu',
+          'Odometer': 168795,
+          'Latitude': 0.0,
+          'Longtitude': 0.0,
+          'FuelStatus': 100
         };
         expect(result, expectedMap);
       },

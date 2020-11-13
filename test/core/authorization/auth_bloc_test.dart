@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
 import 'package:sss_mobile/core/authorization/auth_state.dart';
@@ -30,7 +31,7 @@ void main() {
       when(mockUserRepository.hasToken()).thenReturn(false);
       // assert later
       final expected = [AuthenticationUnauthenticated()];
-      expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+      unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
       // act
       bloc.add(AppStarted());
     },
@@ -43,7 +44,7 @@ void main() {
       when(mockUserRepository.hasToken()).thenReturn(true);
       // assert later
       final expected = [AuthenticationAuthenticated()];
-      expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+      unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
       // act
       bloc.add(AppStarted());
     },
@@ -54,7 +55,7 @@ void main() {
     () async {
       // assert later
       final expected = [AuthenticationLoading(), AuthenticationAuthenticated()];
-      expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+      unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
       // act
       bloc.add(LoggedIn(token: 'null'));
       await untilCalled(mockUserRepository.persistToken(any)).timeout(Duration(seconds: 2));
@@ -67,7 +68,7 @@ void main() {
     () async {
       // assert later
       final expected = [AuthenticationLoading(), AuthenticationUnauthenticated()];
-      expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+      unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
       // act
       bloc.add(LoggedOut());
       await untilCalled(mockUserRepository.deleteToken()).timeout(Duration(seconds: 2));

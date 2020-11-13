@@ -9,6 +9,7 @@ part 'user.g.dart';
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
 @JsonSerializable()
+// ignore: must_be_immutable
 class User extends Equatable {
   User();
 

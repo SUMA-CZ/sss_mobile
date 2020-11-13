@@ -15,7 +15,7 @@ class AuthorizationInterceptor extends Interceptor {
     repo.accessToken().fold((l) {
       print('No Token');
     }, (r) {
-      options.headers["Authorization"] = 'Bearer $r';
+      options.headers['Authorization'] = 'Bearer $r';
     });
 
     return options;

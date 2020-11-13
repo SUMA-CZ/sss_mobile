@@ -6,6 +6,7 @@ import 'user.dart';
 part 'maintenance.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class Maintenance extends Equatable {
   Maintenance();
 

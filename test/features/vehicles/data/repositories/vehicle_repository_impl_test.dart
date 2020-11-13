@@ -176,7 +176,7 @@ void main() {
     test(
       'should call create and get on datasource',
       () async {
-        repository.createTripForVehicleID(id, tOneTripModel);
+        await repository.createTripForVehicleID(id, tOneTripModel);
         verify(mockRemoteDataSource.createTripForVehicleID(id, tOneTripModel));
       },
     );
@@ -187,7 +187,7 @@ void main() {
     test(
       'should call create and get on datasource',
       () async {
-        repository.createMaintenanceForVehicleID(id, tOneMaintenanceModel);
+        await repository.createMaintenanceForVehicleID(id, tOneMaintenanceModel);
         verify(mockRemoteDataSource.createMaintenanceForVehicleID(id, tOneMaintenanceModel));
       },
     );
@@ -198,7 +198,7 @@ void main() {
     test(
       'should call create and get on datasource',
       () async {
-        repository.createRefuelingForVehicleID(id, tOneRefuelingModel);
+        await repository.createRefuelingForVehicleID(id, tOneRefuelingModel);
         verify(mockRemoteDataSource.createRefuelingForVehicleID(id, tOneRefuelingModel));
       },
     );

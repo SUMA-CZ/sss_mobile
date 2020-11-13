@@ -11,6 +11,7 @@ class CreateTrip implements UseCase<List<Trip>, Params> {
 
   CreateTrip({@required this.repository}) : assert(repository != null);
 
+  @override
   Future<Either<Failure, List<Trip>>> call(Params params) async {
     return await repository.createTripForVehicleID(params.vehicleID, params.trip);
   }

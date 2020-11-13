@@ -55,8 +55,8 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
     if (tappedMarker != null) {
       setState(() {
         if (markers.containsKey(selectedMarker)) {
-          final Marker resetOld = markers[selectedMarker]
-              .copyWith(iconParam: BitmapDescriptor.defaultMarker);
+          final Marker resetOld =
+              markers[selectedMarker].copyWith(iconParam: BitmapDescriptor.defaultMarker);
           markers[selectedMarker] = resetOld;
         }
         selectedMarker = markerId;
@@ -177,7 +177,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   }
 
   Future<void> _toggleDraggable() async {
-    final Marker marker = markers[selectedMarker];
+    final marker = markers[selectedMarker];
     setState(() {
       markers[selectedMarker] = marker.copyWith(
         draggableParam: !marker.draggable,
@@ -186,7 +186,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
   }
 
   Future<void> _toggleFlat() async {
-    final Marker marker = markers[selectedMarker];
+    final marker = markers[selectedMarker];
     setState(() {
       markers[selectedMarker] = marker.copyWith(
         flatParam: !marker.flat,
@@ -196,7 +196,7 @@ class PlaceMarkerBodyState extends State<PlaceMarkerBody> {
 
   Future<void> _changeInfo() async {
     final Marker marker = markers[selectedMarker];
-    final String newSnippet = marker.infoWindow.snippet + '*';
+    final newSnippet = marker.infoWindow.snippet + '*';
     setState(() {
       markers[selectedMarker] = marker.copyWith(
         infoWindowParam: marker.infoWindow.copyWith(

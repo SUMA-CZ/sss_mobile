@@ -6,6 +6,7 @@ import 'user.dart';
 part 'refueling.g.dart';
 
 @JsonSerializable()
+// ignore: must_be_immutable
 class Refueling extends Equatable {
   Refueling();
 

@@ -33,5 +33,6 @@ class GetVehiclesStateLoaded extends GetVehiclesState {
 
   GetVehiclesStateLoaded({@required this.vehicles});
 
+  @override
   List<Object> get props => [vehicles];
 }

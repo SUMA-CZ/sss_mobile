@@ -17,7 +17,7 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   Either<Failure, String> accessToken() {
-    String token = prefs.getString(SP_ACCESS_TOKEN);
+    var token = prefs.getString(SP_ACCESS_TOKEN);
     if (token != null) {
       return Right(token);
     } else {
@@ -36,7 +36,7 @@ class UserRepositoryImpl extends UserRepository {
 
   @override
   bool hasToken() {
-    String token = (prefs.getString(SP_ACCESS_TOKEN));
+    var token = (prefs.getString(SP_ACCESS_TOKEN));
     return token != null;
   }
 
@@ -54,13 +54,14 @@ class UserRepositoryImpl extends UserRepository {
     }
   }
 
+  @override
   Future<Either<Failure, Token>> authenticate(credentials) async {
     try {
       final model = await dataSource.authenticate(credentials);
-      persistToken(model.accessToken);
+      await persistToken(model.accessToken);
       return Right(model);
     } catch (e) {
-      deleteToken();
+      await deleteToken();
       return Left(FailureAuthentication());
     }
   }

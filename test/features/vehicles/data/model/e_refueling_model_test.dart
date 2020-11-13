@@ -19,13 +19,13 @@ void main() {
     ..fuelAmount = 1.0
     ..official = true
     ..note = null
-    ..receiptNo = "2"
-    ..fuelType = "Natural 95"
+    ..receiptNo = '2'
+    ..fuelType = 'Natural 95'
     ..user = (User()
-      ..id = "41be89d0-16e4-4133-a941-f6c98273bed7"
-      ..vin = "tomas.sykora@ajty.cz"
-      ..name = "Syky")
-    ..scanURL = "https://sss.suma.guru/api/scans/532";
+      ..id = '41be89d0-16e4-4133-a941-f6c98273bed7'
+      ..vin = 'tomas.sykora@ajty.cz'
+      ..name = 'Syky')
+    ..scanURL = 'https://sss.suma.guru/api/scans/532';
 
   test(
     'should be a subclass of Vehicle entity',

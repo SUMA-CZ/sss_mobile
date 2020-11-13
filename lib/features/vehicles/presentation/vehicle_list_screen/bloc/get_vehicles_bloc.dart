@@ -39,7 +39,7 @@ class GetVehiclesBloc extends Bloc<GetVehiclesEvent, GetVehiclesState> {
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
       case ServerFailure:
-        return "SERVER_FAILURE_MESSAGE";
+        return 'SERVER_FAILURE_MESSAGE';
       default:
         return 'Unexpected error';
     }

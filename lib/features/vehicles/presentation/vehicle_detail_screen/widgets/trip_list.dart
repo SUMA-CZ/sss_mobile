@@ -14,9 +14,6 @@ class TripList extends StatelessWidget {
       body: _buildTripsList(trips),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          /// Get cubit and pass it to next page
-          // Add your onPressed code here!
-
           Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => TripForm()),

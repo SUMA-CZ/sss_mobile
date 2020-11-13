@@ -11,6 +11,7 @@ class CreateRefueling implements UseCase<List<Refueling>, Params> {
 
   CreateRefueling({@required this.repository}) : assert(repository != null);
 
+  @override
   Future<Either<Failure, List<Refueling>>> call(Params params) async {
     return await repository.createRefuelingForVehicleID(params.vehicleID, params.refueling);
   }

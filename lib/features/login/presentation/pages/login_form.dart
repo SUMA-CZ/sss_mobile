@@ -21,7 +21,7 @@ class LoginFormState extends State<LoginForm> {
     _usernameController.text = 'tomas.sykora@ajty.cz';
     _passwordController.text = 'Hawk2772';
 
-    _onLoginButtonPressed() {
+    void _onLoginButtonPressed() {
       BlocProvider.of<LoginBloc>(context).add(
         LoginButtonPressed(
           username: _usernameController.text,

@@ -1,0 +1,6 @@
+include: package:pedantic/analysis_options.yaml
+
+analyzer:
+  exclude:
+    - lib/A_old_bloc/*
+    - lib/core/localization/generated/*

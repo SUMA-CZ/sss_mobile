@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
+import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
@@ -55,7 +56,7 @@ void main() {
         final expected = [VehicleDetailTripsLoading(), VehicleDetailTripsLoaded(successEither)];
 
         // assert
-        expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+        unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
         cubit.getTrips();
@@ -73,7 +74,7 @@ void main() {
         final expected = [VehicleDetailTripsLoading(), VehicleDetailTripsError()];
 
         // assert
-        expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2));
+        unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
         cubit.getTrips();

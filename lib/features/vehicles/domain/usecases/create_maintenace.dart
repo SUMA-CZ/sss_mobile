@@ -11,6 +11,7 @@ class CreateMaintenance implements UseCase<List<Maintenance>, Params> {
 
   CreateMaintenance({@required this.repository}) : assert(repository != null);
 
+  @override
   Future<Either<Failure, List<Maintenance>>> call(Params params) async {
     return await repository.createMaintenanceForVehicleID(params.vehicleID, params.maintenance);
   }
