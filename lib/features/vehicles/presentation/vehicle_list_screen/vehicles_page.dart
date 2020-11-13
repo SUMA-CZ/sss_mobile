@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/authorization/auth_events.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
+import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';

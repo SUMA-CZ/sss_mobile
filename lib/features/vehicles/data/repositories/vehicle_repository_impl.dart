@@ -88,7 +88,6 @@ class VehicleRepositoryImpl extends VehicleRepository {
       await remoteDataSource.createTripForVehicleID(vehicleID, trip);
       final trips = await remoteDataSource.getTripsForVehicleID(vehicleID);
       return Right(trips);
-      return getTripsForVehicleID(vehicleID);
     } on ServerException {
       return Left(ServerFailure());
     }

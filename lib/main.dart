@@ -2,15 +2,15 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:sss_mobile/A_old_bloc/screens/loading_indicator.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
-import 'package:sss_mobile/core/screens/splash_screen.dart';
+import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 
 import 'core/authorization/auth_bloc.dart';
 import 'core/authorization/auth_events.dart';
 import 'core/authorization/auth_state.dart';
 import 'core/bloc/log_bloc_observer.dart';
 import 'core/network/authorization_interceptor.dart';
+import 'core/ui/screens/splash_screen.dart';
 import 'features/login/domain/repositories/user_repository.dart';
 import 'features/login/presentation/pages/login_page.dart';
 import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
