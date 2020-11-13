@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 
@@ -61,6 +62,15 @@ class SSSMobile extends StatelessWidget {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
+  di.sl<Dio>().interceptors.add(PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: false,
+      responseHeader: false,
+      error: true,
+      compact: true,
+      maxWidth: 90));
+
   Bloc.observer = LogBlocObserver();
   di.sl<Dio>().interceptors.add(AuthorizationInterceptor(repo: di.sl<UserRepository>()));
   runApp(SSSMobile());

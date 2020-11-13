@@ -74,10 +74,10 @@ class Trip extends Equatable {
       'OfficialJourney': officialTrip,
       'FuelStatus': fuelStatus / 100.0,
       'date_range': [beginDate, endDate],
-      'InitialOdometer': beginOdometer,
-      'FinalOdometer': endOdometer,
-      'Note': note,
-      'ParkingNore': parkingNote
+      'InitialOdometer': beginOdometer.toString(),
+      'FinalOdometer': endOdometer.toString(),
+      'Note': note ?? '',
+      'ParkingNote': parkingNote ?? ''
     };
   }
 
@@ -86,10 +86,10 @@ class Trip extends Equatable {
       'OfficialJourney': officialTrip,
       'FuelStatus': fuelStatus / 100.0,
       'date_range': [DateTime.now(), DateTime.now()],
-      'InitialOdometer': endOdometer,
-      'FinalOdometer': endOdometer,
+      'InitialOdometer': endOdometer.toString(),
+      'FinalOdometer': endOdometer.toString(),
       'Note': '',
-      'ParkingNore': ''
+      'ParkingNote': ''
     };
   }
 }

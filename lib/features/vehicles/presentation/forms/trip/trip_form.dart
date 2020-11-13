@@ -63,7 +63,7 @@ class TripForm extends StatelessWidget {
                               numberFormat: NumberFormat('0 %'),
                               min: 0,
                               max: 1,
-                              initialValue: 0.5,
+                              // initialValue: 0.5,
                               divisions: 10,
                               activeColor: Theme.of(context).accentColor,
                               decoration: InputDecoration(
@@ -95,7 +95,7 @@ class TripForm extends StatelessWidget {
                                 Expanded(
                                     child: FormBuilderTextField(
                                   attribute: 'InitialOdometer',
-                                  initialValue: '26',
+                                  // initialValue: '26',
                                   decoration: InputDecoration(
                                     labelText: S.current.beginOdometer,
                                   ),
@@ -109,7 +109,7 @@ class TripForm extends StatelessWidget {
                                 Expanded(
                                     child: FormBuilderTextField(
                                   attribute: 'FinalOdometer',
-                                  initialValue: '27',
+                                  // initialValue: '27',
                                   decoration: InputDecoration(
                                     labelText: S.current.endOdometer,
                                   ),
