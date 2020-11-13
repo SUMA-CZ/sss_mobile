@@ -7,8 +7,8 @@ import 'package:sss_mobile/features/vehicles/domain/usecases/create_maintenace.d
 
 part 'maintenance_form_dart_state.dart';
 
-class MaintenanceFormDartCubit extends Cubit<MaintenanceFormState> {
-  MaintenanceFormDartCubit({@required this.usecase, @required this.vehicle})
+class MaintenanceFormCubit extends Cubit<MaintenanceFormState> {
+  MaintenanceFormCubit({@required this.usecase, @required this.vehicle})
       : assert(usecase != null, vehicle != null),
         super(MaintenanceFormInitial());
 

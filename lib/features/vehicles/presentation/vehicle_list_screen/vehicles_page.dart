@@ -5,7 +5,6 @@ import 'package:sss_mobile/core/authorization/auth_events.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/vehicle_detail_screen.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
@@ -105,15 +104,14 @@ class VehiclesPage extends StatelessWidget {
           children: [Icon(Icons.local_gas_station_outlined), Text('${data[i].fuelLevel}%')],
         ),
         trailing: Text(data[i].vin.trim()),
-        subtitle: Text('${data[i].spz}'),
-        title: Text('${data[i].name}'),
+        subtitle: Text(data[i].spz.trim()),
+        title: Text(data[i].name.trim()),
         onTap: () {
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (context) => BlocProvider<VehicleDetailCubit>(
-                        create: (context) => VehicleDetailCubit(
-                            vehicleRepository: sl<VehicleRepository>(), vehicle: data[i]),
+                        create: (context) => sl<VehicleDetailCubit>(param1: data[i]),
                         child: VehicleDetailScreen(vehicle: data[i]),
                       )));
         },

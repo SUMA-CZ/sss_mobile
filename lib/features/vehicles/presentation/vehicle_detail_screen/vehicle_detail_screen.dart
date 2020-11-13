@@ -29,7 +29,10 @@ class VehicleDetailScreen extends StatelessWidget {
       child: BlocBuilder<VehicleDetailTripsCubit, VehicleDetailTripsState>(
         builder: (context, state) {
           if (state is VehicleDetailTripsLoaded) {
-            return TripList(trips: state.trips);
+            return TripList(
+              trips: state.trips,
+              vehicle: vehicle,
+            );
           }
 
           if (state is VehicleDetailTripsLoading) {
