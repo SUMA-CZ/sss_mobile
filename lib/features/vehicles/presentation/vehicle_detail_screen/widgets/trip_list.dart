@@ -25,8 +25,9 @@ class TripList extends StatelessWidget {
             MaterialPageRoute(
                 fullscreenDialog: true,
                 builder: (context) => BlocProvider<TripFormCubit>(
-                    create: (context) => sl<TripFormCubit>(param1: vehicle),
-                    child: TripForm(lastTrip: trips.first))),
+                    create: (context) =>
+                        sl<TripFormCubit>(param1: vehicle)..setLastTrip(trips.first),
+                    child: TripForm())),
           );
         },
         label: Text(S.current.addTrip),

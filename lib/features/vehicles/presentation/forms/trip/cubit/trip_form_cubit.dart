@@ -23,6 +23,11 @@ class TripFormCubit extends Cubit<TripFormState> {
     ));
   }
 
+  void setLastTrip(Trip trip) async {
+    emit(TripFormLoading());
+    emit(TripFormLoaded(trip));
+  }
+
   void deleteTrip() async {
     // TODO:
   }

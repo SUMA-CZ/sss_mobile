@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:sss_mobile/core/error/exception.dart';
+import 'package:sss_mobile/core/utils/comparators.dart';
 import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
@@ -84,7 +85,15 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
       for (var j in response.data) {
         vehicles.add(VehicleModel.fromJson(j));
       }
-      return vehicles;
+      return vehicles..sort(name);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<TripModel> _createTripForVehicleID(String url, Map<String, dynamic> payload) async {
+    try {
+      return TripModel.fromJson((await client.post(url, data: payload)).data);
     } catch (e) {
       throw ServerException();
     }
@@ -97,7 +106,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
       for (var j in response.data) {
         refuelings.add(RefuelingModel.fromJson(j));
       }
-      return refuelings;
+      return refuelings..sort(refuelingOdoDescending);
     } catch (e) {
       throw ServerException();
     }
@@ -111,7 +120,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
       for (var j in response.data) {
         trips.add(TripModel.fromJson(j));
       }
-      return trips;
+      return trips..sort(tripOdoDescending);
     } catch (e) {
       throw ServerException();
     }
@@ -124,15 +133,7 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
       for (var j in response.data) {
         maintenances.add(MaintenanceModel.fromJson(j));
       }
-      return maintenances;
-    } catch (e) {
-      throw ServerException();
-    }
-  }
-
-  Future<TripModel> _createTripForVehicleID(String url, Map<String, dynamic> payload) async {
-    try {
-      return TripModel.fromJson((await client.post(url, data: payload)).data);
+      return maintenances..sort(maintenanceDateDescending);
     } catch (e) {
       throw ServerException();
     }

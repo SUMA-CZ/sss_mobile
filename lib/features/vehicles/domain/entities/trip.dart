@@ -68,4 +68,28 @@ class Trip extends Equatable {
         endDate,
         user
       ];
+
+  Map<String, dynamic> toFormEditJSON() {
+    return {
+      'OfficialJourney': officialTrip,
+      'FuelStatus': fuelStatus / 100.0,
+      'date_range': [beginDate, endDate],
+      'InitialOdometer': beginOdometer,
+      'FinalOdometer': endOdometer,
+      'Note': note,
+      'ParkingNore': parkingNote
+    };
+  }
+
+  Map<String, dynamic> toFormNextJSON() {
+    return {
+      'OfficialJourney': officialTrip,
+      'FuelStatus': fuelStatus / 100.0,
+      'date_range': [DateTime.now(), DateTime.now()],
+      'InitialOdometer': endOdometer,
+      'FinalOdometer': endOdometer,
+      'Note': '',
+      'ParkingNore': ''
+    };
+  }
 }

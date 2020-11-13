@@ -6,14 +6,9 @@ import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
 
 class TripForm extends StatelessWidget {
-  final Trip lastTrip;
-
-  TripForm({@required this.lastTrip});
-
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   final ValueChanged _onChanged = (val) => print(val);
@@ -48,12 +43,9 @@ class TripForm extends StatelessWidget {
                       FormBuilder(
                         // context,
                         key: _fbKey,
-                        // TODO: Add model here
-                        // initialValue: {
-                        //   'movie_rating': 3,
-                        //   'filter_chip': ['Test', 'Test 1'],
-                        //   'date': DateTime.now(),
-                        // },
+                        initialValue: (state is TripFormEdit)
+                            ? state.trip.toFormEditJSON()
+                            : ((state is TripFormLoaded) ? state.trip.toFormNextJSON() : {}),
                         readOnly: false,
                         child: Column(
                           children: <Widget>[

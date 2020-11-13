@@ -19,3 +19,9 @@ class TripFormLoaded extends TripFormState {
 
   TripFormLoaded(this.trip);
 }
+
+class TripFormEdit extends TripFormState {
+  final Trip trip;
+
+  TripFormEdit(this.trip);
+}
