@@ -14,62 +14,6 @@ import '../../../../injection_container.dart';
 class VehiclesPage extends StatelessWidget {
   final _companySPZ = ['5A54291', '1AC8423', '2AM7900', '6AB7175', '6AD2452', '6AE2712', '5A48356'];
 
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-        length: 2,
-        child: Scaffold(
-            appBar: AppBar(
-              title: Text(S.current.loginTitle),
-              actions: <Widget>[
-                Padding(
-                    padding: EdgeInsets.only(right: 20.0),
-                    child: GestureDetector(
-                      onTap: () {
-                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
-                      },
-                      child: Icon(Icons.exit_to_app),
-                    )),
-              ],
-              bottom: TabBar(
-                tabs: [
-                  Tab(icon: Icon(Icons.domain), text: S.current.vehiclesCompanyVehicles),
-                  Tab(icon: Icon(Icons.person), text: S.current.vehiclesPersonalVehicles)
-                ],
-              ),
-            ),
-            body: BlocBuilder<GetVehiclesBloc, GetVehiclesState>(
-              builder: (context, state) {
-                if (state is GetVehiclesStateLoaded) {
-                  return TabBarView(
-                    children: [
-                      ListView.builder(
-                          padding: const EdgeInsets.all(16.0),
-                          itemCount:
-                              state.vehicles.where((v) => _companySPZ.contains(v.spz)).length,
-                          itemBuilder: (BuildContext context, int position) {
-                            return _buildCompanyVehicleRow(context, position, state.vehicles);
-                          }),
-                      ListView.builder(
-                          padding: const EdgeInsets.all(16.0),
-                          itemCount:
-                              state.vehicles.where((v) => !_companySPZ.contains(v.spz)).length,
-                          itemBuilder: (BuildContext context, int position) {
-                            return _buildPersonalVehicleRow(context, position, state.vehicles);
-                          }),
-                    ],
-                  );
-                }
-
-                if (state is GetVehiclesStateError) {
-                  return _buildErrorMessageAndRefresh(context, state.message);
-                }
-
-                return LoadingIndicator();
-              },
-            )));
-  }
-
   Widget _buildErrorMessageAndRefresh(BuildContext context, String message) {
     return Center(
       child: Column(
@@ -117,5 +61,61 @@ class VehiclesPage extends StatelessWidget {
         },
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text(S.current.vehicles),
+              actions: <Widget>[
+                Padding(
+                    padding: EdgeInsets.only(right: 20.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        BlocProvider.of<AuthenticationBloc>(context).add(LoggedOut());
+                      },
+                      child: Icon(Icons.exit_to_app),
+                    )),
+              ],
+              bottom: TabBar(
+                tabs: [
+                  Tab(icon: Icon(Icons.domain), text: S.current.vehiclesCompanyVehicles),
+                  Tab(icon: Icon(Icons.person), text: S.current.vehiclesPersonalVehicles)
+                ],
+              ),
+            ),
+            body: BlocBuilder<GetVehiclesBloc, GetVehiclesState>(
+              builder: (context, state) {
+                if (state is GetVehiclesStateLoaded) {
+                  return TabBarView(
+                    children: [
+                      ListView.builder(
+                          padding: const EdgeInsets.all(16.0),
+                          itemCount:
+                              state.vehicles.where((v) => _companySPZ.contains(v.spz)).length,
+                          itemBuilder: (BuildContext context, int position) {
+                            return _buildCompanyVehicleRow(context, position, state.vehicles);
+                          }),
+                      ListView.builder(
+                          padding: const EdgeInsets.all(16.0),
+                          itemCount:
+                              state.vehicles.where((v) => !_companySPZ.contains(v.spz)).length,
+                          itemBuilder: (BuildContext context, int position) {
+                            return _buildPersonalVehicleRow(context, position, state.vehicles);
+                          }),
+                    ],
+                  );
+                }
+
+                if (state is GetVehiclesStateError) {
+                  return _buildErrorMessageAndRefresh(context, state.message);
+                }
+
+                return LoadingIndicator();
+              },
+            )));
   }
 }

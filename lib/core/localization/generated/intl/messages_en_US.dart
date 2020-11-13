@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "parkingNote" : MessageLookupByLibrary.simpleMessage("Parking note"),
     "refresh" : MessageLookupByLibrary.simpleMessage("REFRESH"),
     "vehicleDetailNoLocation" : MessageLookupByLibrary.simpleMessage("No location recorded"),
+    "vehicles" : MessageLookupByLibrary.simpleMessage("Vehicles"),
     "vehiclesCompanyVehicles" : MessageLookupByLibrary.simpleMessage("Company Vehicles"),
     "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Personal Vehicles")
   };

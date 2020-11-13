@@ -67,6 +67,7 @@ class TripForm extends StatelessWidget {
                             FormBuilderSlider(
                               attribute: 'FuelStatus',
                               onChanged: _onChanged,
+                              validators: [FormBuilderValidators.required()],
                               numberFormat: NumberFormat('0 %'),
                               min: 0,
                               max: 1,
@@ -83,6 +84,7 @@ class TripForm extends StatelessWidget {
                                 Expanded(
                                   child: FormBuilderDateRangePicker(
                                     attribute: 'date_range',
+                                    validators: [FormBuilderValidators.required()],
                                     firstDate: DateTime(1970),
                                     lastDate: DateTime.now(),
                                     initialValue: [
@@ -130,6 +132,7 @@ class TripForm extends StatelessWidget {
                             FormBuilderTextField(
                               attribute: 'Note',
                               initialValue: 'Note',
+                              validators: [FormBuilderValidators.required()],
                               decoration: InputDecoration(
                                 labelText: S.current.description,
                               ),

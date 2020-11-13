@@ -21,6 +21,7 @@
   "parkingNote":"Poznámka k parkování",
   "description":"Účel cesty",
   "dateInterval":"Časový interval",
-  "fuelLevel" : "Množství paliva v nádrži"
+  "fuelLevel" : "Množství paliva v nádrži",
+  "vehicles" : "Vozidla"
 
 }

@@ -41,6 +41,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "parkingNote" : MessageLookupByLibrary.simpleMessage("Poznámka k parkování"),
     "refresh" : MessageLookupByLibrary.simpleMessage("Zkusit znovu"),
     "vehicleDetailNoLocation" : MessageLookupByLibrary.simpleMessage("K tomuto vozidlu nebyly uloženy žádné souřadnice"),
+    "vehicles" : MessageLookupByLibrary.simpleMessage("Vozidla"),
     "vehiclesCompanyVehicles" : MessageLookupByLibrary.simpleMessage("Firemní vozy"),
     "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Soukromé vozy")
   };
