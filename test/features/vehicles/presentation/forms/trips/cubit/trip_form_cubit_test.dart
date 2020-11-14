@@ -10,20 +10,25 @@ import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_trip.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
 
 import '../../../../../../fixtures/fixture_reader.dart';
 
 class MockCreateTrip extends Mock implements CreateTrip {}
 
+class MockVehicleTripListCubit extends Mock implements VehicleDetailTripsCubit {}
+
 void main() {
   TripFormCubit cubit;
   MockCreateTrip mockCreateTrip;
   Vehicle vehicle;
+  MockVehicleTripListCubit mockVehicleTripListCubit;
 
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockCreateTrip = MockCreateTrip();
-    cubit = TripFormCubit(vehicle: vehicle, usecase: mockCreateTrip);
+    cubit = TripFormCubit(
+        vehicle: vehicle, usecase: mockCreateTrip, tripListCubit: mockVehicleTripListCubit);
   });
 
   var tTrips = <Trip>[];
@@ -43,6 +48,8 @@ void main() {
         cubit.createTrip(tTrips.first);
         // assert
         verify(mockCreateTrip.call(Params(vehicleID: vehicle.id, trip: tTrips.first)));
+        verify(mockVehicleTripListCubit.getTrips());
+        verifyNoMoreInteractions(mockVehicleTripListCubit);
       },
     );
 

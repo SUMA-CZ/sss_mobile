@@ -5,6 +5,7 @@ import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/trip_form.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
 
 import '../../../../../injection_container.dart';
 
@@ -20,13 +21,15 @@ class TripList extends StatelessWidget {
       body: _buildTripsList(trips),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
+          var tripListCubit = BlocProvider.of<VehicleDetailTripsCubit>(context);
+
           Navigator.push(
             context,
             MaterialPageRoute(
                 fullscreenDialog: true,
                 builder: (context) => BlocProvider<TripFormCubit>(
                     create: (context) =>
-                        sl<TripFormCubit>(param1: vehicle)..setLastTrip(trips.first),
+                        sl<TripFormCubit>(param1: vehicle, param2: tripListCubit)..setLastTrip(trips.first),
                     child: TripForm())),
           );
         },

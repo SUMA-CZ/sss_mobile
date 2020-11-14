@@ -36,7 +36,8 @@ Future<void> init() async {
   sl.registerFactoryParam(
       (param1, param2) => VehicleDetailCubit(vehicleRepository: sl(), vehicle: param1));
 
-  sl.registerFactoryParam((param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1));
+  sl.registerFactoryParam(
+      (param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1, tripListCubit: param2));
   sl.registerFactoryParam((param1, param2) => RefuelingFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
 

@@ -13,6 +13,23 @@ class TripForm extends StatelessWidget {
 
   final ValueChanged _onChanged = (val) => print(val);
 
+  Map<String, dynamic> _initialDataFor(TripFormState state) {
+    if (state is TripFormEdit) {
+      return state.trip.toFormEditJSON();
+    } else if (state is TripFormLoaded) {
+      return state.trip.toFormNextJSON();
+    }
+    return {
+      'OfficialJourney': true,
+      'FuelStatus': 0.5,
+      'date_range': [DateTime.now(), DateTime.now()],
+      'InitialOdometer': 0,
+      'FinalOdometer': 0,
+      'Note': '',
+      'ParkingNote': ''
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,9 +60,7 @@ class TripForm extends StatelessWidget {
                       FormBuilder(
                         // context,
                         key: _fbKey,
-                        initialValue: (state is TripFormEdit)
-                            ? state.trip.toFormEditJSON()
-                            : ((state is TripFormLoaded) ? state.trip.toFormNextJSON() : {}),
+                        initialValue: _initialDataFor(state),
                         readOnly: false,
                         child: Column(
                           children: <Widget>[
@@ -159,7 +174,7 @@ class TripForm extends StatelessWidget {
                             child: MaterialButton(
                               color: Theme.of(context).accentColor,
                               child: Text('Submit', style: TextStyle(color: Colors.white)),
-                              onPressed: () {
+                              onPressed: () async {
                                 if (_fbKey.currentState.saveAndValidate()) {
                                   print(_fbKey.currentState.value);
                                   var data = _fbKey.currentState.value;
