@@ -7,28 +7,22 @@ import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
-class MockVehicleRepository extends Mock implements VehicleRepository {}
-
 class MockGetVehicle extends Mock implements GetVehicle {}
 
 void main() {
   VehicleDetailCubit cubit;
-  MockVehicleRepository mockVehicleRepository;
   Vehicle vehicle;
   MockGetVehicle mockGetVehicle;
 
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
-    mockVehicleRepository = MockVehicleRepository();
     mockGetVehicle = MockGetVehicle();
-    cubit = VehicleDetailCubit(
-        vehicleRepository: mockVehicleRepository, vehicle: vehicle, usecase: mockGetVehicle);
+    cubit = VehicleDetailCubit(vehicle: vehicle, usecase: mockGetVehicle);
   });
 
   test(

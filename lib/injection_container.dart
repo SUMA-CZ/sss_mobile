@@ -34,8 +34,7 @@ Future<void> init() async {
   sl.registerFactory(() => GetVehiclesBloc(getVehicles: sl()));
   sl.registerFactory(() => LoginBloc(authenticate: sl(), authenticationBloc: sl()));
 
-  sl.registerFactoryParam((param1, param2) =>
-      VehicleDetailCubit(vehicleRepository: sl(), vehicle: param1, usecase: sl()));
+  sl.registerFactoryParam((param1, param2) => VehicleDetailCubit(vehicle: param1, usecase: sl()));
 
   sl.registerFactoryParam(
       (param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1, tripListCubit: param2));
