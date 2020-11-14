@@ -1,8 +1,8 @@
 part of 'vehicle_detail_cubit.dart';
 
-abstract class VehicleDetailState extends Equatable {
+class VehicleDetailState extends Equatable {
   @override
-  List<Object> get props => throw [hashCode];
+  List<Object> get props => [];
 }
 
 class VehicleDetailInitial extends VehicleDetailState {
