@@ -43,5 +43,25 @@
 	<false/>
 	<key>io.flutter.embedded_views_preview</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Nahrávání dokladů</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Focení dokladů</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>Nahrávání zpráv</string>
+	<key>NSContactsUsageDescription</key>
+	<string>Načítání kontaktů</string>
+	<key>NSCalendarsUsageDescription</key>
+	<string>Editace eventů</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Přehrávání hudby</string>
+	<key>NSMotionUsageDescription</key>
+	<string>Nahrávání jízdy</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>Detekce řeči</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>Zaznamenání parkovaní</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Zaznamenání parkovaní</string>
 </dict>
 </plist>
