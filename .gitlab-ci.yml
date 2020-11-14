@@ -46,8 +46,6 @@ ipa.testflight:
     - gem install bundler
     - bundle install --path vendor/bundle
     - flutter pub get
-    - flutter pub run environment_config:generate
-
 
   script:
     - bundle exec fastlane beta
@@ -77,7 +75,6 @@ apk.alpha_track:
     - gem install bundler
     - bundle install
     - flutter pub get
-    - flutter pub run environment_config:generate
   script:
     - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
     - bundle exec fastlane upload_to_play_store_alpha
@@ -99,7 +96,6 @@ apk.prod_track:
     - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
     - cd android/
     - flutter pub get
-    - flutter pub run environment_config:generate
     - gem install bundler
     - bundle install
 

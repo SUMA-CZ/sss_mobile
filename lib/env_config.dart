@@ -1,5 +1,4 @@
 class EnvConfig {
-  static const String PROD = 'false';
-
-  static const String API_URL = 'https://sss.suma.guru/api';
+  static const String API_URL =
+      String.fromEnvironment('API_URL', defaultValue: 'https://sss.suma.guru/api');
 }

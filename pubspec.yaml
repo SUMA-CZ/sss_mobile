@@ -33,7 +33,6 @@ dependencies:
   meta: ^1.2.3
   equatable: ^1.2.5
   dio: ^3.0.10
-  environment_config:
   cupertino_icons: ^0.1.2
   intl_utils: ^1.9.0
   intl: 0.16.1
@@ -60,17 +59,5 @@ flutter_intl:
   class_name: S # Optional. Sets the name for the generated localization class. Default: S
   arb_dir: lib/core/localization/l10n # Optional. Sets the directory of your ARB resource files. Provided value should be a valid path on your system. Default: lib/l10n
   output_dir: lib/core/localization/generated # Optional. Sets the directory of generated localization files. Provided value should be a valid path on your system. Default: lib/generated
-
-environment_config:
-  path: env_config.dart
-  fields:
-    PROD:
-      env_var: PROD
-      const: true
-      default: false
-    API_URL:
-      env_var: API_URL
-      const: true
-      default: 'https://sss.suma.guru/api'
 
 
