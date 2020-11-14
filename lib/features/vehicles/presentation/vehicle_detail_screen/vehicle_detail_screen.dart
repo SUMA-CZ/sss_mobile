@@ -1,3 +1,5 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -100,9 +102,17 @@ class VehicleDetailScreen extends StatelessWidget {
         }
         var pinPosition = LatLng(state.vehicle.latitude, state.vehicle.longitude);
         var initialLocation = CameraPosition(zoom: 16, bearing: 30, target: pinPosition);
-        return GoogleMap(markers: {
-          Marker(markerId: MarkerId('<MARKER_ID>'), position: pinPosition, visible: true)
-        }, initialCameraPosition: initialLocation);
+        return GoogleMap(
+          markers: {
+            Marker(
+              markerId: MarkerId('<MARKER_ID>'),
+              position: pinPosition,
+              visible: true,
+            )
+          },
+          initialCameraPosition: initialLocation,
+          gestureRecognizers: {(Factory<PanGestureRecognizer>(() => PanGestureRecognizer()))},
+        );
       }
       return Text('err');
     });
