@@ -264,6 +264,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Misto parkování`
+  String get selectMapLocation {
+    return Intl.message(
+      'Misto parkování',
+      name: 'selectMapLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?`
+  String get failedToSaveTrip {
+    return Intl.message(
+      'Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?',
+      name: 'failedToSaveTrip',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

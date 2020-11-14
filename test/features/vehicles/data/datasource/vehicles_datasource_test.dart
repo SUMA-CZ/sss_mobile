@@ -352,4 +352,33 @@ void main() {
       },
     );
   });
+
+  group('getVehicle', () {
+    var tVehicle = VehicleModel.fromJson(json.decode(fixture('vehicle.json')));
+    final vehicleID = 16;
+
+    test(
+      'should return VehicleModel when the response code is 200 ',
+      () async {
+        // arrange
+        _setHTTP200WithJsonFile('vehicle.json');
+        // act
+        final result = await dataSource.getVehicle(vehicleID);
+        // assert
+        expect(result, equals(tVehicle));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.getVehicle;
+        // assert
+        expect(() => call(vehicleID), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
 }

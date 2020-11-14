@@ -178,6 +178,7 @@ void main() {
       () async {
         await repository.createTripForVehicleID(id, tOneTripModel);
         verify(mockRemoteDataSource.createTripForVehicleID(id, tOneTripModel));
+        // verifyNoMoreInteractions(mockRemoteDataSource);
       },
     );
   });
@@ -189,6 +190,7 @@ void main() {
       () async {
         await repository.createMaintenanceForVehicleID(id, tOneMaintenanceModel);
         verify(mockRemoteDataSource.createMaintenanceForVehicleID(id, tOneMaintenanceModel));
+        // verifyNoMoreInteractions(mockRemoteDataSource);
       },
     );
   });
@@ -200,6 +202,19 @@ void main() {
       () async {
         await repository.createRefuelingForVehicleID(id, tOneRefuelingModel);
         verify(mockRemoteDataSource.createRefuelingForVehicleID(id, tOneRefuelingModel));
+        // verifyNoMoreInteractions(mockRemoteDataSource);
+      },
+    );
+  });
+
+  group('getVehicle', () {
+    var id = 1;
+    test(
+      'should call get vehicle and get on datasource',
+      () async {
+        await repository.getVehicle(id);
+        verify(mockRemoteDataSource.getVehicle(id));
+        verifyNoMoreInteractions(mockRemoteDataSource);
       },
     );
   });

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'user.dart';
@@ -77,7 +78,9 @@ class Trip extends Equatable {
       'InitialOdometer': beginOdometer.toString(),
       'FinalOdometer': endOdometer.toString(),
       'Note': note ?? '',
-      'ParkingNote': parkingNote ?? ''
+      'ParkingNote': parkingNote ?? '',
+      'coords':
+          CameraPosition(bearing: 0.0, target: LatLng(latitude, longitude), tilt: 0.0, zoom: 18.0)
     };
   }
 
@@ -89,7 +92,9 @@ class Trip extends Equatable {
       'InitialOdometer': endOdometer.toString(),
       'FinalOdometer': endOdometer.toString(),
       'Note': '',
-      'ParkingNote': ''
+      'ParkingNote': '',
+      'coords':
+          CameraPosition(bearing: 0.0, target: LatLng(50.041631, 14.443760), tilt: 0.0, zoom: 18.0)
     };
   }
 }

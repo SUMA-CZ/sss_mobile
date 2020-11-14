@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:form_builder_map_field/form_builder_map_field.dart';
 import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
@@ -43,7 +46,7 @@ class TripForm extends StatelessWidget {
                 if (state is TripFormError) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
-                      content: Text('Savign Failed'),
+                      content: Text(S.current.failedToSaveTrip),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -110,7 +113,6 @@ class TripForm extends StatelessWidget {
                                 Expanded(
                                     child: FormBuilderTextField(
                                   attribute: 'InitialOdometer',
-                                  // initialValue: '26',
                                   decoration: InputDecoration(
                                     labelText: S.current.beginOdometer,
                                   ),
@@ -132,6 +134,7 @@ class TripForm extends StatelessWidget {
                                     FormBuilderValidators.required(),
                                     FormBuilderValidators.numeric(),
                                   ],
+
                                   keyboardType: TextInputType.number,
                                 )),
                               ],
@@ -154,20 +157,28 @@ class TripForm extends StatelessWidget {
                               ),
                               minLines: 2,
                               maxLines: 10,
-                            )
+                            ),
+                            FormBuilderMapField(
+                                initialValue: CameraPosition(
+                                    bearing: 0.0,
+                                    target: LatLng(50.041631, 14.443760),
+                                    tilt: 0.0,
+                                    zoom: 18.0),
+                                attribute: 'coords',
+                                decoration: InputDecoration(labelText: 'Select Location'),
+                                markerIconColor: Colors.red,
+                                markerIconSize: 50,
+                                onChanged: (val) {
+                                  print(val);
+                                },
+                                validators: [],
+                                gestureRecognizers: {
+                                  Factory<PanGestureRecognizer>(() => PanGestureRecognizer())
+                                }),
                           ],
                         ),
                       ),
                       SizedBox(height: 25),
-                      // FormBuilderMapField(
-                      //   attribute: 'Coordinates',
-                      //   decoration: InputDecoration(labelText: 'Select Location'),
-                      //   markerIconColor: Colors.red,
-                      //   markerIconSize: 50,
-                      //   onChanged: (val) {
-                      //     print(val);
-                      //   },
-                      // ),
                       Row(
                         children: <Widget>[
                           Expanded(
@@ -185,6 +196,9 @@ class TripForm extends StatelessWidget {
                                   var interval = data['date_range'];
                                   model.beginDate = interval.first;
                                   model.endDate = interval.last;
+                                  CameraPosition cameraPosition = data['coords'];
+                                  model.latitude = cameraPosition.target.latitude;
+                                  model.longitude = cameraPosition.target.longitude;
                                   print(model);
                                   BlocProvider.of<TripFormCubit>(context).createTrip(model);
                                 } else {

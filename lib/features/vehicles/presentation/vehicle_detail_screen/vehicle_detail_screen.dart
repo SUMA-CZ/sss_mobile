@@ -87,7 +87,7 @@ class VehicleDetailScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMap() {
+  Widget _buildMap(BuildContext context) {
     return BlocBuilder<VehicleDetailCubit, VehicleDetailState>(builder: (context, state) {
       if (state is VehicleDetailInitial) {
         if (state.vehicle.latitude == null ||
@@ -123,9 +123,19 @@ class VehicleDetailScreen extends StatelessWidget {
                   Tab(icon: Icon(Icons.build_circle_outlined)),
                   Tab(icon: Icon(Icons.map_outlined))
                 ],
+                onTap: (index) {
+                  if (index == 3) {
+                    final cubit = BlocProvider.of<VehicleDetailCubit>(context);
+                    cubit.getVehicle();
+                  }
+                },
               ),
             ),
-            body: TabBarView(
-                children: [_buildTrips(), _buildRefueling(), _buildMaintenances(), _buildMap()])));
+            body: TabBarView(children: [
+              _buildTrips(),
+              _buildRefueling(),
+              _buildMaintenances(),
+              _buildMap(context)
+            ])));
   }
 }

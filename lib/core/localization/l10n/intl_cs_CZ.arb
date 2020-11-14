@@ -22,6 +22,8 @@
   "description":"Účel cesty",
   "dateInterval":"Časový interval",
   "fuelLevel" : "Množství paliva v nádrži",
-  "vehicles" : "Vozidla"
+  "vehicles" : "Vozidla",
+  "selectMapLocation": "Misto parkování",
+  "failedToSaveTrip" : "Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?"
 
 }

@@ -22,5 +22,7 @@
   "description":"Purpose of trip",
   "dateInterval":"Date interval",
   "fuelLevel" : "Fuel level",
-  "vehicles" : "Vehicles"
+  "vehicles" : "Vehicles",
+  "selectMapLocation": "Parking spot",
+  "failedToSaveTrip" : "Error saving, is your End odometer greater than Begin odometer?"
 }

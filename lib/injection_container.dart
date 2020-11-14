@@ -21,6 +21,7 @@ import 'features/login/domain/repositories/user_repository.dart';
 import 'features/vehicles/data/datasources/vehicles_datasource.dart';
 import 'features/vehicles/data/repositories/vehicle_repository_impl.dart';
 import 'features/vehicles/domain/repositories/vehicle_repository.dart';
+import 'features/vehicles/domain/usecases/get_vehicle.dart';
 import 'features/vehicles/domain/usecases/get_vehicles.dart';
 import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
 
@@ -33,8 +34,8 @@ Future<void> init() async {
   sl.registerFactory(() => GetVehiclesBloc(getVehicles: sl()));
   sl.registerFactory(() => LoginBloc(authenticate: sl(), authenticationBloc: sl()));
 
-  sl.registerFactoryParam(
-      (param1, param2) => VehicleDetailCubit(vehicleRepository: sl(), vehicle: param1));
+  sl.registerFactoryParam((param1, param2) =>
+      VehicleDetailCubit(vehicleRepository: sl(), vehicle: param1, usecase: sl()));
 
   sl.registerFactoryParam(
       (param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1, tripListCubit: param2));
@@ -48,6 +49,7 @@ Future<void> init() async {
   /// Usecases -- can be singleton, no streams can stay in memory
   sl.registerLazySingleton(() => Authenticate(sl()));
   sl.registerLazySingleton(() => GetVehicles(sl()));
+  sl.registerLazySingleton(() => GetVehicle(sl()));
   sl.registerLazySingleton(() => GetTripsForVehicle(sl()));
   sl.registerLazySingleton(() => GetRefuelingsForVehicle(sl()));
   sl.registerLazySingleton(() => GetMaintenancesForVehicle(sl()));

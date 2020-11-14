@@ -11,6 +11,8 @@ import '../../../../env_config.dart';
 abstract class VehiclesRemoteDataSource {
   Future<List<VehicleModel>> getVehicles();
 
+  Future<VehicleModel> getVehicle(int vehicleID);
+
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID);
 
   Future<TripModel> createTripForVehicleID(int vehicleID, TripModel model);
@@ -31,6 +33,10 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
 
   @override
   Future<List<VehicleModel>> getVehicles() => _getVehiclesFromURL('${EnvConfig.API_URL}/vehicles');
+
+  @override
+  Future<VehicleModel> getVehicle(int vehicleID) =>
+      _getVehicle('${EnvConfig.API_URL}/vehicles/${vehicleID}');
 
   @override
   Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID) =>
@@ -86,6 +92,15 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
         vehicles.add(VehicleModel.fromJson(j));
       }
       return vehicles..sort(name);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  Future<VehicleModel> _getVehicle(String url) async {
+    try {
+      final response = await client.get(url);
+      return VehicleModel.fromJson(response.data);
     } catch (e) {
       throw ServerException();
     }

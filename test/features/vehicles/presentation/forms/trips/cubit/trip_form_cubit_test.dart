@@ -27,6 +27,7 @@ void main() {
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockCreateTrip = MockCreateTrip();
+    mockVehicleTripListCubit = MockVehicleTripListCubit();
     cubit = TripFormCubit(
         vehicle: vehicle, usecase: mockCreateTrip, tripListCubit: mockVehicleTripListCubit);
   });
@@ -45,7 +46,7 @@ void main() {
         when(mockCreateTrip.call(Params(vehicleID: vehicle.id, trip: tTrips.first)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        cubit.createTrip(tTrips.first);
+        await cubit.createTrip(tTrips.first);
         // assert
         verify(mockCreateTrip.call(Params(vehicleID: vehicle.id, trip: tTrips.first)));
         verify(mockVehicleTripListCubit.getTrips());

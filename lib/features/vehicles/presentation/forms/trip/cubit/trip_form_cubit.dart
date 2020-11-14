@@ -10,7 +10,7 @@ part 'trip_form_state.dart';
 
 class TripFormCubit extends Cubit<TripFormState> {
   TripFormCubit({@required this.usecase, @required this.vehicle, @required this.tripListCubit})
-      : assert(usecase != null, vehicle != null),
+      : assert(usecase != null && vehicle != null && tripListCubit != null),
         super(TripFormInitial());
 
   final CreateTrip usecase;
@@ -23,6 +23,7 @@ class TripFormCubit extends Cubit<TripFormState> {
       (failure) => TripFormError(),
       (payload) => TripFormCreated(),
     ));
+    emit(TripFormLoaded(trip));
     tripListCubit.getTrips();
   }
 

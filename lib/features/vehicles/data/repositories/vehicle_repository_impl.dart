@@ -92,4 +92,13 @@ class VehicleRepositoryImpl extends VehicleRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Vehicle>> getVehicle(int vehicleID) async {
+    try {
+      return Right(await remoteDataSource.getVehicle(vehicleID));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }
