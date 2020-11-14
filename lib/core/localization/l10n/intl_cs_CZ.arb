@@ -24,6 +24,7 @@
   "fuelLevel" : "Množství paliva v nádrži",
   "vehicles" : "Vozidla",
   "selectMapLocation": "Misto parkování",
-  "failedToSaveTrip" : "Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?"
+  "failedToSaveTrip" : "Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?",
+  "save": "Uložit"
 
 }

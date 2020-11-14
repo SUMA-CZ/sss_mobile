@@ -28,13 +28,16 @@ class TripList extends StatelessWidget {
             MaterialPageRoute(
                 fullscreenDialog: true,
                 builder: (context) => BlocProvider<TripFormCubit>(
-                    create: (context) =>
-                        sl<TripFormCubit>(param1: vehicle, param2: tripListCubit)..setLastTrip(trips.first),
+                    create: (context) => sl<TripFormCubit>(param1: vehicle, param2: tripListCubit)
+                      ..setLastTrip(trips.first),
                     child: TripForm())),
           );
         },
-        label: Text(S.current.addTrip),
-        icon: Icon(Icons.add_circle_outline),
+        label: Text(S.current.addTrip, style: TextStyle(color: Colors.white)),
+        icon: Icon(
+          Icons.add_circle_outline,
+          color: Colors.white,
+        ),
       ),
     );
   }

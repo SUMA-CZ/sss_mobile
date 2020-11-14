@@ -182,9 +182,9 @@ class TripForm extends StatelessWidget {
                       Row(
                         children: <Widget>[
                           Expanded(
-                            child: MaterialButton(
-                              color: Theme.of(context).accentColor,
-                              child: Text('Submit', style: TextStyle(color: Colors.white)),
+                            child: RaisedButton(
+                              // color: Theme.of(context).accentColor,
+                              child: Text(S.current.save, style: TextStyle(color: Colors.white)),
                               onPressed: () async {
                                 if (_fbKey.currentState.saveAndValidate()) {
                                   print(_fbKey.currentState.value);

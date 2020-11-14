@@ -31,10 +31,16 @@ class SSSMobile extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        brightness: Brightness.dark,
-        primaryColor: Color(0xff2d3663),
-        accentColor: Color(0xffff8f00),
-      ),
+          brightness: Brightness.dark,
+          primaryColor: Color(0xff2d3663),
+          accentColor: Color(0xffff8f00),
+          buttonTheme: ButtonThemeData(
+            buttonColor: Color(0xffff8f00), // Background color (orange in my case).
+            colorScheme:
+                Theme.of(context).colorScheme.copyWith(secondary: Colors.white), // Text color
+          ),
+          floatingActionButtonTheme: FloatingActionButtonThemeData(
+              splashColor: Colors.white.withOpacity(0.25), backgroundColor: Color(0xffff8f00))),
       localizationsDelegates: [
         S.delegate,
         GlobalMaterialLocalizations.delegate,
@@ -80,7 +86,6 @@ void main() async {
 
   Bloc.observer = LogBlocObserver();
   di.sl<Dio>().interceptors.add(AuthorizationInterceptor(repo: di.sl<UserRepository>()));
-  // runApp(SSSMobile());
 
   runZonedGuarded(
     () => runApp(SSSMobile()),

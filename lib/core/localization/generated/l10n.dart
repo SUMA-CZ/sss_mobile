@@ -284,6 +284,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Uložit`
+  String get save {
+    return Intl.message(
+      'Uložit',
+      name: 'save',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

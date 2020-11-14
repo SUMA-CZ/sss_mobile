@@ -79,8 +79,8 @@ class LoginFormState extends State<LoginForm> {
                   Row(
                     children: [
                       Expanded(
-                        child: MaterialButton(
-                          color: Theme.of(context).accentColor,
+                        child: RaisedButton(
+                          // color: Theme.of(context).accentColor,
                           onPressed: () {
                             if (_formKey.currentState.validate()) {
                               if (state is! LoginLoading) {
@@ -88,7 +88,7 @@ class LoginFormState extends State<LoginForm> {
                               }
                             }
                           },
-                          child: Text(S.current.loginButton),
+                          child: Text(S.current.loginButton.toUpperCase()),
                         ),
                       ),
                     ],

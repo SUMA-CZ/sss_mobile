@@ -24,5 +24,6 @@
   "fuelLevel" : "Fuel level",
   "vehicles" : "Vehicles",
   "selectMapLocation": "Parking spot",
-  "failedToSaveTrip" : "Error saving, is your End odometer greater than Begin odometer?"
+  "failedToSaveTrip" : "Error saving, is your End odometer greater than Begin odometer?",
+  "save": "Save"
 }
