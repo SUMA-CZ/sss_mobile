@@ -1,10 +1,14 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:sentry/sentry.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
+import 'package:sss_mobile/env_config.dart';
 
 import 'core/authorization/auth_bloc.dart';
 import 'core/authorization/auth_events.dart';
@@ -17,6 +21,9 @@ import 'features/login/presentation/pages/login_page.dart';
 import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
 import 'features/vehicles/presentation/vehicle_list_screen/vehicles_page.dart';
 import 'injection_container.dart' as di;
+
+final sentry =
+    SentryClient(dsn: "https://df77b1de3d3440958fb5133f3ea23914@o224610.ingest.sentry.io/5516756");
 
 class SSSMobile extends StatelessWidget {
   @override
@@ -73,5 +80,17 @@ void main() async {
 
   Bloc.observer = LogBlocObserver();
   di.sl<Dio>().interceptors.add(AuthorizationInterceptor(repo: di.sl<UserRepository>()));
-  runApp(SSSMobile());
+  // runApp(SSSMobile());
+
+  runZonedGuarded(
+    () => runApp(SSSMobile()),
+    (error, stackTrace) async {
+      if (EnvConfig.API_URL.contains('sss.sumanet')) {
+        await sentry.captureException(
+          exception: error,
+          stackTrace: stackTrace,
+        );
+      }
+    },
+  );
 }
