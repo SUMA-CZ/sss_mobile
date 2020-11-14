@@ -45,7 +45,7 @@ class VehiclesPage extends StatelessWidget {
         leading: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [Icon(Icons.local_gas_station_outlined), Text('${data[i].fuelLevel}%')],
+          children: [Icon(Icons.local_gas_station_outlined), Text('${data[i].fuelLevel ?? '?'} %')],
         ),
         trailing: Text(data[i].vin.trim()),
         subtitle: Text(data[i].spz.trim()),

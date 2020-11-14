@@ -11,7 +11,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>sss_mobile</string>
+	<string>SSS</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -63,5 +63,8 @@
 	<string>Zaznamenání parkovaní</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Zaznamenání parkovaní</string>
+	<key>UIStatusBarHidden</key>
+	<true/>
+
 </dict>
 </plist>

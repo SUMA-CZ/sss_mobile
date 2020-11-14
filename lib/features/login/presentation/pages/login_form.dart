@@ -75,15 +75,23 @@ class LoginFormState extends State<LoginForm> {
                         }
                         return null;
                       }),
-                  RaisedButton(
-                    onPressed: () {
-                      if (_formKey.currentState.validate()) {
-                        if (state is! LoginLoading) {
-                          _onLoginButtonPressed();
-                        }
-                      }
-                    },
-                    child: Text(S.current.loginButton),
+                  SizedBox(height: 25),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: MaterialButton(
+                          color: Theme.of(context).accentColor,
+                          onPressed: () {
+                            if (_formKey.currentState.validate()) {
+                              if (state is! LoginLoading) {
+                                _onLoginButtonPressed();
+                              }
+                            }
+                          },
+                          child: Text(S.current.loginButton),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
