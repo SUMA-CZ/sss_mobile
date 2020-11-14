@@ -71,9 +71,8 @@ flutter_icons:
   adaptive_icon_background: "ffffff"
 
 flutter_native_splash:
-  image: assets/2048x2048.png
+  image: assets/2048x2048_splash.png
   color: "ffffff"
   ios: false
   android: true
-  fill: false
 
