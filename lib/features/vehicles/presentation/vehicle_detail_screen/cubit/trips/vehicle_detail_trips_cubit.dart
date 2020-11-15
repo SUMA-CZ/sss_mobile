@@ -10,12 +10,12 @@ part 'vehicle_detail_trips_state.dart';
 
 class VehicleDetailTripsCubit extends Cubit<VehicleDetailTripsState> {
   VehicleDetailTripsCubit(
-      {@required this.getTripsForVehicle, @required this.deleteTripUsecase, @required this.vehicle})
+      {@required this.getTripsForVehicle, @required this.deleteTrip, @required this.vehicle})
       : assert(getTripsForVehicle != null, vehicle != null),
         super(VehicleDetailTripsInitial());
 
   final GetTripsForVehicle getTripsForVehicle;
-  final DeleteTrip deleteTripUsecase;
+  final DeleteTrip deleteTrip;
   final Vehicle vehicle;
 
   void getTrips() async {
@@ -29,8 +29,7 @@ class VehicleDetailTripsCubit extends Cubit<VehicleDetailTripsState> {
   void delete(int tripID) async {
     emit(VehicleDetailTripsLoading());
 
-    emit((await deleteTripUsecase(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: tripID)))
-        .fold(
+    emit((await deleteTrip(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: tripID))).fold(
       (failure) => VehicleDetailTripsErrorDeleting(),
       (payload) => VehicleDetailTripsDeleted(),
     ));

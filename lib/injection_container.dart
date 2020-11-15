@@ -29,7 +29,7 @@ import 'features/vehicles/data/repositories/vehicle_repository_impl.dart';
 import 'features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'features/vehicles/domain/usecases/get_vehicle.dart';
 import 'features/vehicles/domain/usecases/get_vehicles.dart';
-import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
+import 'features/vehicles/presentation/vehicles_screen/bloc/vehicles_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -37,7 +37,7 @@ Future<void> init() async {
   /// Features - Vehicles
   /// Bloc
   /// Always new instance on a call -- factory
-  sl.registerFactory(() => GetVehiclesBloc(getVehicles: sl()));
+  sl.registerFactory(() => VehiclesBloc(getVehicles: sl()));
   sl.registerFactory(() => LoginBloc(authenticate: sl(), authenticationBloc: sl()));
 
   sl.registerFactoryParam((param1, param2) => VehicleDetailCubit(vehicle: param1, usecase: sl()));
@@ -47,7 +47,7 @@ Future<void> init() async {
   sl.registerFactoryParam((param1, param2) => RefuelingFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) =>
-      VehicleDetailTripsCubit(getTripsForVehicle: sl(), deleteTripUsecase: sl(), vehicle: param1));
+      VehicleDetailTripsCubit(getTripsForVehicle: sl(), deleteTrip: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) => VehicleDetailRefuelingsCubit(
       getRefuelingsForVehicle: sl(), deleteRefueling: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) => VehicleDetailMaintenancesCubit(

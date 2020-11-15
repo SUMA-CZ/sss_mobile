@@ -29,9 +29,7 @@ void main() {
     mockGetTripsForVehicle = MockGetTripsForVehicle();
     mockDeleteTrip = MockDeleteTrip();
     cubit = VehicleDetailTripsCubit(
-        deleteTripUsecase: mockDeleteTrip,
-        getTripsForVehicle: mockGetTripsForVehicle,
-        vehicle: vehicle);
+        deleteTrip: mockDeleteTrip, getTripsForVehicle: mockGetTripsForVehicle, vehicle: vehicle);
   });
 
   var tTrips = <Trip>[];

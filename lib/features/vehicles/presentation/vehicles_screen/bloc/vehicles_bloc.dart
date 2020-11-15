@@ -9,30 +9,30 @@ import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
 
-part 'get_vehicles_event.dart';
-part 'get_vehicles_state.dart';
+part 'vehicles_event.dart';
+part 'vehicles_state.dart';
 
-class GetVehiclesBloc extends Bloc<GetVehiclesEvent, GetVehiclesState> {
-  GetVehiclesBloc({@required this.getVehicles})
+class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
+  VehiclesBloc({@required this.getVehicles})
       : assert(getVehicles != null),
-        super(GetVehiclesInitial());
+        super(VehiclesStateInitial());
 
   final GetVehicles getVehicles;
 
   @override
-  Stream<GetVehiclesState> mapEventToState(GetVehiclesEvent event) async* {
-    if (event is GetVehiclesEventGetVehicles) {
-      yield GetVehiclesStateLoading();
+  Stream<VehiclesState> mapEventToState(VehiclesEvent event) async* {
+    if (event is VehiclesEventRead) {
+      yield VehiclesStateLoading();
       final failureOrVehicles = await getVehicles(NoParams());
       yield* _eitherLoadedOrErrorState(failureOrVehicles);
     }
   }
 
-  Stream<GetVehiclesState> _eitherLoadedOrErrorState(
+  Stream<VehiclesState> _eitherLoadedOrErrorState(
       Either<Failure, List<Vehicle>> failureOrVehicles) async* {
     yield failureOrVehicles.fold(
-      (failure) => GetVehiclesStateError(message: _mapFailureToMessage(failure)),
-      (vehicles) => GetVehiclesStateLoaded(vehicles: vehicles),
+      (failure) => VehiclesStateError(message: _mapFailureToMessage(failure)),
+      (vehicles) => VehiclesStateLoaded(vehicles: vehicles),
     );
   }
 

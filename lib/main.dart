@@ -18,8 +18,8 @@ import 'core/network/authorization_interceptor.dart';
 import 'core/ui/screens/splash_screen.dart';
 import 'features/login/domain/repositories/user_repository.dart';
 import 'features/login/presentation/pages/login_page.dart';
-import 'features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
-import 'features/vehicles/presentation/vehicle_list_screen/vehicles_page.dart';
+import 'features/vehicles/presentation/vehicles_screen/bloc/vehicles_bloc.dart';
+import 'features/vehicles/presentation/vehicles_screen/vehicles_page.dart';
 import 'injection_container.dart' as di;
 
 final sentry =
@@ -54,7 +54,7 @@ class SSSMobile extends StatelessWidget {
           builder: (context, state) {
             if (state is AuthenticationAuthenticated) {
               return BlocProvider(
-                create: (_) => di.sl<GetVehiclesBloc>()..add(GetVehiclesEventGetVehicles()),
+                create: (_) => di.sl<VehiclesBloc>()..add(VehiclesEventRead()),
                 child: VehiclesPage(),
               );
             }

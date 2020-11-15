@@ -8,23 +8,23 @@ import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicles_screen/bloc/vehicles_bloc.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
 class MockGetVehicles extends Mock implements GetVehicles {}
 
 void main() {
-  GetVehiclesBloc bloc;
+  VehiclesBloc bloc;
   MockGetVehicles mockGetVehicles;
   setUp(() {
     mockGetVehicles = MockGetVehicles();
 
-    bloc = GetVehiclesBloc(getVehicles: mockGetVehicles);
+    bloc = VehiclesBloc(getVehicles: mockGetVehicles);
   });
 
   test('Initial State should be loading', () {
-    expect(bloc.state, equals(GetVehiclesInitial()));
+    expect(bloc.state, equals(VehiclesStateInitial()));
   });
 
   group('getVehicles', () {
@@ -37,7 +37,7 @@ void main() {
 
       when(mockGetVehicles(any)).thenAnswer((_) async => Right(tEVehicles));
 
-      bloc.add(GetVehiclesEventGetVehicles());
+      bloc.add(VehiclesEventRead());
 
       await untilCalled(mockGetVehicles(params)).timeout(Duration(seconds: 2));
       // assert
@@ -51,12 +51,12 @@ void main() {
         when(mockGetVehicles(any)).thenAnswer((_) async => Right(tEVehicles));
         // assert later
         final expected = [
-          GetVehiclesStateLoading(),
-          GetVehiclesStateLoaded(vehicles: tEVehicles),
+          VehiclesStateLoading(),
+          VehiclesStateLoaded(vehicles: tEVehicles),
         ];
         unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
         // act
-        bloc.add(GetVehiclesEventGetVehicles());
+        bloc.add(VehiclesEventRead());
       },
     );
 
@@ -69,12 +69,12 @@ void main() {
         when(mockGetVehicles(any)).thenAnswer((_) async => Left(ServerFailure(message: tMessage)));
         // assert later
         final expected = [
-          GetVehiclesStateLoading(),
-          GetVehiclesStateError(message: tMessage),
+          VehiclesStateLoading(),
+          VehiclesStateError(message: tMessage),
         ];
         unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
         // act
-        bloc.add(GetVehiclesEventGetVehicles());
+        bloc.add(VehiclesEventRead());
       },
     );
   });

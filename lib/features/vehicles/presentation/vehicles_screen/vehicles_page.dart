@@ -7,7 +7,7 @@ import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/vehicle_detail_screen.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_list_screen/bloc/get_vehicles_bloc.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicles_screen/bloc/vehicles_bloc.dart';
 
 import '../../../../injection_container.dart';
 
@@ -23,8 +23,7 @@ class VehiclesPage extends StatelessWidget {
             Text(message),
             RaisedButton(
                 child: Text(S.current.refresh),
-                onPressed: () =>
-                    BlocProvider.of<GetVehiclesBloc>(context)..add(GetVehiclesEventGetVehicles()))
+                onPressed: () => BlocProvider.of<VehiclesBloc>(context)..add(VehiclesEventRead()))
           ]),
     );
   }
@@ -87,9 +86,9 @@ class VehiclesPage extends StatelessWidget {
                 ],
               ),
             ),
-            body: BlocBuilder<GetVehiclesBloc, GetVehiclesState>(
+            body: BlocBuilder<VehiclesBloc, VehiclesState>(
               builder: (context, state) {
-                if (state is GetVehiclesStateLoaded) {
+                if (state is VehiclesStateLoaded) {
                   return TabBarView(
                     children: [
                       ListView.builder(
@@ -110,7 +109,7 @@ class VehiclesPage extends StatelessWidget {
                   );
                 }
 
-                if (state is GetVehiclesStateError) {
+                if (state is VehiclesStateError) {
                   return _buildErrorMessageAndRefresh(context, state.message);
                 }
 
