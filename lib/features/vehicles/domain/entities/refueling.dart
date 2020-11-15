@@ -70,7 +70,7 @@ class Refueling extends Equatable {
         scanURL
       ];
 
-  factory Refueling.fromJson(Map<String, dynamic> json) => _$ERefuelingFromJson(json);
+  factory Refueling.fromJson(Map<String, dynamic> json) => _$RefuelingFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ERefuelingToJson(this);
+  Map<String, dynamic> toJson() => _$RefuelingToJson(this);
 }

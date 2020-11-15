@@ -6,10 +6,11 @@ part of 'token_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-TokenModel _$ETokenModelFromJson(Map json) {
-  return TokenModel(token: null)..accessToken = json['AccessToken'] as String;
+TokenModel _$TokenModelFromJson(Map json) {
+  return TokenModel()..accessToken = json['AccessToken'] as String;
 }
 
-Map<String, dynamic> _$ETokenModelToJson(TokenModel instance) => <String, dynamic>{
+Map<String, dynamic> _$TokenModelToJson(TokenModel instance) =>
+    <String, dynamic>{
       'AccessToken': instance.accessToken,
     };

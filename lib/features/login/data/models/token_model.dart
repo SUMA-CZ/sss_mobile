@@ -7,10 +7,10 @@ part 'token_model.g.dart';
 @JsonSerializable()
 // ignore: must_be_immutable
 class TokenModel extends Token {
-  factory TokenModel.fromJson(Map<String, dynamic> json) => _$ETokenModelFromJson(json);
+  factory TokenModel.fromJson(Map<String, dynamic> json) => _$TokenModelFromJson(json);
 
   @override
-  Map<String, dynamic> toJson() => _$ETokenModelToJson(this);
+  Map<String, dynamic> toJson() => _$TokenModelToJson(this);
 
   TokenModel({@required String token}) : super(accessToken: token);
 }

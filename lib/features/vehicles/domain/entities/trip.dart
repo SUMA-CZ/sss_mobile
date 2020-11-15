@@ -50,9 +50,9 @@ class Trip extends Equatable {
   @JsonKey(name: 'User')
   User user;
 
-  factory Trip.fromJson(Map<String, dynamic> json) => _$ETripFromJson(json);
+  factory Trip.fromJson(Map<String, dynamic> json) => _$TripFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ETripToJson(this);
+  Map<String, dynamic> toJson() => _$TripToJson(this);
 
   @override
   List<Object> get props => [

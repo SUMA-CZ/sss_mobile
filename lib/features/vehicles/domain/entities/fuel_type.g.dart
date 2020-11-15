@@ -1,20 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'fuel_type.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map json) {
-  return User()
+FuelType _$FuelTypeFromJson(Map json) {
+  return FuelType()
     ..id = json['Id'] as String
-    ..vin = json['Email'] as String
     ..name = json['Name'] as String;
 }
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$FuelTypeToJson(FuelType instance) => <String, dynamic>{
       'Id': instance.id,
-      'Email': instance.vin,
       'Name': instance.name,
     };

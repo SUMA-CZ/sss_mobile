@@ -12,9 +12,9 @@ class Token extends Equatable {
   @JsonKey(name: 'AccessToken')
   String accessToken;
 
-  factory Token.fromJson(Map<String, dynamic> json) => _$ETokenFromJson(json);
+  factory Token.fromJson(Map<String, dynamic> json) => _$TokenFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ETokenToJson(this);
+  Map<String, dynamic> toJson() => _$TokenToJson(this);
 
   @override
   List<Object> get props => [accessToken];

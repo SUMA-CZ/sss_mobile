@@ -1,20 +1,18 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user.dart';
+part of 'vat_rate.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-User _$UserFromJson(Map json) {
-  return User()
+VatRate _$VatRateFromJson(Map json) {
+  return VatRate()
     ..id = json['Id'] as String
-    ..vin = json['Email'] as String
-    ..name = json['Name'] as String;
+    ..vat = json['VAT'] as String;
 }
 
-Map<String, dynamic> _$UserToJson(User instance) => <String, dynamic>{
+Map<String, dynamic> _$VatRateToJson(VatRate instance) => <String, dynamic>{
       'Id': instance.id,
-      'Email': instance.vin,
-      'Name': instance.name,
+      'VAT': instance.vat,
     };

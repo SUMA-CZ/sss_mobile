@@ -40,9 +40,9 @@ class Maintenance extends Equatable {
   @JsonKey(name: 'ScanURL')
   String scanURL;
 
-  factory Maintenance.fromJson(Map<String, dynamic> json) => _$EMaintenanceFromJson(json);
+  factory Maintenance.fromJson(Map<String, dynamic> json) => _$MaintenanceFromJson(json);
 
-  Map<String, dynamic> toJson() => _$EMaintenanceToJson(this);
+  Map<String, dynamic> toJson() => _$MaintenanceToJson(this);
 
   @override
   List<Object> get props =>

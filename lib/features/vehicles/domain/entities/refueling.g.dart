@@ -6,10 +6,11 @@ part of 'refueling.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Refueling _$ERefuelingFromJson(Map json) {
+Refueling _$RefuelingFromJson(Map json) {
   return Refueling()
     ..id = json['Id'] as int
-    ..date = json['Date'] == null ? null : DateTime.parse(json['Date'] as String)
+    ..date =
+        json['Date'] == null ? null : DateTime.parse(json['Date'] as String)
     ..odometer = json['OdometerState'] as int
     ..price = (json['PriceIncludingVAT'] as num)?.toDouble()
     ..vatRate = json['VatRate'] as String
@@ -28,7 +29,7 @@ Refueling _$ERefuelingFromJson(Map json) {
     ..scanURL = json['ScanURL'] as String;
 }
 
-Map<String, dynamic> _$ERefuelingToJson(Refueling instance) => <String, dynamic>{
+Map<String, dynamic> _$RefuelingToJson(Refueling instance) => <String, dynamic>{
       'Id': instance.id,
       'Date': instance.date?.toIso8601String(),
       'OdometerState': instance.odometer,

@@ -16,7 +16,9 @@ abstract class VehiclesRemoteDataSource {
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID);
 
   Future<void> deleteTrip(int vehicleID, int tripID);
+
   Future<void> deleteMaintenance(int vehicleID, int maintenanceID);
+
   Future<void> deleteRefueling(int vehicleID, int refuelingID);
 
   Future<TripModel> createTripForVehicleID(int vehicleID, TripModel model);

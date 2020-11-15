@@ -6,10 +6,11 @@ part of 'maintenance.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Maintenance _$EMaintenanceFromJson(Map json) {
+Maintenance _$MaintenanceFromJson(Map json) {
   return Maintenance()
     ..id = json['Id'] as int
-    ..date = json['Date'] == null ? null : DateTime.parse(json['Date'] as String)
+    ..date =
+        json['Date'] == null ? null : DateTime.parse(json['Date'] as String)
     ..state = json['State'] as String
     ..price = (json['Price'] as num)?.toDouble()
     ..description = json['Description'] as String
@@ -24,7 +25,8 @@ Maintenance _$EMaintenanceFromJson(Map json) {
     ..scanURL = json['ScanURL'] as String;
 }
 
-Map<String, dynamic> _$EMaintenanceToJson(Maintenance instance) => <String, dynamic>{
+Map<String, dynamic> _$MaintenanceToJson(Maintenance instance) =>
+    <String, dynamic>{
       'Id': instance.id,
       'Date': instance.date?.toIso8601String(),
       'State': instance.state,
