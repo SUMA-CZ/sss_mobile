@@ -7,12 +7,12 @@ import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_vehicles.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicles_screen/bloc/vehicles_bloc.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
-class MockGetVehicles extends Mock implements GetVehicles {}
+class MockGetVehicles extends Mock implements ReadVehicles {}
 
 void main() {
   VehiclesBloc bloc;

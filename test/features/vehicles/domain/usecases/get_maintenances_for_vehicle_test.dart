@@ -5,19 +5,19 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_maintenances_for_vehicle.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
 
 class MockVehicleRepository extends Mock implements VehicleRepository {}
 
 void main() {
-  GetMaintenancesForVehicle usecase;
+  ReadMaintenancesForVehicle usecase;
   MockVehicleRepository repository;
 
   setUp(() {
     repository = MockVehicleRepository();
-    usecase = GetMaintenancesForVehicle(repository);
+    usecase = ReadMaintenancesForVehicle(repository);
   });
 
   var objects = <MaintenanceModel>[];

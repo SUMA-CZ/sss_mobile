@@ -9,17 +9,17 @@ import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_trip.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_trips_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/trips_cubit.dart';
 
 import '../../../../../../fixtures/fixture_reader.dart';
 
-class MockGetTripsForVehicle extends Mock implements GetTripsForVehicle {}
+class MockGetTripsForVehicle extends Mock implements ReadTripsForVehicle {}
 
 class MockDeleteTrip extends Mock implements DeleteTrip {}
 
 void main() {
-  VehicleDetailTripsCubit cubit;
+  TripsCubit cubit;
   MockGetTripsForVehicle mockGetTripsForVehicle;
   Vehicle vehicle;
   MockDeleteTrip mockDeleteTrip;
@@ -28,7 +28,7 @@ void main() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockGetTripsForVehicle = MockGetTripsForVehicle();
     mockDeleteTrip = MockDeleteTrip();
-    cubit = VehicleDetailTripsCubit(
+    cubit = TripsCubit(
         deleteTrip: mockDeleteTrip, getTripsForVehicle: mockGetTripsForVehicle, vehicle: vehicle);
   });
 
@@ -59,7 +59,7 @@ void main() {
         when(mockGetTripsForVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [VehicleDetailTripsLoading(), VehicleDetailTripsLoaded(successEither)];
+        final expected = [TripsStateLoading(), TripsStateLoaded(successEither)];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
@@ -77,7 +77,7 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VehicleDetailTripsLoading(), VehicleDetailTripsError()];
+        final expected = [TripsStateLoading(), TripsStateError()];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
@@ -121,10 +121,10 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tTrips));
 
         final expected = [
-          VehicleDetailTripsLoading(),
-          VehicleDetailTripsDeleted(),
-          VehicleDetailTripsLoading(),
-          VehicleDetailTripsLoaded(tTrips)
+          TripsStateLoading(),
+          TripsStateDeleted(),
+          TripsStateLoading(),
+          TripsStateLoaded(tTrips)
         ];
 
         // assert
@@ -147,10 +147,10 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tTrips));
 
         final expected = [
-          VehicleDetailTripsLoading(),
-          VehicleDetailTripsErrorDeleting(),
-          VehicleDetailTripsLoading(),
-          VehicleDetailTripsLoaded(tTrips)
+          TripsStateLoading(),
+          TripsStateErrorDeleting(),
+          TripsStateLoading(),
+          TripsStateLoaded(tTrips)
         ];
 
         // assert

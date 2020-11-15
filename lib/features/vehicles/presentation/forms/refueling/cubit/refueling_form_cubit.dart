@@ -22,8 +22,4 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       (payload) => RefuelingFormCreated(),
     ));
   }
-
-  void deleteTrip() async {
-    // TODO:
-  }
 }

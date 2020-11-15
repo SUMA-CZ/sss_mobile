@@ -4,7 +4,7 @@ import 'package:meta/meta.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_trip.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/trips_cubit.dart';
 
 part 'trip_form_state.dart';
 
@@ -15,7 +15,7 @@ class TripFormCubit extends Cubit<TripFormState> {
 
   final CreateTrip usecase;
   final Vehicle vehicle;
-  final VehicleDetailTripsCubit tripListCubit;
+  final TripsCubit tripListCubit;
 
   void createTrip(Trip trip) async {
     emit(TripFormLoading());

@@ -3,17 +3,17 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_trips_for_vehicle.dart';
 
 class MockVehicleRepository extends Mock implements VehicleRepository {}
 
 void main() {
-  GetTripsForVehicle usecase;
+  ReadTripsForVehicle usecase;
   MockVehicleRepository repository;
 
   setUp(() {
     repository = MockVehicleRepository();
-    usecase = GetTripsForVehicle(repository);
+    usecase = ReadTripsForVehicle(repository);
   });
 
   final tTrips = [

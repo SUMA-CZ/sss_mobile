@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_vehicles.dart';
 
 part 'vehicles_event.dart';
 part 'vehicles_state.dart';
@@ -17,7 +17,7 @@ class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
       : assert(getVehicles != null),
         super(VehiclesStateInitial());
 
-  final GetVehicles getVehicles;
+  final ReadVehicles getVehicles;
 
   @override
   Stream<VehiclesState> mapEventToState(VehiclesEvent event) async* {

@@ -9,17 +9,17 @@ import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_refueling.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_refuelings_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/refuelings_cubit.dart';
 
 import '../../../../../../fixtures/fixture_reader.dart';
 
-class MockGetRefuelingsForVehicle extends Mock implements GetRefuelingsForVehicle {}
+class MockGetRefuelingsForVehicle extends Mock implements ReadRefuelingsForVehicle {}
 
 class MockDeleteRefueling extends Mock implements DeleteRefueling {}
 
 void main() {
-  VehicleDetailRefuelingsCubit cubit;
+  RefuelingsCubit cubit;
   MockGetRefuelingsForVehicle mockGetRefuelingsForVehicle;
   Vehicle vehicle;
   MockDeleteRefueling mockDeleteRefueling;
@@ -28,7 +28,7 @@ void main() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockGetRefuelingsForVehicle = MockGetRefuelingsForVehicle();
     mockDeleteRefueling = MockDeleteRefueling();
-    cubit = VehicleDetailRefuelingsCubit(
+    cubit = RefuelingsCubit(
         deleteRefueling: mockDeleteRefueling,
         getRefuelingsForVehicle: mockGetRefuelingsForVehicle,
         vehicle: vehicle);
@@ -48,7 +48,7 @@ void main() {
         when(mockGetRefuelingsForVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        cubit.getRefuelings();
+        cubit.read();
         // assert
         verify(mockGetRefuelingsForVehicle.call(Params(vehicleID: vehicle.id)));
       },
@@ -61,16 +61,13 @@ void main() {
         when(mockGetRefuelingsForVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [
-          VehicleDetailRefuelingsLoading(),
-          VehicleDetailRefuelingsLoaded(successEither)
-        ];
+        final expected = [RefuelingsStateLoading(), RefuelingsStateLoaded(successEither)];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
-        cubit.getRefuelings();
+        cubit.read();
       },
     );
 
@@ -82,13 +79,13 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VehicleDetailRefuelingsLoading(), VehicleDetailRefuelingsError()];
+        final expected = [RefuelingsStateLoading(), RefuelingsStateError()];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
-        cubit.getRefuelings();
+        cubit.read();
       },
     );
   });
@@ -126,10 +123,10 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tRefuelings));
 
         final expected = [
-          VehicleDetailRefuelingsLoading(),
-          VehicleDetailRefuelingsDeleted(),
-          VehicleDetailRefuelingsLoading(),
-          VehicleDetailRefuelingsLoaded(tRefuelings)
+          RefuelingsStateLoading(),
+          RefuelingsStateDeleted(),
+          RefuelingsStateLoading(),
+          RefuelingsStateLoaded(tRefuelings)
         ];
 
         // assert
@@ -152,10 +149,10 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tRefuelings));
 
         final expected = [
-          VehicleDetailRefuelingsLoading(),
-          VehicleDetailRefuelingsErrorDeleting(),
-          VehicleDetailRefuelingsLoading(),
-          VehicleDetailRefuelingsLoaded(tRefuelings)
+          RefuelingsStateLoading(),
+          RefuelingsStateErrorDeleting(),
+          RefuelingsStateLoading(),
+          RefuelingsStateLoaded(tRefuelings)
         ];
 
         // assert

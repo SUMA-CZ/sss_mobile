@@ -7,7 +7,7 @@ import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/trip_form.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/trips_cubit.dart';
 
 import '../../../../../injection_container.dart';
 
@@ -21,9 +21,9 @@ class TripList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<VehicleDetailTripsCubit, VehicleDetailTripsState>(
+      body: BlocListener<TripsCubit, TripsState>(
         listener: (context, state) {
-          if (state is VehicleDetailTripsErrorDeleting) {
+          if (state is TripsStateErrorDeleting) {
             Scaffold.of(context).showSnackBar(
               SnackBar(
                 content: Text(S.current.failedDelete),
@@ -36,7 +36,7 @@ class TripList extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          var tripListCubit = BlocProvider.of<VehicleDetailTripsCubit>(context);
+          var tripListCubit = BlocProvider.of<TripsCubit>(context);
 
           Navigator.push(
             context,
@@ -107,7 +107,7 @@ class TripList extends StatelessWidget {
               FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                 onPressed: () {
-                  BlocProvider.of<VehicleDetailTripsCubit>(context).delete(data.id);
+                  BlocProvider.of<TripsCubit>(context).delete(data.id);
                 },
                 child: Column(
                   children: <Widget>[

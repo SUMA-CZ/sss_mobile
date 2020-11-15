@@ -1,4 +1,4 @@
-part of 'maintenance_form_dart_cubit.dart';
+part of 'maintenance_form_cubit.dart';
 
 abstract class MaintenanceFormState extends Equatable {
   @override

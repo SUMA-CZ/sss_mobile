@@ -4,40 +4,40 @@ import 'package:meta/meta.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_refueling.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_refuelings_for_vehicle.dart';
 
-part 'vehicle_detail_refuelings_state.dart';
+part 'refuelings_state.dart';
 
-class VehicleDetailRefuelingsCubit extends Cubit<VehicleDetailRefuelingsState> {
-  VehicleDetailRefuelingsCubit(
+class RefuelingsCubit extends Cubit<RefuelingsState> {
+  RefuelingsCubit(
       {@required this.getRefuelingsForVehicle,
       @required this.deleteRefueling,
       @required this.vehicle})
       : assert(getRefuelingsForVehicle != null && vehicle != null && deleteRefueling != null),
-        super(VehicleDetailRefuelingsInitial());
+        super(RefuelingsStateInitial());
 
-  final GetRefuelingsForVehicle getRefuelingsForVehicle;
+  final ReadRefuelingsForVehicle getRefuelingsForVehicle;
   final DeleteRefueling deleteRefueling;
   final Vehicle vehicle;
 
-  void getRefuelings() async {
-    emit(VehicleDetailRefuelingsLoading());
+  void read() async {
+    emit(RefuelingsStateLoading());
     emit((await getRefuelingsForVehicle(Params(vehicleID: vehicle.id))).fold(
-      (failure) => VehicleDetailRefuelingsError(),
-      (payload) => VehicleDetailRefuelingsLoaded(payload),
+      (failure) => RefuelingsStateError(),
+      (payload) => RefuelingsStateLoaded(payload),
     ));
   }
 
   void delete(int refuelingID) async {
-    emit(VehicleDetailRefuelingsLoading());
+    emit(RefuelingsStateLoading());
 
     emit((await deleteRefueling(
             ParamsForDeletingRefueling(vehicleID: vehicle.id, objectID: refuelingID)))
         .fold(
-      (failure) => VehicleDetailRefuelingsErrorDeleting(),
-      (payload) => VehicleDetailRefuelingsDeleted(),
+      (failure) => RefuelingsStateErrorDeleting(),
+      (payload) => RefuelingsStateDeleted(),
     ));
 
-    await getRefuelings();
+    await read();
   }
 }

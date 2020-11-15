@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/refuelings_cubit.dart';
 
 class RefuelingList extends StatelessWidget {
   final List<Refueling> refuelings;
@@ -15,9 +15,9 @@ class RefuelingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<VehicleDetailRefuelingsCubit, VehicleDetailRefuelingsState>(
+      body: BlocListener<RefuelingsCubit, RefuelingsState>(
           listener: (context, state) {
-            if (state is VehicleDetailRefuelingsErrorDeleting) {
+            if (state is RefuelingsStateErrorDeleting) {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content: Text(S.current.failedDelete),
@@ -75,7 +75,7 @@ class RefuelingList extends StatelessWidget {
               FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                 onPressed: () {
-                  BlocProvider.of<VehicleDetailRefuelingsCubit>(context).delete(data.id);
+                  BlocProvider.of<RefuelingsCubit>(context).delete(data.id);
                 },
                 child: Column(
                   children: <Widget>[

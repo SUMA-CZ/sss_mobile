@@ -5,7 +5,7 @@ import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_maintenace.dart';
 
-part 'maintenance_form_dart_state.dart';
+part 'maintenance_form_state.dart';
 
 class MaintenanceFormCubit extends Cubit<MaintenanceFormState> {
   MaintenanceFormCubit({@required this.usecase, @required this.vehicle})
@@ -21,9 +21,5 @@ class MaintenanceFormCubit extends Cubit<MaintenanceFormState> {
       (failure) => MaintenanceFormStateError(),
       (payload) => MaintenanceFormStateCreated(),
     ));
-  }
-
-  void deleteTrip() async {
-    // TODO:
   }
 }

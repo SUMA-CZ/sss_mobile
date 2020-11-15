@@ -9,17 +9,17 @@ import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart'
 import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_maintenance.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/vehicle_detail_maintenances_cubit.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_maintenances_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/maintenances_cubit.dart';
 
 import '../../../../../../fixtures/fixture_reader.dart';
 
-class MockGetMaintenancesForVehicle extends Mock implements GetMaintenancesForVehicle {}
+class MockGetMaintenancesForVehicle extends Mock implements ReadMaintenancesForVehicle {}
 
 class MockDeleteMaintenance extends Mock implements DeleteMaintenance {}
 
 void main() {
-  VehicleDetailMaintenancesCubit cubit;
+  MaintenancesCubit cubit;
   MockGetMaintenancesForVehicle mockGetMaintenancesForVehicle;
   MockDeleteMaintenance mockDeleteMaintenance;
   Vehicle vehicle;
@@ -28,7 +28,7 @@ void main() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockGetMaintenancesForVehicle = MockGetMaintenancesForVehicle();
     mockDeleteMaintenance = MockDeleteMaintenance();
-    cubit = VehicleDetailMaintenancesCubit(
+    cubit = MaintenancesCubit(
         deleteMaintenance: mockDeleteMaintenance,
         getMaintenancesForTrip: mockGetMaintenancesForVehicle,
         vehicle: vehicle);
@@ -48,7 +48,7 @@ void main() {
         when(mockGetMaintenancesForVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        cubit.getMaintenances();
+        cubit.read();
         // assert
         verify(mockGetMaintenancesForVehicle.call(Params(vehicleID: vehicle.id)));
       },
@@ -61,16 +61,13 @@ void main() {
         when(mockGetMaintenancesForVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [
-          VehicleDetailMaintenancesLoading(),
-          VehicleDetailMaintenancesLoaded(successEither)
-        ];
+        final expected = [MaintenancesStateLoading(), MaintenancesStateLoaded(successEither)];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
-        cubit.getMaintenances();
+        cubit.read();
       },
     );
 
@@ -82,13 +79,13 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VehicleDetailMaintenancesLoading(), VehicleDetailMaintenancesError()];
+        final expected = [MaintenancesStateLoading(), MaintenancesStateError()];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
-        cubit.getMaintenances();
+        cubit.read();
       },
     );
   });
@@ -126,10 +123,10 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tTrips));
 
         final expected = [
-          VehicleDetailMaintenancesLoading(),
-          VehicleDetailMaintenancesDeleted(),
-          VehicleDetailMaintenancesLoading(),
-          VehicleDetailMaintenancesLoaded(tTrips)
+          MaintenancesStateLoading(),
+          MaintenancesStateDeleted(),
+          MaintenancesStateLoading(),
+          MaintenancesStateLoaded(tTrips)
         ];
 
         // assert
@@ -152,10 +149,10 @@ void main() {
             .thenAnswer((realInvocation) async => Right(tTrips));
 
         final expected = [
-          VehicleDetailMaintenancesLoading(),
-          VehicleDetailMaintenancesErrorDeleting(),
-          VehicleDetailMaintenancesLoading(),
-          VehicleDetailMaintenancesLoaded(tTrips)
+          MaintenancesStateLoading(),
+          MaintenancesStateErrorDeleting(),
+          MaintenancesStateLoading(),
+          MaintenancesStateLoaded(tTrips)
         ];
 
         // assert

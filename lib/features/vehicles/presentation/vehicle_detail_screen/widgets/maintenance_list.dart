@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
-import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/vehicle_detail_maintenances_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/maintenances_cubit.dart';
 
 class MaintenanceList extends StatelessWidget {
   final List<Maintenance> maintenances;
@@ -15,9 +15,9 @@ class MaintenanceList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<VehicleDetailMaintenancesCubit, VehicleDetailMaintenancesState>(
+      body: BlocListener<MaintenancesCubit, MaintenancesState>(
           listener: (context, state) {
-            if (state is VehicleDetailMaintenancesErrorDeleting) {
+            if (state is MaintenancesStateErrorDeleting) {
               Scaffold.of(context).showSnackBar(
                 SnackBar(
                   content: Text(S.current.failedDelete),
@@ -61,7 +61,7 @@ class MaintenanceList extends StatelessWidget {
               FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                 onPressed: () {
-                  BlocProvider.of<VehicleDetailMaintenancesCubit>(context).delete(data.id);
+                  BlocProvider.of<MaintenancesCubit>(context).delete(data.id);
                 },
                 child: Column(
                   children: <Widget>[

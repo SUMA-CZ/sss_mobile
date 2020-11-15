@@ -4,34 +4,33 @@ import 'package:meta/meta.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_trip.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_trips_for_vehicle.dart';
 
-part 'vehicle_detail_trips_state.dart';
+part 'trips_state.dart';
 
-class VehicleDetailTripsCubit extends Cubit<VehicleDetailTripsState> {
-  VehicleDetailTripsCubit(
-      {@required this.getTripsForVehicle, @required this.deleteTrip, @required this.vehicle})
+class TripsCubit extends Cubit<TripsState> {
+  TripsCubit({@required this.getTripsForVehicle, @required this.deleteTrip, @required this.vehicle})
       : assert(getTripsForVehicle != null, vehicle != null),
-        super(VehicleDetailTripsInitial());
+        super(TripsStateInitial());
 
-  final GetTripsForVehicle getTripsForVehicle;
+  final ReadTripsForVehicle getTripsForVehicle;
   final DeleteTrip deleteTrip;
   final Vehicle vehicle;
 
   void getTrips() async {
-    emit(VehicleDetailTripsLoading());
+    emit(TripsStateLoading());
     emit((await getTripsForVehicle(Params(vehicleID: vehicle.id))).fold(
-      (failure) => VehicleDetailTripsError(),
-      (payload) => VehicleDetailTripsLoaded(payload),
+      (failure) => TripsStateError(),
+      (payload) => TripsStateLoaded(payload),
     ));
   }
 
   void delete(int tripID) async {
-    emit(VehicleDetailTripsLoading());
+    emit(TripsStateLoading());
 
     emit((await deleteTrip(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: tripID))).fold(
-      (failure) => VehicleDetailTripsErrorDeleting(),
-      (payload) => VehicleDetailTripsDeleted(),
+      (failure) => TripsStateErrorDeleting(),
+      (payload) => TripsStateDeleted(),
     ));
 
     getTrips();

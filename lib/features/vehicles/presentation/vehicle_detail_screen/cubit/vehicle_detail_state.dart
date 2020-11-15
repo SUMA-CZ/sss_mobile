@@ -5,12 +5,12 @@ class VehicleDetailState extends Equatable {
   List<Object> get props => [];
 }
 
-class VehicleDetailInitial extends VehicleDetailState {
+class VehicleDetailStateInitial extends VehicleDetailState {
   final Vehicle vehicle;
 
-  VehicleDetailInitial({@required this.vehicle});
+  VehicleDetailStateInitial({@required this.vehicle});
   @override
   List<Object> get props => [vehicle];
 }
 
-class VehicleDetailLoading extends VehicleDetailState {}
+class VehicleDetailStateLoading extends VehicleDetailState {}

@@ -7,12 +7,12 @@ import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
 
 import '../../../../../fixtures/fixture_reader.dart';
 
-class MockGetVehicle extends Mock implements GetVehicle {}
+class MockGetVehicle extends Mock implements ReadVehicle {}
 
 void main() {
   VehicleDetailCubit cubit;
@@ -28,7 +28,7 @@ void main() {
   test(
     'should be intitial with vehicle',
     () async {
-      expect(cubit.state, VehicleDetailInitial(vehicle: vehicle));
+      expect(cubit.state, VehicleDetailStateInitial(vehicle: vehicle));
     },
   );
 
@@ -43,7 +43,7 @@ void main() {
         when(mockGetVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        cubit.getVehicle();
+        cubit.readVehicle();
         // assert
         verify(mockGetVehicle.call(Params(vehicleID: vehicle.id)));
       },
@@ -56,13 +56,16 @@ void main() {
         when(mockGetVehicle.call(Params(vehicleID: vehicle.id)))
             .thenAnswer((realInvocation) async => Right(successEither));
         // act
-        final expected = [VehicleDetailLoading(), VehicleDetailInitial(vehicle: tVehicle)];
+        final expected = [
+          VehicleDetailStateLoading(),
+          VehicleDetailStateInitial(vehicle: tVehicle)
+        ];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
-        cubit.getVehicle();
+        cubit.readVehicle();
       },
     );
 
@@ -74,13 +77,13 @@ void main() {
             .thenAnswer((realInvocation) async => Left(ServerFailure()));
         // act
 
-        final expected = [VehicleDetailLoading(), VehicleDetailInitial(vehicle: vehicle)];
+        final expected = [VehicleDetailStateLoading(), VehicleDetailStateInitial(vehicle: vehicle)];
 
         // assert
         unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
 
         // act
-        cubit.getVehicle();
+        cubit.readVehicle();
       },
     );
   });

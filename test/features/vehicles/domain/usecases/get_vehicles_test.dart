@@ -4,17 +4,17 @@ import 'package:mockito/mockito.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_vehicles.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_vehicles.dart';
 
 class MockVehicleRepository extends Mock implements VehicleRepository {}
 
 void main() {
-  GetVehicles usecase;
+  ReadVehicles usecase;
   MockVehicleRepository repository;
 
   setUp(() {
     repository = MockVehicleRepository();
-    usecase = GetVehicles(repository);
+    usecase = ReadVehicles(repository);
   });
 
   final tVehicles = [Vehicle(id: 1, spz: 'A'), Vehicle(id: 2, spz: 'B')];

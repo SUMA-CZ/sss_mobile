@@ -3,17 +3,17 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
-import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 
-class GetTripsForVehicle implements UseCase<List<Trip>, Params> {
+class ReadVehicle implements UseCase<Vehicle, Params> {
   final VehicleRepository repository;
 
-  GetTripsForVehicle(this.repository);
+  ReadVehicle(this.repository);
 
   @override
-  Future<Either<Failure, List<Trip>>> call(Params params) async {
-    return await repository.getTripsForVehicleID(params.vehicleID);
+  Future<Either<Failure, Vehicle>> call(Params params) async {
+    return await repository.getVehicle(params.vehicleID);
   }
 }
 
