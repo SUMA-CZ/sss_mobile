@@ -8,7 +8,7 @@ part of 'fuel_type.dart';
 
 FuelType _$FuelTypeFromJson(Map json) {
   return FuelType()
-    ..id = json['Id'] as String
+    ..id = json['Id'] as int
     ..name = json['Name'] as String;
 }
 

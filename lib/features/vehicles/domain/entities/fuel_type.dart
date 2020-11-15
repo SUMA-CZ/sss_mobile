@@ -14,7 +14,7 @@ class FuelType extends Equatable {
   FuelType();
 
   @JsonKey(name: 'Id')
-  String id;
+  int id;
 
   @JsonKey(name: 'Name')
   String name;

@@ -8,7 +8,7 @@ part of 'fuel_type_model.dart';
 
 FuelTypeModel _$FuelTypeModelFromJson(Map json) {
   return FuelTypeModel()
-    ..id = json['Id'] as String
+    ..id = json['Id'] as int
     ..name = json['Name'] as String;
 }
 
