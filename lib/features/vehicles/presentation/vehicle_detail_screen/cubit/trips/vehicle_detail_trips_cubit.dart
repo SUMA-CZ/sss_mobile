@@ -26,17 +26,15 @@ class VehicleDetailTripsCubit extends Cubit<VehicleDetailTripsState> {
     ));
   }
 
-  void deleteTrip(int tripID) async {
+  void delete(int tripID) async {
     emit(VehicleDetailTripsLoading());
 
-    emit((await deleteTripUsecase(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: tripID))).fold(
+    emit((await deleteTripUsecase(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: tripID)))
+        .fold(
       (failure) => VehicleDetailTripsErrorDeleting(),
-      (payload) => null,
+      (payload) => VehicleDetailTripsDeleted(),
     ));
 
-    emit((await getTripsForVehicle(Params(vehicleID: vehicle.id))).fold(
-      (failure) => VehicleDetailTripsError(),
-      (payload) => VehicleDetailTripsLoaded(payload),
-    ));
+    getTrips();
   }
 }

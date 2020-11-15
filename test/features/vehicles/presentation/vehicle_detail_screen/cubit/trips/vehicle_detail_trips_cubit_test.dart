@@ -8,6 +8,7 @@ import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/delete_trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
 
@@ -15,15 +16,22 @@ import '../../../../../../fixtures/fixture_reader.dart';
 
 class MockGetTripsForVehicle extends Mock implements GetTripsForVehicle {}
 
+class MockDeleteTrip extends Mock implements DeleteTrip {}
+
 void main() {
   VehicleDetailTripsCubit cubit;
   MockGetTripsForVehicle mockGetTripsForVehicle;
   Vehicle vehicle;
+  MockDeleteTrip mockDeleteTrip;
 
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockGetTripsForVehicle = MockGetTripsForVehicle();
-    cubit = VehicleDetailTripsCubit(getTripsForVehicle: mockGetTripsForVehicle, vehicle: vehicle);
+    mockDeleteTrip = MockDeleteTrip();
+    cubit = VehicleDetailTripsCubit(
+        deleteTripUsecase: mockDeleteTrip,
+        getTripsForVehicle: mockGetTripsForVehicle,
+        vehicle: vehicle);
   });
 
   var tTrips = <Trip>[];
@@ -78,6 +86,80 @@ void main() {
 
         // act
         cubit.getTrips();
+      },
+    );
+  });
+
+  group('deleteTrip', () {
+    final maintenanceID = 1;
+    test(
+      'should use delete and getMaintenances usecases to get data',
+      () async {
+        // arrange
+        when(mockDeleteTrip
+                .call(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: maintenanceID)))
+            .thenAnswer((realInvocation) async => Right(null));
+
+        when(mockGetTripsForVehicle.call(Params(vehicleID: vehicle.id)))
+            .thenAnswer((realInvocation) async => Right(tTrips));
+        // act
+        await cubit.delete(1);
+        // assert
+        verify(mockDeleteTrip
+            .call(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: maintenanceID)));
+        verify(mockGetTripsForVehicle.call(Params(vehicleID: vehicle.id)));
+      },
+    );
+
+    test(
+      'should [Loading, Deleted, Loading, Loaded] when success deleting',
+      () async {
+        // arrange
+        when(mockDeleteTrip
+                .call(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: maintenanceID)))
+            .thenAnswer((realInvocation) async => Right(null));
+
+        when(mockGetTripsForVehicle.call(Params(vehicleID: vehicle.id)))
+            .thenAnswer((realInvocation) async => Right(tTrips));
+
+        final expected = [
+          VehicleDetailTripsLoading(),
+          VehicleDetailTripsDeleted(),
+          VehicleDetailTripsLoading(),
+          VehicleDetailTripsLoaded(tTrips)
+        ];
+
+        // assert
+        unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
+
+        await cubit.delete(1);
+        // assert
+      },
+    );
+
+    test(
+      'should [Loading, ErrorDeleting, Loading, Loaded] when success deleting',
+      () async {
+        // arrange
+        when(mockDeleteTrip
+                .call(ParamsForDeleteTrip(vehicleID: vehicle.id, objectID: maintenanceID)))
+            .thenAnswer((realInvocation) async => Left(ServerFailure()));
+
+        when(mockGetTripsForVehicle.call(Params(vehicleID: vehicle.id)))
+            .thenAnswer((realInvocation) async => Right(tTrips));
+
+        final expected = [
+          VehicleDetailTripsLoading(),
+          VehicleDetailTripsErrorDeleting(),
+          VehicleDetailTripsLoading(),
+          VehicleDetailTripsLoaded(tTrips)
+        ];
+
+        // assert
+        unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
+
+        await cubit.delete(1);
+        // assert
       },
     );
   });

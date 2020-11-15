@@ -32,3 +32,8 @@ class VehicleDetailMaintenancesErrorDeleting extends VehicleDetailMaintenancesSt
   @override
   List<Object> get props => [];
 }
+
+class VehicleDetailMaintenancesDeleted extends VehicleDetailMaintenancesState {
+  @override
+  List<Object> get props => [];
+}

@@ -107,7 +107,7 @@ class TripList extends StatelessWidget {
               FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                 onPressed: () {
-                  BlocProvider.of<VehicleDetailTripsCubit>(context).deleteTrip(data.id);
+                  BlocProvider.of<VehicleDetailTripsCubit>(context).delete(data.id);
                 },
                 child: Column(
                   children: <Widget>[

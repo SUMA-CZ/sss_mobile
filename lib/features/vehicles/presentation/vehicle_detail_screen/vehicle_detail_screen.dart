@@ -25,7 +25,8 @@ class VehicleDetailScreen extends StatelessWidget {
     return BlocProvider<VehicleDetailTripsCubit>(
       create: (context) => sl<VehicleDetailTripsCubit>(param1: vehicle)..getTrips(),
       child: BlocBuilder<VehicleDetailTripsCubit, VehicleDetailTripsState>(
-        buildWhen: (previous, current) => current != null,
+        buildWhen: (previous, current) => (current is! VehicleDetailMaintenancesDeleted &&
+            current is! VehicleDetailMaintenancesErrorDeleting),
         builder: (context, state) {
           if (state is VehicleDetailTripsLoaded) {
             return TripList(
@@ -58,7 +59,8 @@ class VehicleDetailScreen extends StatelessWidget {
     return BlocProvider<VehicleDetailRefuelingsCubit>(
       create: (context) => sl<VehicleDetailRefuelingsCubit>(param1: vehicle)..getRefuelings(),
       child: BlocBuilder<VehicleDetailRefuelingsCubit, VehicleDetailRefuelingsState>(
-        buildWhen: (previous, current) => current != null,
+        buildWhen: (previous, current) => (current is! VehicleDetailRefuelingsErrorDeleting &&
+            current is! VehicleDetailRefuelingsDeleted),
         builder: (context, state) {
           if (state is VehicleDetailRefuelingsLoaded) {
             return RefuelingList(refuelings: state.refuelings);
@@ -89,7 +91,8 @@ class VehicleDetailScreen extends StatelessWidget {
     return BlocProvider<VehicleDetailMaintenancesCubit>(
       create: (context) => sl<VehicleDetailMaintenancesCubit>(param1: vehicle)..getMaintenances(),
       child: BlocBuilder<VehicleDetailMaintenancesCubit, VehicleDetailMaintenancesState>(
-        buildWhen: (previous, current) => current != null,
+        buildWhen: (previous, current) =>
+            (current is! VehicleDetailTripsDeleted && current is! VehicleDetailTripsErrorDeleting),
         builder: (context, state) {
           if (state is VehicleDetailMaintenancesLoaded) {
             return MaintenanceList(maintenances: state.maintenances);

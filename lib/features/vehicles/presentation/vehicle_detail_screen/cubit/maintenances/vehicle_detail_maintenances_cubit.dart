@@ -35,7 +35,7 @@ class VehicleDetailMaintenancesCubit extends Cubit<VehicleDetailMaintenancesStat
             ParamsForDeletingMaintenance(vehicleID: vehicle.id, objectID: maintenanceID)))
         .fold(
       (failure) => VehicleDetailMaintenancesErrorDeleting(),
-      (payload) => null,
+      (payload) => VehicleDetailMaintenancesDeleted(),
     ));
 
     await getMaintenances();

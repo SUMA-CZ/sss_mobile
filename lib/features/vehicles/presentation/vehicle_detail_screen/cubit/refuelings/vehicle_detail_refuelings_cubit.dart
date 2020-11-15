@@ -35,7 +35,7 @@ class VehicleDetailRefuelingsCubit extends Cubit<VehicleDetailRefuelingsState> {
             ParamsForDeletingRefueling(vehicleID: vehicle.id, objectID: refuelingID)))
         .fold(
       (failure) => VehicleDetailRefuelingsErrorDeleting(),
-      (payload) => null,
+      (payload) => VehicleDetailRefuelingsDeleted(),
     ));
 
     await getRefuelings();

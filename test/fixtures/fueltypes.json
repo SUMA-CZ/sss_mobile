@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 1,
+    "Name": "Natural 95"
+  },
+  {
+    "Id": 2,
+    "Name": "Natural 98"
+  },
+  {
+    "Id": 3,
+    "Name": "Diesel"
+  },
+  {
+    "Id": 4,
+    "Name": "LPG"
+  },
+  {
+    "Id": 7,
+    "Name": "Natural 98 + LPG"
+  },
+  {
+    "Id": 8,
+    "Name": null
+  }
+]
