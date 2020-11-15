@@ -101,4 +101,31 @@ class VehicleRepositoryImpl extends VehicleRepository {
       return Left(ServerFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, void>> deleteTrip(int vehicleID, int tripID) async {
+    try {
+      return Right(await remoteDataSource.deleteTrip(vehicleID, tripID));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteMaintenance(int vehicleID, int maintenanceID) async {
+    try {
+      return Right(await remoteDataSource.deleteMaintenance(vehicleID, maintenanceID));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteRefueling(int vehicleID, int refuelingID) async {
+    try {
+      return Right(await remoteDataSource.deleteRefueling(vehicleID, refuelingID));
+    } on ServerException {
+      return Left(ServerFailure());
+    }
+  }
 }

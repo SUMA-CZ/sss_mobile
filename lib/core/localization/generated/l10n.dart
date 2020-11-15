@@ -294,6 +294,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Upravit`
+  String get edit {
+    return Intl.message(
+      'Upravit',
+      name: 'edit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Smazat`
+  String get delete {
+    return Intl.message(
+      'Smazat',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

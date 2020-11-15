@@ -218,4 +218,35 @@ void main() {
       },
     );
   });
+
+  group('deleteRecords', () {
+    var vehicleID = 1;
+    var objectID = 2;
+    test(
+      'should call get delete trip via datasource',
+      () async {
+        await repository.deleteTrip(vehicleID, objectID);
+        verify(mockRemoteDataSource.deleteTrip(vehicleID, objectID));
+        verifyNoMoreInteractions(mockRemoteDataSource);
+      },
+    );
+
+    test(
+      'should call get delete refueling via datasource',
+      () async {
+        await repository.deleteRefueling(vehicleID, objectID);
+        verify(mockRemoteDataSource.deleteRefueling(vehicleID, objectID));
+        verifyNoMoreInteractions(mockRemoteDataSource);
+      },
+    );
+
+    test(
+      'should call get delete maintenance via datasource',
+      () async {
+        await repository.deleteMaintenance(vehicleID, objectID);
+        verify(mockRemoteDataSource.deleteMaintenance(vehicleID, objectID));
+        verifyNoMoreInteractions(mockRemoteDataSource);
+      },
+    );
+  });
 }

@@ -15,6 +15,10 @@ abstract class VehiclesRemoteDataSource {
 
   Future<List<TripModel>> getTripsForVehicleID(int vehicleID);
 
+  Future<void> deleteTrip(int vehicleID, int tripID);
+  Future<void> deleteMaintenance(int vehicleID, int maintenanceID);
+  Future<void> deleteRefueling(int vehicleID, int refuelingID);
+
   Future<TripModel> createTripForVehicleID(int vehicleID, TripModel model);
 
   Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID);
@@ -149,6 +153,33 @@ class VehiclesRemoteDataSourceImpl implements VehiclesRemoteDataSource {
         maintenances.add(MaintenanceModel.fromJson(j));
       }
       return maintenances..sort(maintenanceDateDescending);
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<void> deleteTrip(int vehicleID, int tripID) async {
+    try {
+      await client.delete('${EnvConfig.API_URL}/vehicles/$vehicleID/trips/$tripID');
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<void> deleteMaintenance(int vehicleID, int maintenanceID) async {
+    try {
+      await client.delete('${EnvConfig.API_URL}/vehicles/$vehicleID/maintenances/$maintenanceID');
+    } catch (e) {
+      throw ServerException();
+    }
+  }
+
+  @override
+  Future<void> deleteRefueling(int vehicleID, int refuelingID) async {
+    try {
+      await client.delete('${EnvConfig.API_URL}/vehicles/$vehicleID/refuelings/$refuelingID');
     } catch (e) {
       throw ServerException();
     }

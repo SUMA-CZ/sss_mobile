@@ -6,12 +6,16 @@ import 'package:sss_mobile/features/login/presentation/bloc/login.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_maintenace.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/delete_maintenance.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/delete_refueling.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/delete_trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/maintenance/cubit/maintenance_form_dart_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
 
 import 'core/authorization/auth_bloc.dart';
@@ -40,6 +44,8 @@ Future<void> init() async {
       (param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1, tripListCubit: param2));
   sl.registerFactoryParam((param1, param2) => RefuelingFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
+  sl.registerFactoryParam((param1, param2) =>
+      VehicleDetailTripsCubit(getTripsForVehicle: sl(), deleteTripUsecase: sl(), vehicle: param1));
 
   /// Auth
   sl.registerLazySingleton(() => AuthenticationBloc(userRepository: sl()));
@@ -49,6 +55,9 @@ Future<void> init() async {
   sl.registerLazySingleton(() => Authenticate(sl()));
   sl.registerLazySingleton(() => GetVehicles(sl()));
   sl.registerLazySingleton(() => GetVehicle(sl()));
+  sl.registerLazySingleton(() => DeleteTrip(sl()));
+  sl.registerLazySingleton(() => DeleteRefueling(sl()));
+  sl.registerLazySingleton(() => DeleteMaintenance(sl()));
   sl.registerLazySingleton(() => GetTripsForVehicle(sl()));
   sl.registerLazySingleton(() => GetRefuelingsForVehicle(sl()));
   sl.registerLazySingleton(() => GetMaintenancesForVehicle(sl()));

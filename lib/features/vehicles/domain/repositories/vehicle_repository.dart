@@ -11,6 +11,9 @@ import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 abstract class VehicleRepository {
   Future<Either<Failure, List<Vehicle>>> getVehicles();
   Future<Either<Failure, Vehicle>> getVehicle(int vehicleID);
+  Future<Either<Failure, void>> deleteTrip(int vehicleID, int tripID);
+  Future<Either<Failure, void>> deleteMaintenance(int vehicleID, int maintenanceID);
+  Future<Either<Failure, void>> deleteRefueling(int vehicleID, int refuelingID);
   Future<Either<Failure, List<Trip>>> getTripsForVehicleID(int vehicleID);
   Future<Either<Failure, List<Refueling>>> getRefuelingsForVehicleID(int vehicleID);
   Future<Either<Failure, List<Maintenance>>> getMaintenancesForVehicleID(int vehicleID);

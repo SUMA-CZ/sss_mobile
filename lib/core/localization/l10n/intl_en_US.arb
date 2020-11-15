@@ -25,5 +25,7 @@
   "vehicles" : "Vehicles",
   "selectMapLocation": "Parking spot",
   "failedToSaveTrip" : "Error saving, is your End odometer greater than Begin odometer?",
-  "save": "Save"
+  "save": "Save",
+  "edit" : "Edit",
+  "delete" : "Delete"
 }

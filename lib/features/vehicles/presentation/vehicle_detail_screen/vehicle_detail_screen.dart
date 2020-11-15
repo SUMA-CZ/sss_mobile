@@ -8,7 +8,6 @@ import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/vehicle_detail_maintenances_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
@@ -26,9 +25,9 @@ class VehicleDetailScreen extends StatelessWidget {
 
   Widget _buildTrips() {
     return BlocProvider<VehicleDetailTripsCubit>(
-      create: (context) =>
-          VehicleDetailTripsCubit(usecase: sl<GetTripsForVehicle>(), vehicle: vehicle)..getTrips(),
+      create: (context) => sl<VehicleDetailTripsCubit>(param1: vehicle)..getTrips(),
       child: BlocBuilder<VehicleDetailTripsCubit, VehicleDetailTripsState>(
+        buildWhen: (previous, current) => current != null,
         builder: (context, state) {
           if (state is VehicleDetailTripsLoaded) {
             return TripList(

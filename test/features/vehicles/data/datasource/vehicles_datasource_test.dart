@@ -41,6 +41,16 @@ void main() {
     when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
   }
 
+  void setHTTP200Empty() {
+    final httpResponse = ResponseBody.fromString(
+      '',
+      200,
+      headers: dioHttpHeadersForResponseBody,
+    );
+
+    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
+  }
+
   void setHTTP200Vehicles() {
     _setHTTP200WithJsonFile('vehicles.json');
   }
@@ -378,6 +388,62 @@ void main() {
         final call = dataSource.getVehicle;
         // assert
         expect(() => call(vehicleID), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+  });
+
+  group('deleteRecords', () {
+    final vehicleID = 16;
+
+    test(
+      'should return VehicleModel when the response code is 200 ',
+      () async {
+        // arrange
+        setHTTP200Empty();
+        // act
+        // Nothing to test here as unable to test the url dio made request to
+        await dataSource.deleteTrip(1, 1);
+        setHTTP200Empty();
+        await dataSource.deleteMaintenance(1, 1);
+        setHTTP200Empty();
+        await dataSource.deleteRefueling(1, 1);
+        // assert
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.deleteMaintenance;
+        // assert
+        expect(() => call(1, 1), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.deleteTrip;
+        // assert
+        expect(() => call(1, 1), throwsA(TypeMatcher<ServerException>()));
+      },
+    );
+
+    test(
+      'should throw a ServerException when the response code is 500 or other',
+      () async {
+        // arrange
+        setHTTP500();
+        // act
+        final call = dataSource.deleteRefueling;
+        // assert
+        expect(() => call(1, 1), throwsA(TypeMatcher<ServerException>()));
       },
     );
   });

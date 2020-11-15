@@ -27,3 +27,8 @@ class VehicleDetailTripsError extends VehicleDetailTripsState {
   @override
   List<Object> get props => [];
 }
+
+class VehicleDetailTripsErrorDeleting extends VehicleDetailTripsState {
+  @override
+  List<Object> get props => [];
+}

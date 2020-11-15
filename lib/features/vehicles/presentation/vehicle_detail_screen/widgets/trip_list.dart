@@ -18,7 +18,19 @@ class TripList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildTripsList(trips),
+      body: BlocListener<VehicleDetailTripsCubit, VehicleDetailTripsState>(
+        listener: (context, state) {
+          if (state is VehicleDetailTripsErrorDeleting) {
+            Scaffold.of(context).showSnackBar(
+              SnackBar(
+                content: Text(S.current.failedToSaveTrip),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: _buildTripsList(trips),
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           var tripListCubit = BlocProvider.of<VehicleDetailTripsCubit>(context);
@@ -81,7 +93,44 @@ class TripList extends StatelessWidget {
                 _buildTableRowWithPadding(S.current.parkingNote, data.parkingNote.toString()),
               ],
             ),
-          )
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.spaceAround,
+            buttonHeight: 52.0,
+            buttonMinWidth: 90.0,
+            children: <Widget>[
+              // FlatButton(
+              //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+              //   onPressed: () {
+              //     // BlocProvider.of<VehicleDetailTripsCubit>(context)
+              //   },
+              //   child: Column(
+              //     children: <Widget>[
+              //       Icon(Icons.create_outlined, color: Theme.of(context).accentColor),
+              //       Padding(
+              //         padding: const EdgeInsets.symmetric(vertical: 2.0),
+              //       ),
+              //       Text(S.current.edit, style: TextStyle(color: Theme.of(context).accentColor)),
+              //     ],
+              //   ),
+              // ),
+              FlatButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+                onPressed: () {
+                  BlocProvider.of<VehicleDetailTripsCubit>(context).deleteTrip(data.id);
+                },
+                child: Column(
+                  children: <Widget>[
+                    Icon(Icons.delete_outline, color: Theme.of(context).accentColor),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Text(S.current.delete, style: TextStyle(color: Theme.of(context).accentColor)),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
