@@ -6,8 +6,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_maintenances_for_vehicle.dart';
-import 'package:sss_mobile/features/vehicles/domain/usecases/get_refuelings_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/vehicle_detail_maintenances_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
@@ -40,7 +38,17 @@ class VehicleDetailScreen extends StatelessWidget {
             return LoadingIndicator();
           }
 
-          return Text('error');
+          return Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(S.current.errorCom),
+                  RaisedButton(
+                      child: Text(S.current.refresh),
+                      onPressed: () => BlocProvider.of<VehicleDetailTripsCubit>(context).getTrips())
+                ]),
+          );
         },
       ),
     );
@@ -48,10 +56,9 @@ class VehicleDetailScreen extends StatelessWidget {
 
   Widget _buildRefueling() {
     return BlocProvider<VehicleDetailRefuelingsCubit>(
-      create: (context) =>
-          VehicleDetailRefuelingsCubit(usecase: sl<GetRefuelingsForVehicle>(), vehicle: vehicle)
-            ..getRefuelings(),
+      create: (context) => sl<VehicleDetailRefuelingsCubit>(param1: vehicle)..getRefuelings(),
       child: BlocBuilder<VehicleDetailRefuelingsCubit, VehicleDetailRefuelingsState>(
+        buildWhen: (previous, current) => current != null,
         builder: (context, state) {
           if (state is VehicleDetailRefuelingsLoaded) {
             return RefuelingList(refuelings: state.refuelings);
@@ -61,7 +68,18 @@ class VehicleDetailScreen extends StatelessWidget {
             return LoadingIndicator();
           }
 
-          return Text('error');
+          return Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(S.current.errorCom),
+                  RaisedButton(
+                      child: Text(S.current.refresh),
+                      onPressed: () =>
+                          BlocProvider.of<VehicleDetailRefuelingsCubit>(context).getRefuelings())
+                ]),
+          );
         },
       ),
     );
@@ -69,10 +87,9 @@ class VehicleDetailScreen extends StatelessWidget {
 
   Widget _buildMaintenances() {
     return BlocProvider<VehicleDetailMaintenancesCubit>(
-      create: (context) =>
-          VehicleDetailMaintenancesCubit(usecase: sl<GetMaintenancesForVehicle>(), vehicle: vehicle)
-            ..getMaintenances(),
+      create: (context) => sl<VehicleDetailMaintenancesCubit>(param1: vehicle)..getMaintenances(),
       child: BlocBuilder<VehicleDetailMaintenancesCubit, VehicleDetailMaintenancesState>(
+        buildWhen: (previous, current) => current != null,
         builder: (context, state) {
           if (state is VehicleDetailMaintenancesLoaded) {
             return MaintenanceList(maintenances: state.maintenances);
@@ -82,7 +99,18 @@ class VehicleDetailScreen extends StatelessWidget {
             return LoadingIndicator();
           }
 
-          return Text('error');
+          return Center(
+            child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(S.current.errorCom),
+                  RaisedButton(
+                      child: Text(S.current.refresh),
+                      onPressed: () => BlocProvider.of<VehicleDetailMaintenancesCubit>(context)
+                          .getMaintenances())
+                ]),
+          );
         },
       ),
     );

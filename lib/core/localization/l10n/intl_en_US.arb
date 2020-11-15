@@ -25,7 +25,9 @@
   "vehicles" : "Vehicles",
   "selectMapLocation": "Parking spot",
   "failedToSaveTrip" : "Error saving, is your End odometer greater than Begin odometer?",
+  "failedDelete" : "Error deleting record",
   "save": "Save",
   "edit" : "Edit",
-  "delete" : "Delete"
+  "delete" : "Delete",
+  "errorCom" : "Error connecting to SSS"
 }

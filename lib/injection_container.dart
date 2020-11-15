@@ -15,6 +15,8 @@ import 'package:sss_mobile/features/vehicles/domain/usecases/get_trips_for_vehic
 import 'package:sss_mobile/features/vehicles/presentation/forms/maintenance/cubit/maintenance_form_dart_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/vehicle_detail_maintenances_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/trips/vehicle_detail_trips_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/vehicle_detail_cubit.dart';
 
@@ -46,6 +48,10 @@ Future<void> init() async {
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) =>
       VehicleDetailTripsCubit(getTripsForVehicle: sl(), deleteTripUsecase: sl(), vehicle: param1));
+  sl.registerFactoryParam((param1, param2) => VehicleDetailRefuelingsCubit(
+      getRefuelingsForVehicle: sl(), deleteRefueling: sl(), vehicle: param1));
+  sl.registerFactoryParam((param1, param2) => VehicleDetailMaintenancesCubit(
+      getMaintenancesForTrip: sl(), deleteMaintenance: sl(), vehicle: param1));
 
   /// Auth
   sl.registerLazySingleton(() => AuthenticationBloc(userRepository: sl()));

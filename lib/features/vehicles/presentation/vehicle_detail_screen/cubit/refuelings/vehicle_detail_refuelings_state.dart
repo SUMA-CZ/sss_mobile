@@ -27,3 +27,8 @@ class VehicleDetailRefuelingsError extends VehicleDetailRefuelingsState {
   @override
   List<Object> get props => [];
 }
+
+class VehicleDetailRefuelingsErrorDeleting extends VehicleDetailRefuelingsState {
+  @override
+  List<Object> get props => [];
+}

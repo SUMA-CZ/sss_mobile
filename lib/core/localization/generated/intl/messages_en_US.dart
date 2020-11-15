@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit" : MessageLookupByLibrary.simpleMessage("Edit"),
     "endData" : MessageLookupByLibrary.simpleMessage("End date"),
     "endOdometer" : MessageLookupByLibrary.simpleMessage("End odometer"),
+    "errorCom" : MessageLookupByLibrary.simpleMessage("Error connecting to SSS"),
+    "failedDelete" : MessageLookupByLibrary.simpleMessage("Error deleting record"),
     "failedToSaveTrip" : MessageLookupByLibrary.simpleMessage("Error saving, is your End odometer greater than Begin odometer?"),
     "fuelLevel" : MessageLookupByLibrary.simpleMessage("Fuel level"),
     "loginButton" : MessageLookupByLibrary.simpleMessage("Login"),

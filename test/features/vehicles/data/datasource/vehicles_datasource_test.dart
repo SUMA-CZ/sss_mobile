@@ -393,8 +393,6 @@ void main() {
   });
 
   group('deleteRecords', () {
-    final vehicleID = 16;
-
     test(
       'should return VehicleModel when the response code is 200 ',
       () async {

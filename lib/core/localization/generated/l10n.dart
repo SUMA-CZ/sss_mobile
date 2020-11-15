@@ -285,6 +285,16 @@ class S {
     );
   }
 
+  /// `Záznam se nepodařilo smazat`
+  String get failedDelete {
+    return Intl.message(
+      'Záznam se nepodařilo smazat',
+      name: 'failedDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Uložit`
   String get save {
     return Intl.message(
@@ -310,6 +320,16 @@ class S {
     return Intl.message(
       'Smazat',
       name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chyba komunikace se SSS`
+  String get errorCom {
+    return Intl.message(
+      'Chyba komunikace se SSS',
+      name: 'errorCom',
       desc: '',
       args: [],
     );

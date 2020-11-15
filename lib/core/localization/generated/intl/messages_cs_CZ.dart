@@ -32,6 +32,8 @@ class MessageLookup extends MessageLookupByLibrary {
     "edit" : MessageLookupByLibrary.simpleMessage("Upravit"),
     "endData" : MessageLookupByLibrary.simpleMessage("Konečné datum"),
     "endOdometer" : MessageLookupByLibrary.simpleMessage("Konečný stav km"),
+    "errorCom" : MessageLookupByLibrary.simpleMessage("Chyba komunikace se SSS"),
+    "failedDelete" : MessageLookupByLibrary.simpleMessage("Záznam se nepodařilo smazat"),
     "failedToSaveTrip" : MessageLookupByLibrary.simpleMessage("Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?"),
     "fuelLevel" : MessageLookupByLibrary.simpleMessage("Množství paliva v nádrži"),
     "loginButton" : MessageLookupByLibrary.simpleMessage("Přihlásit se"),

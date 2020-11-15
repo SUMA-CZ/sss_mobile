@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
 
 class RefuelingList extends StatelessWidget {
   final List<Refueling> refuelings;
@@ -10,7 +12,18 @@ class RefuelingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildList(refuelings),
+      body: BlocListener<VehicleDetailRefuelingsCubit, VehicleDetailRefuelingsState>(
+          listener: (context, state) {
+            if (state is VehicleDetailRefuelingsErrorDeleting) {
+              Scaffold.of(context).showSnackBar(
+                SnackBar(
+                  content: Text(S.current.failedDelete),
+                  backgroundColor: Colors.red,
+                ),
+              );
+            }
+          },
+          child: _buildList(refuelings)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           /// Get cubit and pass it to next page
@@ -61,7 +74,29 @@ class RefuelingList extends StatelessWidget {
                 _buildTableRowWithPadding('Poznámka', data.note ?? ''),
               ],
             ),
-          )
+          ),
+          ButtonBar(
+            alignment: MainAxisAlignment.spaceAround,
+            buttonHeight: 52.0,
+            buttonMinWidth: 90.0,
+            children: <Widget>[
+              FlatButton(
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
+                onPressed: () {
+                  BlocProvider.of<VehicleDetailRefuelingsCubit>(context).delete(data.id);
+                },
+                child: Column(
+                  children: <Widget>[
+                    Icon(Icons.delete_outline, color: Theme.of(context).accentColor),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 2.0),
+                    ),
+                    Text(S.current.delete, style: TextStyle(color: Theme.of(context).accentColor)),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

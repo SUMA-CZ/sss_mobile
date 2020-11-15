@@ -23,8 +23,8 @@ void main() {
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockGetMaintenancesForVehicle = MockGetMaintenancesForVehicle();
-    cubit =
-        VehicleDetailMaintenancesCubit(usecase: mockGetMaintenancesForVehicle, vehicle: vehicle);
+    cubit = VehicleDetailMaintenancesCubit(
+        getMaintenancesForTrip: mockGetMaintenancesForVehicle, vehicle: vehicle);
   });
 
   var tTrips = <Maintenance>[];

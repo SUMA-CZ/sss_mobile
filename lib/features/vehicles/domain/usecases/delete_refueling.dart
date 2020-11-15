@@ -5,22 +5,22 @@ import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 
-class DeleteRefueling implements UseCase<void, Params> {
+class DeleteRefueling implements UseCase<void, ParamsForDeletingRefueling> {
   final VehicleRepository repository;
 
   DeleteRefueling(this.repository);
 
   @override
-  Future<Either<Failure, void>> call(Params params) async {
+  Future<Either<Failure, void>> call(ParamsForDeletingRefueling params) async {
     return await repository.deleteRefueling(params.vehicleID, params.objectID);
   }
 }
 
-class Params extends Equatable {
+class ParamsForDeletingRefueling extends Equatable {
   final int vehicleID;
   final int objectID;
 
-  Params({@required this.vehicleID, this.objectID});
+  ParamsForDeletingRefueling({@required this.vehicleID, this.objectID});
 
   @override
   List<Object> get props => [vehicleID, objectID];

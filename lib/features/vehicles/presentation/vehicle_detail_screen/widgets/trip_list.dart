@@ -23,7 +23,7 @@ class TripList extends StatelessWidget {
           if (state is VehicleDetailTripsErrorDeleting) {
             Scaffold.of(context).showSnackBar(
               SnackBar(
-                content: Text(S.current.failedToSaveTrip),
+                content: Text(S.current.failedDelete),
                 backgroundColor: Colors.red,
               ),
             );

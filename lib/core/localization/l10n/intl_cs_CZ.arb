@@ -25,8 +25,10 @@
   "vehicles" : "Vozidla",
   "selectMapLocation": "Misto parkování",
   "failedToSaveTrip" : "Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?",
+  "failedDelete" : "Záznam se nepodařilo smazat",
   "save": "Uložit",
   "edit" : "Upravit",
-  "delete" : "Smazat"
+  "delete" : "Smazat",
+  "errorCom" : "Chyba komunikace se SSS"
 
 }

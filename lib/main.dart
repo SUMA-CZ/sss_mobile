@@ -23,7 +23,7 @@ import 'features/vehicles/presentation/vehicle_list_screen/vehicles_page.dart';
 import 'injection_container.dart' as di;
 
 final sentry =
-    SentryClient(dsn: "https://df77b1de3d3440958fb5133f3ea23914@o224610.ingest.sentry.io/5516756");
+    SentryClient(dsn: 'https://df77b1de3d3440958fb5133f3ea23914@o224610.ingest.sentry.io/5516756');
 
 class SSSMobile extends StatelessWidget {
   @override

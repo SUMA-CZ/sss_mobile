@@ -23,7 +23,8 @@ void main() {
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
     mockGetRefuelingsForVehicle = MockGetRefuelingsForVehicle();
-    cubit = VehicleDetailRefuelingsCubit(usecase: mockGetRefuelingsForVehicle, vehicle: vehicle);
+    cubit = VehicleDetailRefuelingsCubit(
+        getRefuelingsForVehicle: mockGetRefuelingsForVehicle, vehicle: vehicle);
   });
 
   var tTrips = <Refueling>[];
