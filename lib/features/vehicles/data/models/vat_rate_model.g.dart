@@ -8,7 +8,7 @@ part of 'vat_rate_model.dart';
 
 VatRateModel _$VatRateModelFromJson(Map json) {
   return VatRateModel()
-    ..id = json['Id'] as String
+    ..id = json['Id'] as int
     ..vat = json['VAT'] as String;
 }
 

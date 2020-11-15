@@ -12,6 +12,7 @@ import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 
 import '../../../../fixtures/fixture_reader.dart';
+import '../../../../helpers/dio_response_helper.dart';
 
 class DioAdapterMock extends Mock implements HttpClientAdapter {}
 
@@ -30,74 +31,6 @@ void main() {
     dataSource = VehiclesRemoteDataSourceImpl(client: dio);
   });
 
-  void _setHTTP200WithJsonFile(String filename) {
-    final responsePayload = fixture(filename);
-    final httpResponse = ResponseBody.fromString(
-      responsePayload,
-      200,
-      headers: dioHttpHeadersForResponseBody,
-    );
-
-    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
-  }
-
-  void setHTTP200Empty() {
-    final httpResponse = ResponseBody.fromString(
-      '',
-      200,
-      headers: dioHttpHeadersForResponseBody,
-    );
-
-    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
-  }
-
-  void setHTTP200Vehicles() {
-    _setHTTP200WithJsonFile('vehicles.json');
-  }
-
-  void setHTTP200Trips() {
-    _setHTTP200WithJsonFile('trips.json');
-  }
-
-  void setHTTP200Refueling() {
-    _setHTTP200WithJsonFile('refuelings.json');
-  }
-
-  void setHTTP200Maintenances() {
-    _setHTTP200WithJsonFile('maintenances.json');
-  }
-
-  void setHTTP400() {
-    final responsePayload = json.encode({'error': 'error'});
-    final httpResponse = ResponseBody.fromString(
-      responsePayload,
-      400,
-      headers: dioHttpHeadersForResponseBody,
-    );
-
-    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
-  }
-
-  void setHTTP201With(String filename) {
-    final responsePayload = fixture(filename);
-    final httpResponse = ResponseBody.fromString(
-      responsePayload,
-      201,
-      headers: dioHttpHeadersForResponseBody,
-    );
-
-    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
-  }
-
-  void setHTTP500() {
-    final httpResponse = ResponseBody.fromString(
-      '',
-      500,
-      headers: dioHttpHeadersForResponseBody,
-    );
-    when(dioAdapterMock.fetch(any, any, any)).thenAnswer((_) async => httpResponse);
-  }
-
   group('getVehicles', () {
     var eVehicles = <VehicleModel>[];
     for (var j in json.decode(fixture('vehicles.json'))) {
@@ -108,7 +41,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setHTTP200Vehicles();
+        setHTTPResponse(dioAdapterMock, 200, 'vehicles.json');
         // act
         await dataSource.getVehicles();
         // assert
@@ -120,7 +53,7 @@ void main() {
       'should return List<Vehicles> when the response code is 200 (success)',
       () async {
         // arrange
-        setHTTP200Vehicles();
+        setHTTPResponse(dioAdapterMock, 200, 'vehicles.json');
         // act
         final result = await dataSource.getVehicles();
         // assert
@@ -132,7 +65,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setHTTP400();
+        setHTTPResponse(dioAdapterMock, 400, null);
         // act
         final call = dataSource.getVehicles;
         // assert
@@ -153,7 +86,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setHTTP200Trips();
+        setHTTPResponse(dioAdapterMock, 200, 'trips.json');
         // act
         await dataSource.getTripsForVehicleID(vehicleID);
         // assert
@@ -165,7 +98,7 @@ void main() {
       'should return List<TripModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setHTTP200Trips();
+        setHTTPResponse(dioAdapterMock, 200, 'trips.json');
         // act
         final result = await dataSource.getTripsForVehicleID(vehicleID);
         // assert
@@ -177,7 +110,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setHTTP400();
+        setHTTPResponse(dioAdapterMock, 400, null);
         // act
         final call = dataSource.getTripsForVehicleID;
         // assert
@@ -198,7 +131,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles''',
       () async {
         // arrange
-        setHTTP200Refueling();
+        setHTTPResponse(dioAdapterMock, 200, 'refuelings.json');
         // act
         await dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
@@ -210,7 +143,7 @@ void main() {
       'should return List<RefuelingModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setHTTP200Refueling();
+        setHTTPResponse(dioAdapterMock, 200, 'refuelings.json');
         // act
         final result = await dataSource.getRefuelingsForVehicleID(vehicleID);
         // assert
@@ -222,7 +155,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setHTTP400();
+        setHTTPResponse(dioAdapterMock, 400, null);
         // act
         final call = dataSource.getRefuelingsForVehicleID;
         // assert
@@ -243,7 +176,7 @@ void main() {
       '''should perform a GET request on a URL /vehicles/{id}/trips''',
       () async {
         // arrange
-        setHTTP200Maintenances();
+        setHTTPResponse(dioAdapterMock, 200, 'maintenances.json');
         // act
         await dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert
@@ -255,7 +188,7 @@ void main() {
       'should return List<MaintenanceModel> when the response code is 200 (success)',
       () async {
         // arrange
-        setHTTP200Maintenances();
+        setHTTPResponse(dioAdapterMock, 200, 'maintenances.json');
         // act
         final result = await dataSource.getMaintenancesForVehicleID(vehicleID);
         // assert
@@ -267,7 +200,7 @@ void main() {
       'should throw a ServerException when the response code is 404 or other',
       () async {
         // arrange
-        setHTTP400();
+        setHTTPResponse(dioAdapterMock, 400, null);
         // act
         final call = dataSource.getMaintenancesForVehicleID;
         // assert
@@ -284,7 +217,7 @@ void main() {
       'should return TripModel when the response code is 201 (created)',
       () async {
         // arrange
-        setHTTP201With('trip.json');
+        setHTTPResponse(dioAdapterMock, 200, 'trip.json');
         // act
         final result = await dataSource.createTripForVehicleID(vehicleID, tTrip);
         // assert
@@ -296,7 +229,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.createTripForVehicleID;
         // assert
@@ -313,7 +246,7 @@ void main() {
       'should return RefuelingModel when the response code is 201 (created)',
       () async {
         // arrange
-        setHTTP201With('refueling.json');
+        setHTTPResponse(dioAdapterMock, 201, 'refueling.json');
         // act
         final result = await dataSource.createRefuelingForVehicleID(vehicleID, tRefueling);
         // assert
@@ -325,7 +258,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.createRefuelingForVehicleID;
         // assert
@@ -342,7 +275,7 @@ void main() {
       'should return MaintenanceModel when the response code is 201 (created)',
       () async {
         // arrange
-        setHTTP201With('maintenance.json');
+        setHTTPResponse(dioAdapterMock, 201, 'maintenance.json');
         // act
         final result = await dataSource.createMaintenanceForVehicleID(vehicleID, tMaintenance);
         // assert
@@ -354,7 +287,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.createMaintenanceForVehicleID;
         // assert
@@ -371,7 +304,7 @@ void main() {
       'should return VehicleModel when the response code is 200 ',
       () async {
         // arrange
-        _setHTTP200WithJsonFile('vehicle.json');
+        setHTTPResponse(dioAdapterMock, 200, 'vehicle.json');
         // act
         final result = await dataSource.getVehicle(vehicleID);
         // assert
@@ -383,7 +316,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.getVehicle;
         // assert
@@ -397,13 +330,13 @@ void main() {
       'should return VehicleModel when the response code is 200 ',
       () async {
         // arrange
-        setHTTP200Empty();
+        setHTTPResponse(dioAdapterMock, 200, null);
         // act
         // Nothing to test here as unable to test the url dio made request to
         await dataSource.deleteTrip(1, 1);
-        setHTTP200Empty();
+        setHTTPResponse(dioAdapterMock, 200, null);
         await dataSource.deleteMaintenance(1, 1);
-        setHTTP200Empty();
+        setHTTPResponse(dioAdapterMock, 200, null);
         await dataSource.deleteRefueling(1, 1);
         // assert
       },
@@ -413,7 +346,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.deleteMaintenance;
         // assert
@@ -425,7 +358,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.deleteTrip;
         // assert
@@ -437,7 +370,7 @@ void main() {
       'should throw a ServerException when the response code is 500 or other',
       () async {
         // arrange
-        setHTTP500();
+        setHTTPResponse(dioAdapterMock, 500, null);
         // act
         final call = dataSource.deleteRefueling;
         // assert

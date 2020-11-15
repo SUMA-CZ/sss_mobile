@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
 import 'package:sss_mobile/features/login/presentation/bloc/login.dart';
+import 'package:sss_mobile/features/vehicles/data/datasources/fuel_types_datasource.dart';
+import 'package:sss_mobile/features/vehicles/data/datasources/vat_rates_datasource.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_maintenace.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_trip.dart';
@@ -78,6 +80,8 @@ Future<void> init() async {
   /// Data sources
   sl.registerLazySingleton<VehiclesRemoteDataSource>(
       () => VehiclesRemoteDataSourceImpl(client: sl()));
+  sl.registerLazySingleton<VatRatesDataSource>(() => VatRatesDataSourceImpl(client: sl()));
+  sl.registerLazySingleton<FuelTypesDataSource>(() => FuelTypesDataSourceImpl(client: sl()));
 
   sl.registerLazySingleton<AccountDataSource>(() => AccountDataSourceImpl(client: sl()));
 

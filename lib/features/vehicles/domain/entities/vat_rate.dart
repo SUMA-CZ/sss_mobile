@@ -14,7 +14,7 @@ class VatRate extends Equatable {
   VatRate();
 
   @JsonKey(name: 'Id')
-  String id;
+  int id;
 
   @JsonKey(name: 'VAT')
   String vat;
