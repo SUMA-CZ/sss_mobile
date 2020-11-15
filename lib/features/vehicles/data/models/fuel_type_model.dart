@@ -15,5 +15,6 @@ class FuelTypeModel extends FuelType {
 
   factory FuelTypeModel.fromJson(Map<String, dynamic> json) => _$FuelTypeModelFromJson(json);
 
+  @override
   Map<String, dynamic> toJson() => _$FuelTypeModelToJson(this);
 }

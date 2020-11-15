@@ -21,8 +21,6 @@ class FuelType extends Equatable {
 
   factory FuelType.fromJson(Map<String, dynamic> json) => _$FuelTypeFromJson(json);
 
-  Map<String, dynamic> toJson() => _$FuelTypeToJson(this);
-
   @override
   List<Object> get props => [id, name];
 }
