@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addTrip" : MessageLookupByLibrary.simpleMessage("Přidat jízdu"),
     "beginDate" : MessageLookupByLibrary.simpleMessage("Počáteční datum"),
     "beginOdometer" : MessageLookupByLibrary.simpleMessage("Počáteční stav km"),
+    "date" : MessageLookupByLibrary.simpleMessage("Datum"),
     "dateInterval" : MessageLookupByLibrary.simpleMessage("Časový interval"),
     "delete" : MessageLookupByLibrary.simpleMessage("Smazat"),
     "description" : MessageLookupByLibrary.simpleMessage("Účel cesty"),
@@ -42,14 +43,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "loginPassword" : MessageLookupByLibrary.simpleMessage("Heslo"),
     "loginPasswordIsEmpty" : MessageLookupByLibrary.simpleMessage("Prázdné heslo"),
     "loginTitle" : MessageLookupByLibrary.simpleMessage("Přihlášení do SSS"),
+    "no" : MessageLookupByLibrary.simpleMessage("Ne"),
+    "note" : MessageLookupByLibrary.simpleMessage("Poznámka"),
+    "odometer" : MessageLookupByLibrary.simpleMessage("Odometer"),
     "officialTrip" : MessageLookupByLibrary.simpleMessage("Pracovní cesta"),
     "parkingNote" : MessageLookupByLibrary.simpleMessage("Poznámka k parkování"),
+    "price" : MessageLookupByLibrary.simpleMessage("Cena"),
     "refresh" : MessageLookupByLibrary.simpleMessage("Zkusit znovu"),
     "save" : MessageLookupByLibrary.simpleMessage("Uložit"),
     "selectMapLocation" : MessageLookupByLibrary.simpleMessage("Misto parkování"),
     "vehicleDetailNoLocation" : MessageLookupByLibrary.simpleMessage("K tomuto vozidlu nebyly uloženy žádné souřadnice"),
     "vehicles" : MessageLookupByLibrary.simpleMessage("Vozidla"),
     "vehiclesCompanyVehicles" : MessageLookupByLibrary.simpleMessage("Firemní vozy"),
-    "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Soukromé vozy")
+    "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Soukromé vozy"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Ano")
   };
 }

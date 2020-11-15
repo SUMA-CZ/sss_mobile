@@ -29,6 +29,11 @@
   "save": "Uložit",
   "edit" : "Upravit",
   "delete" : "Smazat",
-  "errorCom" : "Chyba komunikace se SSS"
-
+  "errorCom" : "Chyba komunikace se SSS",
+  "date":"Datum",
+  "odometer":"Odometer",
+  "price":"Cena",
+  "note":"Poznámka",
+  "yes":"Ano",
+  "no":"Ne"
 }

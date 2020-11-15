@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
+import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
@@ -54,19 +55,6 @@ class TripList extends StatelessWidget {
     );
   }
 
-  TableRow _buildTableRowWithPadding(String left, String right) {
-    return TableRow(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(left),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(right),
-      )
-    ]);
-  }
-
   Widget _buildRowForTrips(BuildContext context, Trip data) {
     return Card(
       child: ExpansionTile(
@@ -85,12 +73,12 @@ class TripList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                _buildTableRowWithPadding(S.current.beginDate, data.beginDate.toString()),
-                _buildTableRowWithPadding(S.current.endData, data.endDate.toString()),
-                _buildTableRowWithPadding(S.current.beginOdometer, data.beginOdometer.toString()),
-                _buildTableRowWithPadding(S.current.endOdometer, data.endOdometer.toString()),
-                _buildTableRowWithPadding(S.current.officialTrip, data.officialTrip ? 'Ano' : 'Ne'),
-                _buildTableRowWithPadding(S.current.parkingNote, data.parkingNote.toString()),
+                buildTableRowWithPadding(S.current.beginDate, data.beginDate.toString()),
+                buildTableRowWithPadding(S.current.endData, data.endDate.toString()),
+                buildTableRowWithPadding(S.current.beginOdometer, data.beginOdometer.toString()),
+                buildTableRowWithPadding(S.current.endOdometer, data.endOdometer.toString()),
+                buildTableRowWithPadding(S.current.officialTrip, data.officialTrip ? 'Ano' : 'Ne'),
+                buildTableRowWithPadding(S.current.parkingNote, data.parkingNote.toString()),
               ],
             ),
           ),

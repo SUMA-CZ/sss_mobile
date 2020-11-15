@@ -334,6 +334,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Datum`
+  String get date {
+    return Intl.message(
+      'Datum',
+      name: 'date',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Odometer`
+  String get odometer {
+    return Intl.message(
+      'Odometer',
+      name: 'odometer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cena`
+  String get price {
+    return Intl.message(
+      'Cena',
+      name: 'price',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Poznámka`
+  String get note {
+    return Intl.message(
+      'Poznámka',
+      name: 'note',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ano`
+  String get yes {
+    return Intl.message(
+      'Ano',
+      name: 'yes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ne`
+  String get no {
+    return Intl.message(
+      'Ne',
+      name: 'no',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

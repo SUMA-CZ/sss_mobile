@@ -26,6 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "addTrip" : MessageLookupByLibrary.simpleMessage("Přidat jízdu"),
     "beginDate" : MessageLookupByLibrary.simpleMessage("Begin date"),
     "beginOdometer" : MessageLookupByLibrary.simpleMessage("Begin odometer"),
+    "date" : MessageLookupByLibrary.simpleMessage("Date"),
     "dateInterval" : MessageLookupByLibrary.simpleMessage("Date interval"),
     "delete" : MessageLookupByLibrary.simpleMessage("Delete"),
     "description" : MessageLookupByLibrary.simpleMessage("Purpose of trip"),
@@ -42,14 +43,19 @@ class MessageLookup extends MessageLookupByLibrary {
     "loginPassword" : MessageLookupByLibrary.simpleMessage("Password"),
     "loginPasswordIsEmpty" : MessageLookupByLibrary.simpleMessage("Password is empty"),
     "loginTitle" : MessageLookupByLibrary.simpleMessage("Login into SSS"),
+    "no" : MessageLookupByLibrary.simpleMessage("No"),
+    "note" : MessageLookupByLibrary.simpleMessage("Note"),
+    "odometer" : MessageLookupByLibrary.simpleMessage("Odometer"),
     "officialTrip" : MessageLookupByLibrary.simpleMessage("Business trip"),
     "parkingNote" : MessageLookupByLibrary.simpleMessage("Parking note"),
+    "price" : MessageLookupByLibrary.simpleMessage("Price"),
     "refresh" : MessageLookupByLibrary.simpleMessage("REFRESH"),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
     "selectMapLocation" : MessageLookupByLibrary.simpleMessage("Parking spot"),
     "vehicleDetailNoLocation" : MessageLookupByLibrary.simpleMessage("No location recorded"),
     "vehicles" : MessageLookupByLibrary.simpleMessage("Vehicles"),
     "vehiclesCompanyVehicles" : MessageLookupByLibrary.simpleMessage("Company Vehicles"),
-    "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Personal Vehicles")
+    "vehiclesPersonalVehicles" : MessageLookupByLibrary.simpleMessage("Personal Vehicles"),
+    "yes" : MessageLookupByLibrary.simpleMessage("Yes")
   };
 }

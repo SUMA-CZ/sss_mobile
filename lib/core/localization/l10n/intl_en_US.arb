@@ -29,5 +29,11 @@
   "save": "Save",
   "edit" : "Edit",
   "delete" : "Delete",
-  "errorCom" : "Error connecting to SSS"
+  "errorCom" : "Error connecting to SSS",
+  "date":"Date",
+  "odometer":"Odometer",
+  "price":"Price",
+  "note":"Note",
+  "yes":"Yes",
+  "no":"No"
 }

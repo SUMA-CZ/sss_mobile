@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
+import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/vehicle_detail_refuelings_cubit.dart';
 
@@ -35,19 +36,6 @@ class RefuelingList extends StatelessWidget {
     );
   }
 
-  TableRow _buildTableRowWithPadding(String left, String right) {
-    return TableRow(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(left),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(right),
-      )
-    ]);
-  }
-
   Widget _buildRow(BuildContext context, Refueling data) {
     return Card(
       child: ExpansionTile(
@@ -66,12 +54,14 @@ class RefuelingList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                _buildTableRowWithPadding('Datum', data.date.toString()),
-                _buildTableRowWithPadding('Odometr', data.odometer.toString() ?? 0.toString()),
-                _buildTableRowWithPadding(
-                    'Cena', data.price.toString() + ' ' + data.currency ?? ''),
-                _buildTableRowWithPadding('Pracovní cesta', data.official ? 'Ano' : 'Ne'),
-                _buildTableRowWithPadding('Poznámka', data.note ?? ''),
+                buildTableRowWithPadding(S.current.date, data.date.toString()),
+                buildTableRowWithPadding(
+                    S.current.odometer, data.odometer.toString() ?? 0.toString()),
+                buildTableRowWithPadding(
+                    S.current.price, data.price.toString() + ' ' + data.currency ?? ''),
+                buildTableRowWithPadding(
+                    S.current.officialTrip, data.official ? S.current.yes : S.current.no),
+                buildTableRowWithPadding(S.current.note, data.note ?? ''),
               ],
             ),
           ),

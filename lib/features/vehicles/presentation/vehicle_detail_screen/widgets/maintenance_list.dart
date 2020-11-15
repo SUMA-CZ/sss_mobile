@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
+import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/maintenances/vehicle_detail_maintenances_cubit.dart';
 
@@ -35,19 +36,6 @@ class MaintenanceList extends StatelessWidget {
     );
   }
 
-  TableRow _buildTableRowWithPadding(String left, String right) {
-    return TableRow(children: [
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(left),
-      ),
-      Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(right),
-      )
-    ]);
-  }
-
   Widget _buildRow(BuildContext context, Maintenance data) {
     return Card(
       child: ExpansionTile(
@@ -59,7 +47,7 @@ class MaintenanceList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                _buildTableRowWithPadding('Datum', data.date.toString()),
+                buildTableRowWithPadding(S.current.date, data.date.toString()),
               ],
             ),
           ),
