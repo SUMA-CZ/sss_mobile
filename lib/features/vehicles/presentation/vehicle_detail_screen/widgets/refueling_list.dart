@@ -4,13 +4,20 @@ import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
+import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
+import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/refueling_form.dart';
 import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/refuelings_cubit.dart';
+
+import '../../../../../injection_container.dart';
 
 class RefuelingList extends StatelessWidget {
   final List<Refueling> refuelings;
+  final Vehicle vehicle;
+
   final DateFormat dateFormat = DateFormat.yMMMEd();
 
-  RefuelingList({Key key, this.refuelings}) : super(key: key);
+  RefuelingList({Key key, this.refuelings, this.vehicle}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +36,17 @@ class RefuelingList extends StatelessWidget {
           child: _buildList(refuelings)),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          /// Get cubit and pass it to next page
-          // Add your onPressed code here!
+          var tripListCubit = BlocProvider.of<RefuelingsCubit>(context);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+                fullscreenDialog: true,
+                builder: (context) => BlocProvider<RefuelingFormCubit>(
+                    create: (context) =>
+                        sl<RefuelingFormCubit>(param1: vehicle, param2: tripListCubit),
+                    child: RefuelingForm())),
+          );
         },
         label: Text(S.current.addRefueling),
         icon: Icon(Icons.add_circle_outline),

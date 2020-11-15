@@ -10,16 +10,16 @@ part 'refueling_form_state.dart';
 class RefuelingFormCubit extends Cubit<RefuelingFormState> {
   RefuelingFormCubit({@required this.usecase, @required this.vehicle})
       : assert(usecase != null, vehicle != null),
-        super(RefuelingFormInitial());
+        super(RefuelingFormStateInitial());
 
   final CreateRefueling usecase;
   final Vehicle vehicle;
 
   void createTrip(Refueling refueling) async {
-    emit(RefuelingFormLoading());
+    emit(RefuelingFormStateLoading());
     emit((await usecase(Params(vehicleID: vehicle.id, refueling: refueling))).fold(
-      (failure) => RefuelingFormError(),
-      (payload) => RefuelingFormCreated(),
+      (failure) => RefuelingFormStateError(),
+      (payload) => RefuelingFormStateCreated(),
     ));
   }
 }

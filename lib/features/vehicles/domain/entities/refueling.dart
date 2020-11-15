@@ -73,4 +73,8 @@ class Refueling extends Equatable {
   factory Refueling.fromJson(Map<String, dynamic> json) => _$RefuelingFromJson(json);
 
   Map<String, dynamic> toJson() => _$RefuelingToJson(this);
+
+  Map<String, dynamic> toFormEditJSON() {
+    return {};
+  }
 }

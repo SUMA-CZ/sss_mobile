@@ -6,16 +6,16 @@ abstract class RefuelingFormState extends Equatable {
   List<Object> get props => [];
 }
 
-class RefuelingFormInitial extends RefuelingFormState {}
+class RefuelingFormStateInitial extends RefuelingFormState {}
 
-class RefuelingFormLoading extends RefuelingFormState {}
+class RefuelingFormStateLoading extends RefuelingFormState {}
 
-class RefuelingFormCreated extends RefuelingFormState {}
+class RefuelingFormStateCreated extends RefuelingFormState {}
 
-class RefuelingFormError extends RefuelingFormState {}
+class RefuelingFormStateError extends RefuelingFormState {}
 
-class RefuelingFormLoaded extends RefuelingFormState {
+class RefuelingFormStateLoaded extends RefuelingFormState {
   final Refueling refueling;
 
-  RefuelingFormLoaded(this.refueling);
+  RefuelingFormStateLoaded(this.refueling);
 }

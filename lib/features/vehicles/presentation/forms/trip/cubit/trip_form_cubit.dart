@@ -31,8 +31,4 @@ class TripFormCubit extends Cubit<TripFormState> {
     emit(TripFormLoading());
     emit(TripFormLoaded(trip));
   }
-
-  void deleteTrip() async {
-    // TODO:
-  }
 }

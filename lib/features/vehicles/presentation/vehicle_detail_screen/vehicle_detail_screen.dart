@@ -63,7 +63,10 @@ class VehicleDetailScreen extends StatelessWidget {
             (current is! RefuelingsStateErrorDeleting && current is! RefuelingsStateDeleted),
         builder: (context, state) {
           if (state is RefuelingsStateLoaded) {
-            return RefuelingList(refuelings: state.refuelings);
+            return RefuelingList(
+              refuelings: state.refuelings,
+              vehicle: vehicle,
+            );
           }
 
           if (state is RefuelingsStateLoading) {
