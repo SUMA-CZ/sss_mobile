@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/trip.dart';
@@ -13,6 +14,7 @@ import '../../../../../injection_container.dart';
 class TripList extends StatelessWidget {
   final List<Trip> trips;
   final Vehicle vehicle;
+  final DateFormat dateFormat = DateFormat.yMMMEd();
 
   TripList({@required this.trips, @required this.vehicle}) : assert(vehicle != null);
 
@@ -73,8 +75,8 @@ class TripList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                buildTableRowWithPadding(S.current.beginDate, data.beginDate.toString()),
-                buildTableRowWithPadding(S.current.endData, data.endDate.toString()),
+                buildTableRowWithPadding(S.current.beginDate, dateFormat.format(data.beginDate)),
+                buildTableRowWithPadding(S.current.endData, dateFormat.format(data.endDate)),
                 buildTableRowWithPadding(S.current.beginOdometer, data.beginOdometer.toString()),
                 buildTableRowWithPadding(S.current.endOdometer, data.endOdometer.toString()),
                 buildTableRowWithPadding(S.current.officialTrip, data.officialTrip ? 'Ano' : 'Ne'),

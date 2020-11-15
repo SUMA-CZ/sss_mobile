@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
@@ -7,6 +8,7 @@ import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/
 
 class MaintenanceList extends StatelessWidget {
   final List<Maintenance> maintenances;
+  final DateFormat dateFormat = DateFormat.yMMMEd();
 
   MaintenanceList({@required this.maintenances});
 
@@ -47,7 +49,7 @@ class MaintenanceList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                buildTableRowWithPadding(S.current.date, data.date.toString()),
+                buildTableRowWithPadding(S.current.date, dateFormat.format(data.date)),
               ],
             ),
           ),

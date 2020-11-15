@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
@@ -7,8 +8,9 @@ import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/
 
 class RefuelingList extends StatelessWidget {
   final List<Refueling> refuelings;
+  final DateFormat dateFormat = DateFormat.yMMMEd();
 
-  const RefuelingList({Key key, this.refuelings}) : super(key: key);
+  RefuelingList({Key key, this.refuelings}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +56,7 @@ class RefuelingList extends StatelessWidget {
             child: Table(
               border: TableBorder.all(),
               children: [
-                buildTableRowWithPadding(S.current.date, data.date.toString()),
+                buildTableRowWithPadding(S.current.date, dateFormat.format(data.date)),
                 buildTableRowWithPadding(
                     S.current.odometer, data.odometer.toString() ?? 0.toString()),
                 buildTableRowWithPadding(
