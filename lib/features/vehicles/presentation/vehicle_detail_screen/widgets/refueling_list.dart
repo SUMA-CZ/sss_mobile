@@ -44,7 +44,7 @@ class RefuelingList extends StatelessWidget {
                 fullscreenDialog: true,
                 builder: (context) => BlocProvider<RefuelingFormCubit>(
                     create: (context) =>
-                        sl<RefuelingFormCubit>(param1: vehicle, param2: tripListCubit),
+                        sl<RefuelingFormCubit>(param1: vehicle, param2: tripListCubit)..getLoaded(),
                     child: RefuelingForm())),
           );
         },

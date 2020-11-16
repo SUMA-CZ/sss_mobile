@@ -35,5 +35,9 @@
   "price":"Price",
   "note":"Note",
   "yes":"Yes",
-  "no":"No"
+  "no":"No",
+  "litres" : "Amount of litres",
+  "fuelType" : "Fuel Type",
+  "vat" : "TAX",
+  "currency" : "Currency"
 }

@@ -35,5 +35,9 @@
   "price":"Cena",
   "note":"Poznámka",
   "yes":"Ano",
-  "no":"Ne"
+  "no":"Ne",
+  "litres" : "Množství litrů",
+  "fuelType" : "Typ paliva",
+  "vat" : "DPH",
+  "currency" : "Měna"
 }

@@ -3,8 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
 
 class RefuelingForm extends StatelessWidget {
@@ -17,13 +19,14 @@ class RefuelingForm extends StatelessWidget {
       return state.refueling.toFormEditJSON();
     }
     return {
+      'Date': DateTime.now(),
+      'OdometerState': '0',
+      'PriceIncludingVAT': '0',
+      'FuelBulk': '0',
       'OfficialJourney': true,
-      'FuelStatus': 0.5,
-      'date_range': [DateTime.now(), DateTime.now()],
-      'InitialOdometer': 0,
-      'FinalOdometer': 0,
-      'Note': '',
-      'ParkingNote': ''
+      'Note': null,
+      'VatRate': '21%',
+      'Currency': 'CZK',
     };
   }
 
@@ -31,7 +34,7 @@ class RefuelingForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(S.current.addTrip),
+          title: Text(S.current.addRefueling),
         ),
         body: Padding(
             padding: const EdgeInsets.all(10),
@@ -77,26 +80,64 @@ class RefuelingForm extends StatelessWidget {
                                   'https://cohenwoodworking.com/wp-content/uploads/2016/09/image-placeholder-500x500.jpg'),
                               maxImages: 1,
                               iconColor: Colors.red,
-                              // readOnly: true,
-                              // validators: [
-                              //   FormBuilderValidators.required(),
-                              //   (images) {
-                              //     if (images.length < 2) {
-                              //       return 'Two or more images required.';
-                              //     }
-                              //     return null;
-                              //   }
-                              // ],
                               onChanged: _onChanged,
                             ),
                             Row(
                               children: <Widget>[
                                 Expanded(
+                                  child: FormBuilderDateTimePicker(
+                                    attribute: 'Date',
+                                    inputType: InputType.date,
+                                    format: DateFormat.yMMMd(),
+                                    decoration: InputDecoration(labelText: S.current.date),
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Expanded(
                                     child: FormBuilderTextField(
-                                  initialValue: '',
-                                  attribute: 'InitialOdometer',
+                                  attribute: 'OdometerState',
                                   decoration: InputDecoration(
-                                    labelText: S.current.beginOdometer,
+                                    labelText: S.current.odometer,
+                                  ),
+                                  validators: [
+                                    FormBuilderValidators.required(),
+                                    FormBuilderValidators.numeric(),
+                                  ],
+                                  keyboardType: TextInputType.number,
+                                )),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: FormBuilderTextField(
+                                    attribute: 'FuelBulk',
+                                    decoration: InputDecoration(labelText: S.current.litres),
+                                    keyboardType: TextInputType.number,
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Expanded(
+                                    child: FormBuilderDropdown(
+                                  attribute: "FuelType",
+                                  decoration: InputDecoration(labelText: S.current.fuelType),
+                                  initialValue: 'Male',
+                                  // hint: Text('Select Gender'),
+                                  validators: [FormBuilderValidators.required()],
+                                  items: ['Male', 'Female', 'Other']
+                                      .map((gender) =>
+                                          DropdownMenuItem(value: gender, child: Text("$gender")))
+                                      .toList(),
+                                )),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                    child: FormBuilderTextField(
+                                  attribute: 'PriceIncludingVAT',
+                                  decoration: InputDecoration(
+                                    labelText: S.current.price,
                                   ),
                                   validators: [
                                     FormBuilderValidators.required(),
@@ -106,19 +147,40 @@ class RefuelingForm extends StatelessWidget {
                                 )),
                                 SizedBox(width: 20),
                                 Expanded(
+                                    child: FormBuilderDropdown(
+                                  attribute: "gender",
+                                  decoration: InputDecoration(labelText: S.current.vat),
+                                  initialValue: '21%',
+                                  // hint: Text('Select Gender'),
+                                  validators: [FormBuilderValidators.required()],
+                                  items: ['21%', 'Female', 'Other']
+                                      .map((gender) =>
+                                          DropdownMenuItem(value: gender, child: Text("$gender")))
+                                      .toList(),
+                                )),
+                                SizedBox(width: 20),
+                                Expanded(
+                                    child: FormBuilderDropdown(
+                                  attribute: "Currency",
+                                  initialValue: 'CZK',
+                                  decoration: InputDecoration(labelText: S.current.currency),
+                                  validators: [FormBuilderValidators.required()],
+                                  items: ['CZK', 'EUR']
+                                      .map((gender) =>
+                                          DropdownMenuItem(value: gender, child: Text("$gender")))
+                                      .toList(),
+                                )),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
                                     child: FormBuilderTextField(
-                                  attribute: 'FinalOdometer',
                                   initialValue: '',
-                                  // initialValue: '27',
+                                  attribute: 'Note',
                                   decoration: InputDecoration(
-                                    labelText: S.current.endOdometer,
+                                    labelText: S.current.note,
                                   ),
-                                  validators: [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.numeric(),
-                                  ],
-
-                                  keyboardType: TextInputType.number,
                                 )),
                               ],
                             ),
@@ -134,20 +196,30 @@ class RefuelingForm extends StatelessWidget {
                               child: Text(S.current.save, style: TextStyle(color: Colors.white)),
                               onPressed: () async {
                                 if (_fbKey.currentState.saveAndValidate()) {
-                                  // print(_fbKey.currentState.value);
-                                  // var data = _fbKey.currentState.value;
-                                  // data['InitialOdometer'] = int.parse(data['InitialOdometer']);
-                                  // data['FinalOdometer'] = int.parse(data['FinalOdometer']);
-                                  // data['FuelStatus'] = (data['FuelStatus'] * 100).toInt();
-                                  // var model = TripModel.fromJson(data);
-                                  // var interval = data['date_range'];
-                                  // model.beginDate = interval.first;
-                                  // model.endDate = interval.last;
-                                  // CameraPosition cameraPosition = data['coords'];
-                                  // model.latitude = cameraPosition.target.latitude;
-                                  // model.longitude = cameraPosition.target.longitude;
-                                  // print(model);
-                                  // BlocProvider.of<TripFormCubit>(context).createTrip(model);
+                                  // body: JSON.stringify({
+                                  //   Date: Moment(date).format('YYYY-MM-DD'),
+                                  //   OdometerState: odometerState,
+                                  //   OfficialJourney: officialJourney,
+                                  //   Note: note,
+                                  //   FuelBulk: fuelBulk,
+                                  //   PriceIncludingVAT: priceIncludingVAT,
+                                  //   ReceiptNumber: receiptNumber,
+                                  //   CurrencyId: currency,
+                                  //   FuelTypeId: fuelType,
+                                  //   VatRateId: vatRate,
+                                  //   Scan: 'data:image/png;base64,' + base64Image
+                                  // })
+                                  var data = _fbKey.currentState.value;
+                                  var model = RefuelingModel();
+                                  model.date = data['Date'];
+                                  model.odometer = int.parse(data['OdometerState']);
+                                  model.price = double.parse(data['PriceIncludingVAT']);
+                                  model.official = data['OfficialJourney'];
+                                  model.note = data['Note'];
+                                  model.fuelAmount = double.parse(data['FuelBulk']);
+
+                                  BlocProvider.of<RefuelingFormCubit>(context)
+                                      .createRefueling(model);
                                 } else {
                                   print(_fbKey.currentState.value);
                                   print('validation failed');

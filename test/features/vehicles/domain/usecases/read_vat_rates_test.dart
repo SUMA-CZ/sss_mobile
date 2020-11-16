@@ -31,7 +31,7 @@ void main() {
       // arrange
       when(repository.readAll()).thenAnswer((_) async => Right(tVatRates));
       // act
-      final result = await usecase(NoParams());
+      final result = await usecase(NoParamsReadVat());
       // assert
       expect(result, Right(tVatRates));
       verify(repository.readAll());

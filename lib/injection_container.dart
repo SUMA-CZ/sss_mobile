@@ -11,9 +11,11 @@ import 'package:sss_mobile/features/vehicles/domain/usecases/create_trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_maintenance.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_fuel_types.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_maintenances_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_refuelings_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_trips_for_vehicle.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_vat_rates.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/maintenance/cubit/maintenance_form_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
@@ -46,7 +48,8 @@ Future<void> init() async {
 
   sl.registerFactoryParam(
       (param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1, tripListCubit: param2));
-  sl.registerFactoryParam((param1, param2) => RefuelingFormCubit(usecase: sl(), vehicle: param1));
+  sl.registerFactoryParam((param1, param2) => RefuelingFormCubit(
+      readFuelTypes: sl(), readVatRates: sl(), getRefueling: sl(), vehicle: param1));
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam(
       (param1, param2) => TripsCubit(getTripsForVehicle: sl(), deleteTrip: sl(), vehicle: param1));
@@ -72,6 +75,8 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CreateTrip(repository: sl()));
   sl.registerLazySingleton(() => CreateMaintenance(repository: sl()));
   sl.registerLazySingleton(() => CreateRefueling(repository: sl()));
+  sl.registerLazySingleton(() => ReadVatRates(sl()));
+  sl.registerLazySingleton(() => ReadFuelTypes(sl()));
 
   /// Repository
   sl.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: sl()));

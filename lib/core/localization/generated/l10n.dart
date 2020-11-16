@@ -394,6 +394,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Množství litrů`
+  String get litres {
+    return Intl.message(
+      'Množství litrů',
+      name: 'litres',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Typ paliva`
+  String get fuelType {
+    return Intl.message(
+      'Typ paliva',
+      name: 'fuelType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `DPH`
+  String get vat {
+    return Intl.message(
+      'DPH',
+      name: 'vat',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Měna`
+  String get currency {
+    return Intl.message(
+      'Měna',
+      name: 'currency',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
