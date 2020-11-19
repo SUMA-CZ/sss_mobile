@@ -48,11 +48,8 @@ class TripList extends StatelessWidget {
                     child: TripForm())),
           );
         },
-        label: Text(S.current.addTrip, style: TextStyle(color: Colors.white)),
-        icon: Icon(
-          Icons.add_circle_outline,
-          color: Colors.white,
-        ),
+        label: Text(S.current.addTrip),
+        icon: Icon(Icons.add_circle_outline),
       ),
     );
   }
@@ -80,7 +77,7 @@ class TripList extends StatelessWidget {
                 buildTableRowWithPadding(S.current.beginOdometer, data.beginOdometer.toString()),
                 buildTableRowWithPadding(S.current.endOdometer, data.endOdometer.toString()),
                 buildTableRowWithPadding(S.current.officialTrip, data.officialTrip ? 'Ano' : 'Ne'),
-                buildTableRowWithPadding(S.current.parkingNote, data.parkingNote.toString()),
+                buildTableRowWithPadding(S.current.parkingNote, data.parkingNote ?? ''),
               ],
             ),
           ),
@@ -89,21 +86,6 @@ class TripList extends StatelessWidget {
             buttonHeight: 52.0,
             buttonMinWidth: 90.0,
             children: <Widget>[
-              // FlatButton(
-              //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
-              //   onPressed: () {
-              //     // BlocProvider.of<VehicleDetailTripsCubit>(context)
-              //   },
-              //   child: Column(
-              //     children: <Widget>[
-              //       Icon(Icons.create_outlined, color: Theme.of(context).accentColor),
-              //       Padding(
-              //         padding: const EdgeInsets.symmetric(vertical: 2.0),
-              //       ),
-              //       Text(S.current.edit, style: TextStyle(color: Theme.of(context).accentColor)),
-              //     ],
-              //   ),
-              // ),
               FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                 onPressed: () {

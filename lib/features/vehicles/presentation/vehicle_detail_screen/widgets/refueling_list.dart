@@ -84,10 +84,13 @@ class RefuelingList extends StatelessWidget {
               ],
             ),
           ),
-          Image(
-              image: NetworkImage(data.scanURL + '/download', headers: {
-            'Authorization': 'Bearer ' + sl<UserRepository>().accessTokenForImage()
-          })),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image(
+                image: NetworkImage(data.scanURL + '/download', headers: {
+              'Authorization': 'Bearer ' + sl<UserRepository>().accessTokenForImage()
+            })),
+          ),
           ButtonBar(
             alignment: MainAxisAlignment.spaceAround,
             buttonHeight: 52.0,

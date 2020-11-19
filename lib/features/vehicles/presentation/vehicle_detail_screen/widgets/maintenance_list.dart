@@ -27,14 +27,6 @@ class MaintenanceList extends StatelessWidget {
             }
           },
           child: _buildList(maintenances)),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          /// Get cubit and pass it to next page
-          // Add your onPressed code here!
-        },
-        label: Text(S.current.addMaintenance),
-        icon: Icon(Icons.add_circle_outline),
-      ),
     );
   }
 
