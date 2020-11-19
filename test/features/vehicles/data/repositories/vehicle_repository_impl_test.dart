@@ -8,6 +8,7 @@ import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/vehicles_datasource.dart';
 import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model_create_dto.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 import 'package:sss_mobile/features/vehicles/data/repositories/vehicle_repository_impl.dart';
@@ -50,6 +51,7 @@ void main() {
 
   final tOneTripModel = TripModel.fromJson(json.decode(fixture('trip.json')));
   final tOneRefuelingModel = RefuelingModel.fromJson(json.decode(fixture('refueling.json')));
+  final tRefuelingCreateDTO = RefuelingModelCreateDTO()..base64Image = 'test';
   final tOneMaintenanceModel = MaintenanceModel.fromJson(json.decode(fixture('maintenance.json')));
 
   var vehicleID = 16;
@@ -200,8 +202,8 @@ void main() {
     test(
       'should call create and get on datasource',
       () async {
-        await repository.createRefuelingForVehicleID(id, tOneRefuelingModel);
-        verify(mockRemoteDataSource.createRefuelingForVehicleID(id, tOneRefuelingModel));
+        await repository.createRefuelingForVehicleID(id, tRefuelingCreateDTO);
+        verify(mockRemoteDataSource.createRefuelingForVehicleID(id, tRefuelingCreateDTO));
         // verifyNoMoreInteractions(mockRemoteDataSource);
       },
     );
