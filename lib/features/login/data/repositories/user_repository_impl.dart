@@ -25,6 +25,10 @@ class UserRepositoryImpl extends UserRepository {
     }
   }
 
+  String accessTokenForImage() {
+    return prefs.getString(SP_ACCESS_TOKEN);
+  }
+
   @override
   Future<Either<Failure, dynamic>> deleteToken() async {
     if (await prefs.remove(SP_ACCESS_TOKEN)) {

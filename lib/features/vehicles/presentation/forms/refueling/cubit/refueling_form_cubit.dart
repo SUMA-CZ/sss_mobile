@@ -61,8 +61,6 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       model.vatRateObject = data['VatRate'];
       model.fuelTypeObject = data['FuelType'];
 
-      // var payload = model.toJson;
-
       File file = data['images'].first;
       final bytes = await Io.File(file.path).readAsBytes();
       final base = base64Encode(bytes);

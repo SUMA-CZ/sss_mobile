@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
+import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/vehicle.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
@@ -83,6 +84,10 @@ class RefuelingList extends StatelessWidget {
               ],
             ),
           ),
+          Image(
+              image: NetworkImage(data.scanURL + '/download', headers: {
+            'Authorization': 'Bearer ' + sl<UserRepository>().accessTokenForImage()
+          })),
           ButtonBar(
             alignment: MainAxisAlignment.spaceAround,
             buttonHeight: 52.0,

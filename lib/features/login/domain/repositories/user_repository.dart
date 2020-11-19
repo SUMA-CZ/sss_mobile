@@ -7,6 +7,7 @@ abstract class UserRepository {
   Future<Either<Failure, Token>> authenticate(UserCredentialsModel credentials);
 
   Either<Failure, String> accessToken();
+  String accessTokenForImage();
 
   Future<Either<Failure, String>> persistToken(String token);
 

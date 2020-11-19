@@ -13,6 +13,7 @@ class RefuelingForm extends StatelessWidget {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
 
   final ValueChanged _onChanged = (val) => print(val);
+  bool _saving = false;
 
   Map<String, dynamic> _initialDataFor(RefuelingFormState state) {
     if (state is RefuelingFormStateLoaded && state.refueling != null) {
@@ -44,6 +45,15 @@ class RefuelingForm extends StatelessWidget {
                     SnackBar(
                       content: Text(S.current.failedToRefueling),
                       backgroundColor: Colors.red,
+                    ),
+                  );
+                }
+
+                if (state is RefuelingFormStateLoading) {
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(S.current.save),
+                      backgroundColor: Colors.green,
                     ),
                   );
                 }
