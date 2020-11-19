@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
+import 'package:sss_mobile/core/ui/form_builder_validator_with_localization.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
-import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
 
 class RefuelingForm extends StatelessWidget {
@@ -15,7 +15,7 @@ class RefuelingForm extends StatelessWidget {
   final ValueChanged _onChanged = (val) => print(val);
 
   Map<String, dynamic> _initialDataFor(RefuelingFormState state) {
-    if (state is RefuelingFormStateLoaded) {
+    if (state is RefuelingFormStateLoaded && state.refueling != null) {
       return state.refueling.toFormEditJSON();
     }
     return {
@@ -25,7 +25,6 @@ class RefuelingForm extends StatelessWidget {
       'FuelBulk': '0',
       'OfficialJourney': true,
       'Note': null,
-      'VatRate': '21%',
       'Currency': 'CZK',
     };
   }
@@ -43,7 +42,7 @@ class RefuelingForm extends StatelessWidget {
                 if (state is RefuelingFormStateError) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(S.current.failedToSaveTrip),
+                      content: Text(S.current.failedToRefueling),
                       backgroundColor: Colors.red,
                     ),
                   );
@@ -54,7 +53,7 @@ class RefuelingForm extends StatelessWidget {
                 }
               },
               child: BlocBuilder<RefuelingFormCubit, RefuelingFormState>(builder: (context, state) {
-                if (state is RefuelingFormStateInitial || state is RefuelingFormStateLoaded) {
+                if (state is RefuelingFormStateLoaded) {
                   return ListView(
                     children: <Widget>[
                       FormBuilder(
@@ -100,8 +99,9 @@ class RefuelingForm extends StatelessWidget {
                                     labelText: S.current.odometer,
                                   ),
                                   validators: [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.numeric(),
+                                    FormBuilderValidatorsWithLocalization.required(),
+                                    FormBuilderValidatorsWithLocalization.numeric(),
+                                    FormBuilderValidatorsWithLocalization.min(1)
                                   ],
                                   keyboardType: TextInputType.number,
                                 )),
@@ -112,6 +112,10 @@ class RefuelingForm extends StatelessWidget {
                                 Expanded(
                                   child: FormBuilderTextField(
                                     attribute: 'FuelBulk',
+                                    validators: [
+                                      FormBuilderValidatorsWithLocalization.required(),
+                                      FormBuilderValidatorsWithLocalization.min(1)
+                                    ],
                                     decoration: InputDecoration(labelText: S.current.litres),
                                     keyboardType: TextInputType.number,
                                   ),
@@ -119,14 +123,13 @@ class RefuelingForm extends StatelessWidget {
                                 SizedBox(width: 20),
                                 Expanded(
                                     child: FormBuilderDropdown(
-                                  attribute: "FuelType",
+                                  attribute: 'FuelType',
                                   decoration: InputDecoration(labelText: S.current.fuelType),
-                                  initialValue: 'Male',
-                                  // hint: Text('Select Gender'),
-                                  validators: [FormBuilderValidators.required()],
-                                  items: ['Male', 'Female', 'Other']
-                                      .map((gender) =>
-                                          DropdownMenuItem(value: gender, child: Text("$gender")))
+                                  initialValue: state.fuelTypes.first,
+                                  validators: [FormBuilderValidatorsWithLocalization.required()],
+                                  items: state.fuelTypes
+                                      .map((fuelType) => DropdownMenuItem(
+                                          value: fuelType, child: Text('${fuelType.name}')))
                                       .toList(),
                                 )),
                               ],
@@ -140,34 +143,34 @@ class RefuelingForm extends StatelessWidget {
                                     labelText: S.current.price,
                                   ),
                                   validators: [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.numeric(),
+                                    FormBuilderValidatorsWithLocalization.required(),
+                                    FormBuilderValidatorsWithLocalization.numeric(),
+                                    FormBuilderValidatorsWithLocalization.min(1)
                                   ],
                                   keyboardType: TextInputType.number,
                                 )),
                                 SizedBox(width: 20),
                                 Expanded(
                                     child: FormBuilderDropdown(
-                                  attribute: "gender",
+                                  attribute: 'VatRate',
                                   decoration: InputDecoration(labelText: S.current.vat),
-                                  initialValue: '21%',
-                                  // hint: Text('Select Gender'),
-                                  validators: [FormBuilderValidators.required()],
-                                  items: ['21%', 'Female', 'Other']
-                                      .map((gender) =>
-                                          DropdownMenuItem(value: gender, child: Text("$gender")))
+                                  initialValue: state.vatRates.first,
+                                  validators: [FormBuilderValidatorsWithLocalization.required()],
+                                  items: state.vatRates
+                                      .map((vatRate) => DropdownMenuItem(
+                                          value: vatRate, child: Text('${vatRate.vat}')))
                                       .toList(),
                                 )),
                                 SizedBox(width: 20),
                                 Expanded(
                                     child: FormBuilderDropdown(
-                                  attribute: "Currency",
-                                  initialValue: 'CZK',
+                                  attribute: 'Currency',
+                                  initialValue: state.currencies.first,
                                   decoration: InputDecoration(labelText: S.current.currency),
-                                  validators: [FormBuilderValidators.required()],
-                                  items: ['CZK', 'EUR']
-                                      .map((gender) =>
-                                          DropdownMenuItem(value: gender, child: Text("$gender")))
+                                  validators: [FormBuilderValidatorsWithLocalization.required()],
+                                  items: state.currencies
+                                      .map((gender) => DropdownMenuItem(
+                                          value: gender, child: Text('${gender.code}')))
                                       .toList(),
                                 )),
                               ],
@@ -196,30 +199,7 @@ class RefuelingForm extends StatelessWidget {
                               child: Text(S.current.save, style: TextStyle(color: Colors.white)),
                               onPressed: () async {
                                 if (_fbKey.currentState.saveAndValidate()) {
-                                  // body: JSON.stringify({
-                                  //   Date: Moment(date).format('YYYY-MM-DD'),
-                                  //   OdometerState: odometerState,
-                                  //   OfficialJourney: officialJourney,
-                                  //   Note: note,
-                                  //   FuelBulk: fuelBulk,
-                                  //   PriceIncludingVAT: priceIncludingVAT,
-                                  //   ReceiptNumber: receiptNumber,
-                                  //   CurrencyId: currency,
-                                  //   FuelTypeId: fuelType,
-                                  //   VatRateId: vatRate,
-                                  //   Scan: 'data:image/png;base64,' + base64Image
-                                  // })
-                                  var data = _fbKey.currentState.value;
-                                  var model = RefuelingModel();
-                                  model.date = data['Date'];
-                                  model.odometer = int.parse(data['OdometerState']);
-                                  model.price = double.parse(data['PriceIncludingVAT']);
-                                  model.official = data['OfficialJourney'];
-                                  model.note = data['Note'];
-                                  model.fuelAmount = double.parse(data['FuelBulk']);
-
-                                  BlocProvider.of<RefuelingFormCubit>(context)
-                                      .createRefueling(model);
+                                  _saveButtonAction(_fbKey.currentState.value, context);
                                 } else {
                                   print(_fbKey.currentState.value);
                                   print('validation failed');
@@ -236,5 +216,9 @@ class RefuelingForm extends StatelessWidget {
                 return LoadingIndicator();
               }),
             )));
+  }
+
+  void _saveButtonAction(Map<String, dynamic> data, BuildContext context) {
+    BlocProvider.of<RefuelingFormCubit>(context).createRefuelingWithFormData(data);
   }
 }

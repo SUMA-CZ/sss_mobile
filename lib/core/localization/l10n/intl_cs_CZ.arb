@@ -39,5 +39,9 @@
   "litres" : "Množství litrů",
   "fuelType" : "Typ paliva",
   "vat" : "DPH",
-  "currency" : "Měna"
+  "currency" : "Měna",
+  "failedToRefueling": "Error při ukládání tankovaní, zkontrolujte hodnoty ve formuláři.",
+  "validationRequired":"Povinná hodnota",
+  "validationMin1":"Musí být > 1",
+  "validationNumeric":"Musí být číslo"
 }

@@ -3,14 +3,21 @@ import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sss_mobile/features/login/domain/usecases/authenticate.dart';
 import 'package:sss_mobile/features/login/presentation/bloc/login.dart';
+import 'package:sss_mobile/features/vehicles/data/datasources/currency_datasource.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/fuel_types_datasource.dart';
 import 'package:sss_mobile/features/vehicles/data/datasources/vat_rates_datasource.dart';
+import 'package:sss_mobile/features/vehicles/data/repositories/currency_repository_impl.dart';
+import 'package:sss_mobile/features/vehicles/data/repositories/fuel_type_repository_impl.dart';
+import 'package:sss_mobile/features/vehicles/data/repositories/vat_rate_repository_imp.dart';
+import 'package:sss_mobile/features/vehicles/domain/repositories/currency_repository.dart';
+import 'package:sss_mobile/features/vehicles/domain/repositories/vat_rate_repository.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_maintenace.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/create_trip.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_maintenance.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/delete_trip.dart';
+import 'package:sss_mobile/features/vehicles/domain/usecases/read_currencies.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_fuel_types.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_maintenances_for_vehicle.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_refuelings_for_vehicle.dart';
@@ -30,6 +37,7 @@ import 'features/login/data/repositories/user_repository_impl.dart';
 import 'features/login/domain/repositories/user_repository.dart';
 import 'features/vehicles/data/datasources/vehicles_datasource.dart';
 import 'features/vehicles/data/repositories/vehicle_repository_impl.dart';
+import 'features/vehicles/domain/repositories/fuel_type_repository.dart';
 import 'features/vehicles/domain/repositories/vehicle_repository.dart';
 import 'features/vehicles/domain/usecases/read_vehicle.dart';
 import 'features/vehicles/domain/usecases/read_vehicles.dart';
@@ -49,7 +57,11 @@ Future<void> init() async {
   sl.registerFactoryParam(
       (param1, param2) => TripFormCubit(usecase: sl(), vehicle: param1, tripListCubit: param2));
   sl.registerFactoryParam((param1, param2) => RefuelingFormCubit(
-      readFuelTypes: sl(), readVatRates: sl(), getRefueling: sl(), vehicle: param1));
+      readFuelTypes: sl(),
+      readVatRates: sl(),
+      createRefuelingUseCase: sl(),
+      readCurrency: sl(),
+      vehicle: param1));
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam(
       (param1, param2) => TripsCubit(getTripsForVehicle: sl(), deleteTrip: sl(), vehicle: param1));
@@ -77,18 +89,23 @@ Future<void> init() async {
   sl.registerLazySingleton(() => CreateRefueling(repository: sl()));
   sl.registerLazySingleton(() => ReadVatRates(sl()));
   sl.registerLazySingleton(() => ReadFuelTypes(sl()));
+  sl.registerLazySingleton(() => ReadCurrency(sl()));
 
   /// Repository
   sl.registerLazySingleton<VehicleRepository>(() => VehicleRepositoryImpl(remoteDataSource: sl()));
   sl.registerLazySingleton<UserRepository>(() => UserRepositoryImpl(prefs: sl(), dataSource: sl()));
+  sl.registerLazySingleton<FuelTypeRepository>(
+      () => FuelTypeRepositoryImpl(remoteDataSource: sl()));
+  sl.registerLazySingleton<VatRateRepository>(() => VatRateRepositoryImpl(remoteDataSource: sl()));
+  sl.registerLazySingleton<CurrencyRepository>(() => CurrencyRepositoryImpl(dataSource: sl()));
 
   /// Data sources
   sl.registerLazySingleton<VehiclesRemoteDataSource>(
       () => VehiclesRemoteDataSourceImpl(client: sl()));
   sl.registerLazySingleton<VatRatesDataSource>(() => VatRatesDataSourceImpl(client: sl()));
   sl.registerLazySingleton<FuelTypesDataSource>(() => FuelTypesDataSourceImpl(client: sl()));
-
   sl.registerLazySingleton<AccountDataSource>(() => AccountDataSourceImpl(client: sl()));
+  sl.registerLazySingleton<CurrencyDataSource>(() => CurrencyDataSourceImpl(client: sl()));
 
   /// External
   final sharedPreferences = await SharedPreferences.getInstance();

@@ -18,6 +18,11 @@ class RefuelingFormStateLoaded extends RefuelingFormState {
   final Refueling refueling;
   final List<VatRate> vatRates;
   final List<FuelType> fuelTypes;
+  final List<Currency> currencies;
 
-  RefuelingFormStateLoaded({this.refueling, this.fuelTypes, this.vatRates});
+  RefuelingFormStateLoaded(
+      {this.refueling,
+      @required this.fuelTypes,
+      @required this.vatRates,
+      @required this.currencies});
 }

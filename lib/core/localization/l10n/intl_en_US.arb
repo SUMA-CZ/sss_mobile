@@ -39,5 +39,9 @@
   "litres" : "Amount of litres",
   "fuelType" : "Fuel Type",
   "vat" : "TAX",
-  "currency" : "Currency"
+  "currency" : "Currency",
+  "failedToRefueling": "Error while saving refueling, check the form data.",
+ "validationRequired":"Required value",
+ "validationMin1":"Must be greater than 1",
+ "validationNumeric":"Must be numeric"
 }

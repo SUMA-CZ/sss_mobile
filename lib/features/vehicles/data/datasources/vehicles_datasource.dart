@@ -3,6 +3,7 @@ import 'package:sss_mobile/core/error/exception.dart';
 import 'package:sss_mobile/core/utils/comparators.dart';
 import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model_create_dto.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 
@@ -25,7 +26,7 @@ abstract class VehiclesRemoteDataSource {
 
   Future<List<RefuelingModel>> getRefuelingsForVehicleID(int vehicleID);
 
-  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModel model);
+  Future<RefuelingModel> createRefuelingForVehicleID(int vehicleID, RefuelingModelCreateDTO model);
 
   Future<List<MaintenanceModel>> getMaintenancesForVehicleID(int vehicleID);
 

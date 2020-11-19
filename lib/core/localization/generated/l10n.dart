@@ -434,6 +434,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Error při ukládání tankovaní, zkontrolujte hodnoty ve formuláři.`
+  String get failedToRefueling {
+    return Intl.message(
+      'Error při ukládání tankovaní, zkontrolujte hodnoty ve formuláři.',
+      name: 'failedToRefueling',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Povinná hodnota`
+  String get validationRequired {
+    return Intl.message(
+      'Povinná hodnota',
+      name: 'validationRequired',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Musí být > 1`
+  String get validationMin1 {
+    return Intl.message(
+      'Musí být > 1',
+      name: 'validationMin1',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Musí být číslo`
+  String get validationNumeric {
+    return Intl.message(
+      'Musí být číslo',
+      name: 'validationNumeric',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

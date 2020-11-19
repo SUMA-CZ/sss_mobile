@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model_create_dto.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 
@@ -19,7 +20,7 @@ class CreateRefueling implements UseCase<List<Refueling>, Params> {
 
 class Params extends Equatable {
   final int vehicleID;
-  final Refueling refueling;
+  final RefuelingModelCreateDTO refueling;
 
   Params({@required this.vehicleID, @required this.refueling});
 

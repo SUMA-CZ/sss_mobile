@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:sss_mobile/core/error/failure.dart';
 import 'package:sss_mobile/features/vehicles/data/models/maintenance_model.dart';
-import 'package:sss_mobile/features/vehicles/data/models/refueling_model.dart';
+import 'package:sss_mobile/features/vehicles/data/models/refueling_model_create_dto.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/maintenance.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
@@ -20,7 +20,7 @@ abstract class VehicleRepository {
 
   Future<Either<Failure, List<Trip>>> createTripForVehicleID(int vehicleID, TripModel trip);
   Future<Either<Failure, List<Refueling>>> createRefuelingForVehicleID(
-      int vehicleID, RefuelingModel refueling);
+      int vehicleID, RefuelingModelCreateDTO refueling);
   Future<Either<Failure, List<Maintenance>>> createMaintenanceForVehicleID(
       int vehicleID, MaintenanceModel maintenance);
 }
