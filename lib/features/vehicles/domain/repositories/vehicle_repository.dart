@@ -19,7 +19,7 @@ abstract class VehicleRepository {
   Future<Either<Failure, List<Maintenance>>> getMaintenancesForVehicleID(int vehicleID);
 
   Future<Either<Failure, List<Trip>>> createTripForVehicleID(int vehicleID, TripModel trip);
-  Future<Either<Failure, List<Refueling>>> createRefuelingForVehicleID(
+  Future<Either<Failure, Refueling>> createRefuelingForVehicleID(
       int vehicleID, RefuelingModelCreateDTO refueling);
   Future<Either<Failure, List<Maintenance>>> createMaintenanceForVehicleID(
       int vehicleID, MaintenanceModel maintenance);

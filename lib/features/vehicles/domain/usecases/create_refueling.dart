@@ -7,13 +7,13 @@ import 'package:sss_mobile/features/vehicles/data/models/refueling_model_create_
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
 import 'package:sss_mobile/features/vehicles/domain/repositories/vehicle_repository.dart';
 
-class CreateRefueling implements UseCase<List<Refueling>, Params> {
+class CreateRefueling implements UseCase<Refueling, Params> {
   final VehicleRepository repository;
 
   CreateRefueling({@required this.repository}) : assert(repository != null);
 
   @override
-  Future<Either<Failure, List<Refueling>>> call(Params params) async {
+  Future<Either<Failure, Refueling>> call(Params params) async {
     return await repository.createRefuelingForVehicleID(params.vehicleID, params.refueling);
   }
 }

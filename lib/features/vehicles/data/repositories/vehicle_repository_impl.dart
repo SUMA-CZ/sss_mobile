@@ -71,12 +71,11 @@ class VehicleRepositoryImpl extends VehicleRepository {
   }
 
   @override
-  Future<Either<Failure, List<Refueling>>> createRefuelingForVehicleID(
+  Future<Either<Failure, Refueling>> createRefuelingForVehicleID(
       int vehicleID, RefuelingModel refueling) async {
     try {
-      await remoteDataSource.createRefuelingForVehicleID(vehicleID, refueling);
-      final refuelingModels = await remoteDataSource.getRefuelingsForVehicleID(vehicleID);
-      return Right(refuelingModels);
+      final model = await remoteDataSource.createRefuelingForVehicleID(vehicleID, refueling);
+      return Right(model);
     } on ServerException {
       return Left(ServerFailure());
     }

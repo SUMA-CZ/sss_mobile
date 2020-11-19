@@ -88,7 +88,7 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       (payload) {
         vatRates = payload;
         return RefuelingFormStateLoading();
-      },
+      }, /**/
     ));
 
     emit((await readFuelTypes(NoParams())).fold(

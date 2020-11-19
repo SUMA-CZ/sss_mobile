@@ -35,11 +35,11 @@ void main() {
     () async {
       // arrange
       when(repository.createRefuelingForVehicleID(vehicleID, model))
-          .thenAnswer((_) async => Right(objects));
+          .thenAnswer((_) async => Right(objects.first));
       // act
       final result = await usecase(Params(vehicleID: vehicleID, refueling: model));
       // assert
-      expect(result, Right(objects));
+      expect(result, Right(objects.first));
       verify(repository.createRefuelingForVehicleID(vehicleID, model));
       verifyNoMoreInteractions(repository);
     },
