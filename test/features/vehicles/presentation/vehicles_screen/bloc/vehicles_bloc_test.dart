@@ -61,7 +61,7 @@ void main() {
         bloc.add(VehiclesEventRead());
       },
     );
-
+/**/
     S.delegate.load(Locale('en', 'US'));
     test(
       'should emit [Loading, Error] when getting data fails',

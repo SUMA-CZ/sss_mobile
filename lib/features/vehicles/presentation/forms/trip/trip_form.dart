@@ -141,7 +141,6 @@ class TripForm extends StatelessWidget {
                             ),
                             FormBuilderTextField(
                               attribute: 'Note',
-                              initialValue: 'Note',
                               validators: [FormBuilderValidators.required()],
                               decoration: InputDecoration(
                                 labelText: S.current.description,
@@ -150,7 +149,6 @@ class TripForm extends StatelessWidget {
                               maxLines: 10,
                             ),
                             FormBuilderTextField(
-                              initialValue: 'Parking Note',
                               attribute: 'ParkingNote',
                               decoration: InputDecoration(
                                 labelText: S.current.parkingNote,
