@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pedantic/pedantic.dart';
@@ -61,6 +63,8 @@ void main() {
         .timeout(Duration(seconds: 2)));
     expect(result, Right(tToken));
   });
+
+  S.delegate.load(Locale('en', 'US'));
 
   test(
       'should [Loading, (authbloc.LoggedIn) => [AuthenticationLoading,'

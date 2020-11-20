@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:ui';
 
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/error/failure.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/usecases/usecase.dart';
 import 'package:sss_mobile/features/vehicles/data/models/vehicle_model.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_vehicles.dart';
@@ -60,17 +62,16 @@ void main() {
       },
     );
 
-    final tMessage = 'SERVER_FAILURE_MESSAGE';
-
+    S.delegate.load(Locale('en', 'US'));
     test(
       'should emit [Loading, Error] when getting data fails',
       () async {
         // arrange
-        when(mockGetVehicles(any)).thenAnswer((_) async => Left(ServerFailure(message: tMessage)));
+        when(mockGetVehicles(any)).thenAnswer((_) async => Left(ServerFailure()));
         // assert later
         final expected = [
           VehiclesStateLoading(),
-          VehiclesStateError(message: tMessage),
+          VehiclesStateError(message: S.current.errorCom),
         ];
         unawaited(expectLater(bloc, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
         // act
