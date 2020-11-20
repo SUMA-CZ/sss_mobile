@@ -18,9 +18,6 @@ class LoginFormState extends State<LoginForm> {
 
   @override
   Widget build(BuildContext context) {
-    _usernameController.text = 'tomas.sykora@ajty.cz';
-    _passwordController.text = 'Hawk2772';
-
     void _onLoginButtonPressed() {
       BlocProvider.of<LoginBloc>(context).add(
         LoginButtonPressed(
@@ -54,6 +51,10 @@ class LoginFormState extends State<LoginForm> {
               child: Column(
                 children: [
                   TextFormField(
+                    autocorrect: false,
+                    enableSuggestions: false,
+                    keyboardType: TextInputType.emailAddress,
+                    autofocus: true,
                     decoration: InputDecoration(labelText: S.current.loginEmail),
                     controller: _usernameController,
                     validator: (value) {
