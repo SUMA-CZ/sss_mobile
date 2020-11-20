@@ -43,5 +43,7 @@
   "failedToRefueling": "Error při ukládání tankovaní, zkontrolujte hodnoty ve formuláři.",
   "validationRequired":"Povinná hodnota",
   "validationMin1":"Musí být > 1",
-  "validationNumeric":"Musí být číslo"
+  "validationNumeric":"Musí být číslo",
+   "errorSharedPrefs" : "Error při ukládání tokenu",
+   "errorAuthentication" : "Chybná autentifikace"
 }

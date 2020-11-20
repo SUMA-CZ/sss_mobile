@@ -31,17 +31,8 @@ class VehiclesBloc extends Bloc<VehiclesEvent, VehiclesState> {
   Stream<VehiclesState> _eitherLoadedOrErrorState(
       Either<Failure, List<Vehicle>> failureOrVehicles) async* {
     yield failureOrVehicles.fold(
-      (failure) => VehiclesStateError(message: _mapFailureToMessage(failure)),
+      (failure) => VehiclesStateError(message: failure.toLocalizedString()),
       (vehicles) => VehiclesStateLoaded(vehicles: vehicles),
     );
-  }
-
-  String _mapFailureToMessage(Failure failure) {
-    switch (failure.runtimeType) {
-      case ServerFailure:
-        return 'SERVER_FAILURE_MESSAGE';
-      default:
-        return 'Unexpected error';
-    }
   }
 }

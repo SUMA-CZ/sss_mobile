@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/form_builder_validator_with_localization.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
@@ -62,169 +63,173 @@ class RefuelingForm extends StatelessWidget {
                   Navigator.of(context).pop();
                 }
               },
-              child: BlocBuilder<RefuelingFormCubit, RefuelingFormState>(builder: (context, state) {
-                if (state is RefuelingFormStateLoaded) {
-                  return ListView(
-                    children: <Widget>[
-                      FormBuilder(
-                        // context,
-                        key: _fbKey,
-                        initialValue: _initialDataFor(state),
-                        readOnly: false,
-                        child: Column(
-                          children: <Widget>[
-                            FormBuilderSwitch(
-                              label: Text(S.current.officialTrip),
-                              attribute: 'OfficialJourney',
-                              initialValue: true,
-                              activeColor: Theme.of(context).accentColor,
-                              onChanged: _onChanged,
-                            ),
-                            FormBuilderImagePicker(
-                              attribute: 'images',
-                              decoration: const InputDecoration(
-                                labelText: 'Images',
+              child: ModalProgressHUD(
+                inAsyncCall: _saving,
+                child:
+                    BlocBuilder<RefuelingFormCubit, RefuelingFormState>(builder: (context, state) {
+                  if (state is RefuelingFormStateLoaded) {
+                    return ListView(
+                      children: <Widget>[
+                        FormBuilder(
+                          // context,
+                          key: _fbKey,
+                          initialValue: _initialDataFor(state),
+                          readOnly: false,
+                          child: Column(
+                            children: <Widget>[
+                              FormBuilderSwitch(
+                                label: Text(S.current.officialTrip),
+                                attribute: 'OfficialJourney',
+                                initialValue: true,
+                                activeColor: Theme.of(context).accentColor,
+                                onChanged: _onChanged,
                               ),
-                              defaultImage: NetworkImage(
-                                  'https://cohenwoodworking.com/wp-content/uploads/2016/09/image-placeholder-500x500.jpg'),
-                              maxImages: 1,
-                              iconColor: Colors.red,
-                              onChanged: _onChanged,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: FormBuilderDateTimePicker(
-                                    attribute: 'Date',
-                                    inputType: InputType.date,
-                                    format: DateFormat.yMMMd(),
-                                    decoration: InputDecoration(labelText: S.current.date),
-                                  ),
+                              FormBuilderImagePicker(
+                                attribute: 'images',
+                                decoration: const InputDecoration(
+                                  labelText: 'Images',
                                 ),
-                                SizedBox(width: 20),
-                                Expanded(
-                                    child: FormBuilderTextField(
-                                  attribute: 'OdometerState',
-                                  decoration: InputDecoration(
-                                    labelText: S.current.odometer,
+                                defaultImage: NetworkImage(
+                                    'https://cohenwoodworking.com/wp-content/uploads/2016/09/image-placeholder-500x500.jpg'),
+                                maxImages: 1,
+                                iconColor: Colors.red,
+                                onChanged: _onChanged,
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: FormBuilderDateTimePicker(
+                                      attribute: 'Date',
+                                      inputType: InputType.date,
+                                      format: DateFormat.yMMMd(),
+                                      decoration: InputDecoration(labelText: S.current.date),
+                                    ),
                                   ),
-                                  validators: [
-                                    FormBuilderValidatorsWithLocalization.required(),
-                                    FormBuilderValidatorsWithLocalization.numeric(),
-                                    FormBuilderValidatorsWithLocalization.min(1)
-                                  ],
-                                  keyboardType: TextInputType.number,
-                                )),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: FormBuilderTextField(
-                                    attribute: 'FuelBulk',
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                      child: FormBuilderTextField(
+                                    attribute: 'OdometerState',
+                                    decoration: InputDecoration(
+                                      labelText: S.current.odometer,
+                                    ),
                                     validators: [
                                       FormBuilderValidatorsWithLocalization.required(),
+                                      FormBuilderValidatorsWithLocalization.numeric(),
                                       FormBuilderValidatorsWithLocalization.min(1)
                                     ],
-                                    decoration: InputDecoration(labelText: S.current.litres),
                                     keyboardType: TextInputType.number,
-                                  ),
-                                ),
-                                SizedBox(width: 20),
-                                Expanded(
-                                    child: FormBuilderDropdown(
-                                  attribute: 'FuelType',
-                                  decoration: InputDecoration(labelText: S.current.fuelType),
-                                  initialValue: state.fuelTypes.first,
-                                  validators: [FormBuilderValidatorsWithLocalization.required()],
-                                  items: state.fuelTypes
-                                      .map((fuelType) => DropdownMenuItem(
-                                          value: fuelType, child: Text('${fuelType.name}')))
-                                      .toList(),
-                                )),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
+                                  )),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
                                     child: FormBuilderTextField(
-                                  attribute: 'PriceIncludingVAT',
-                                  decoration: InputDecoration(
-                                    labelText: S.current.price,
+                                      attribute: 'FuelBulk',
+                                      validators: [
+                                        FormBuilderValidatorsWithLocalization.required(),
+                                        FormBuilderValidatorsWithLocalization.min(1)
+                                      ],
+                                      decoration: InputDecoration(labelText: S.current.litres),
+                                      keyboardType: TextInputType.number,
+                                    ),
                                   ),
-                                  validators: [
-                                    FormBuilderValidatorsWithLocalization.required(),
-                                    FormBuilderValidatorsWithLocalization.numeric(),
-                                    FormBuilderValidatorsWithLocalization.min(1)
-                                  ],
-                                  keyboardType: TextInputType.number,
-                                )),
-                                SizedBox(width: 20),
-                                Expanded(
-                                    child: FormBuilderDropdown(
-                                  attribute: 'VatRate',
-                                  decoration: InputDecoration(labelText: S.current.vat),
-                                  initialValue: state.vatRates.first,
-                                  validators: [FormBuilderValidatorsWithLocalization.required()],
-                                  items: state.vatRates
-                                      .map((vatRate) => DropdownMenuItem(
-                                          value: vatRate, child: Text('${vatRate.vat}')))
-                                      .toList(),
-                                )),
-                                SizedBox(width: 20),
-                                Expanded(
-                                    child: FormBuilderDropdown(
-                                  attribute: 'Currency',
-                                  initialValue: state.currencies.first,
-                                  decoration: InputDecoration(labelText: S.current.currency),
-                                  validators: [FormBuilderValidatorsWithLocalization.required()],
-                                  items: state.currencies
-                                      .map((gender) => DropdownMenuItem(
-                                          value: gender, child: Text('${gender.code}')))
-                                      .toList(),
-                                )),
-                              ],
-                            ),
-                            Row(
-                              children: <Widget>[
-                                Expanded(
-                                    child: FormBuilderTextField(
-                                  initialValue: '',
-                                  attribute: 'Note',
-                                  decoration: InputDecoration(
-                                    labelText: S.current.note,
-                                  ),
-                                )),
-                              ],
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                      child: FormBuilderDropdown(
+                                    attribute: 'FuelType',
+                                    decoration: InputDecoration(labelText: S.current.fuelType),
+                                    initialValue: state.fuelTypes.first,
+                                    validators: [FormBuilderValidatorsWithLocalization.required()],
+                                    items: state.fuelTypes
+                                        .map((fuelType) => DropdownMenuItem(
+                                            value: fuelType, child: Text('${fuelType.name}')))
+                                        .toList(),
+                                  )),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      child: FormBuilderTextField(
+                                    attribute: 'PriceIncludingVAT',
+                                    decoration: InputDecoration(
+                                      labelText: S.current.price,
+                                    ),
+                                    validators: [
+                                      FormBuilderValidatorsWithLocalization.required(),
+                                      FormBuilderValidatorsWithLocalization.numeric(),
+                                      FormBuilderValidatorsWithLocalization.min(1)
+                                    ],
+                                    keyboardType: TextInputType.number,
+                                  )),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                      child: FormBuilderDropdown(
+                                    attribute: 'VatRate',
+                                    decoration: InputDecoration(labelText: S.current.vat),
+                                    initialValue: state.vatRates.first,
+                                    validators: [FormBuilderValidatorsWithLocalization.required()],
+                                    items: state.vatRates
+                                        .map((vatRate) => DropdownMenuItem(
+                                            value: vatRate, child: Text('${vatRate.vat}')))
+                                        .toList(),
+                                  )),
+                                  SizedBox(width: 20),
+                                  Expanded(
+                                      child: FormBuilderDropdown(
+                                    attribute: 'Currency',
+                                    initialValue: state.currencies.first,
+                                    decoration: InputDecoration(labelText: S.current.currency),
+                                    validators: [FormBuilderValidatorsWithLocalization.required()],
+                                    items: state.currencies
+                                        .map((gender) => DropdownMenuItem(
+                                            value: gender, child: Text('${gender.code}')))
+                                        .toList(),
+                                  )),
+                                ],
+                              ),
+                              Row(
+                                children: <Widget>[
+                                  Expanded(
+                                      child: FormBuilderTextField(
+                                    initialValue: '',
+                                    attribute: 'Note',
+                                    decoration: InputDecoration(
+                                      labelText: S.current.note,
+                                    ),
+                                  )),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 25),
+                        Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: RaisedButton(
+                                // color: Theme.of(context).accentColor,
+                                child: Text(S.current.save, style: TextStyle(color: Colors.white)),
+                                onPressed: () async {
+                                  if (_fbKey.currentState.saveAndValidate()) {
+                                    _saveButtonAction(_fbKey.currentState.value, context);
+                                  } else {
+                                    print(_fbKey.currentState.value);
+                                    print('validation failed');
+                                  }
+                                },
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      SizedBox(height: 25),
-                      Row(
-                        children: <Widget>[
-                          Expanded(
-                            child: RaisedButton(
-                              // color: Theme.of(context).accentColor,
-                              child: Text(S.current.save, style: TextStyle(color: Colors.white)),
-                              onPressed: () async {
-                                if (_fbKey.currentState.saveAndValidate()) {
-                                  _saveButtonAction(_fbKey.currentState.value, context);
-                                } else {
-                                  print(_fbKey.currentState.value);
-                                  print('validation failed');
-                                }
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  );
-                }
+                      ],
+                    );
+                  }
 
-                return LoadingIndicator();
-              }),
+                  return LoadingIndicator();
+                }),
+              ),
             )));
   }
 

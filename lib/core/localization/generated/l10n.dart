@@ -474,6 +474,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Error při ukládání tokenu`
+  String get errorSharedPrefs {
+    return Intl.message(
+      'Error při ukládání tokenu',
+      name: 'errorSharedPrefs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Chybná autentifikace`
+  String get errorAuthentication {
+    return Intl.message(
+      'Chybná autentifikace',
+      name: 'errorAuthentication',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
