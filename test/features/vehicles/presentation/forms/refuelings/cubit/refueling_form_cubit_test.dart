@@ -143,4 +143,56 @@ void main() {
       },
     );
   });
+
+  group('getLoaded', () {
+    test('should [Loading, Loaded] when getting vatrates, flueltypes and currencies was success',
+        () async {
+      when(mockReadCurrency.call(any)).thenAnswer((realInvocation) async => Right(currencies));
+      when(mockReadFuelTypes.call(any)).thenAnswer((realInvocation) async => Right(fuelTypes));
+      when(mockReadVatRates.call(any)).thenAnswer((realInvocation) async => Right(vatrates));
+
+      final expected = [
+        RefuelingFormStateLoading(),
+        RefuelingFormStateLoaded(fuelTypes: fuelTypes, vatRates: vatrates, currencies: currencies)
+      ];
+
+      unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
+
+      await cubit.getLoaded();
+    });
+
+    test('should [Loading, Error] when currecies fail to fetch', () async {
+      when(mockReadCurrency.call(any)).thenAnswer((realInvocation) async => Left(ServerFailure()));
+      when(mockReadFuelTypes.call(any)).thenAnswer((realInvocation) async => Right(fuelTypes));
+      when(mockReadVatRates.call(any)).thenAnswer((realInvocation) async => Right(vatrates));
+
+      final expected = [RefuelingFormStateLoading(), RefuelingFormStateError()];
+
+      unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
+      await cubit.getLoaded();
+    });
+
+    test('should [Loading, Error] when fueltypes fail to fetch', () async {
+      when(mockReadCurrency.call(any)).thenAnswer((realInvocation) async => Right(currencies));
+      when(mockReadFuelTypes.call(any)).thenAnswer((realInvocation) async => Left(ServerFailure()));
+      when(mockReadVatRates.call(any)).thenAnswer((realInvocation) async => Right(vatrates));
+
+      final expected = [RefuelingFormStateLoading(), RefuelingFormStateError()];
+
+      unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
+      await cubit.getLoaded();
+    });
+
+    test('should [Loading, Error] when vat rates fail to fetch', () async {
+      when(mockReadCurrency.call(any)).thenAnswer((realInvocation) async => Right(currencies));
+      when(mockReadFuelTypes.call(any)).thenAnswer((realInvocation) async => Right(fuelTypes));
+      when(mockReadVatRates.call(any)).thenAnswer((realInvocation) async => Left(ServerFailure()));
+
+      final expected = [RefuelingFormStateLoading(), RefuelingFormStateError()];
+
+      unawaited(expectLater(cubit, emitsInOrder(expected)).timeout(Duration(seconds: 2)));
+      await cubit.getLoaded();
+    });
+  });
 }
+x

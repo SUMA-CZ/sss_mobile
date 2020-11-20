@@ -81,33 +81,24 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
     var fuelTypes;
     var currencies;
 
-    emit((await readVatRates(NoParamsReadVat())).fold(
-      (failure) {
-        return RefuelingFormStateError();
-      },
-      (payload) {
-        vatRates = payload;
-        return RefuelingFormStateLoading();
-      }, /**/
-    ));
+    (await readVatRates(NoParamsReadVat())).fold(
+      (failure) => emit(RefuelingFormStateError()),
+      (payload) => vatRates = payload,
+    );
 
-    emit((await readFuelTypes(NoParams())).fold(
-      (failure) => RefuelingFormStateError(),
-      (payload) {
-        fuelTypes = payload;
-        return RefuelingFormStateLoading();
-      },
-    ));
+    (await readFuelTypes(NoParams())).fold(
+      (failure) => emit(RefuelingFormStateError()),
+      (payload) => fuelTypes = payload,
+    );
 
-    emit((await readCurrency(NoParamsCurrency())).fold(
-      (failure) => RefuelingFormStateError(),
-      (payload) {
-        currencies = payload;
-        return RefuelingFormStateLoading();
-      },
-    ));
+    (await readCurrency(NoParamsCurrency())).fold(
+      (failure) => emit(RefuelingFormStateError()),
+      (payload) => currencies = payload,
+    );
 
-    emit(
-        RefuelingFormStateLoaded(fuelTypes: fuelTypes, vatRates: vatRates, currencies: currencies));
+    if (vatRates != null && currencies != null && fuelTypes != null) {
+      emit(RefuelingFormStateLoaded(
+          fuelTypes: fuelTypes, vatRates: vatRates, currencies: currencies));
+    }
   }
 }
