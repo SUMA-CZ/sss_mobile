@@ -61,7 +61,8 @@ Future<void> init() async {
       readVatRates: sl(),
       createRefuelingUseCase: sl(),
       readCurrency: sl(),
-      vehicle: param1));
+      vehicle: param1,
+      refuelingsCubit: param2));
   sl.registerFactoryParam((param1, param2) => MaintenanceFormCubit(usecase: sl(), vehicle: param1));
   sl.registerFactoryParam(
       (param1, param2) => TripsCubit(getTripsForVehicle: sl(), deleteTrip: sl(), vehicle: param1));

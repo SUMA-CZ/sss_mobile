@@ -19,6 +19,7 @@ import 'package:sss_mobile/features/vehicles/domain/usecases/read_currencies.dar
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_fuel_types.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_vat_rates.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/refuelings_cubit.dart';
 
 import '../../../../../../fixtures/fixture_reader.dart';
 
@@ -30,6 +31,8 @@ class MockReadFuelTypes extends Mock implements ReadFuelTypes {}
 
 class MockReadCurrency extends Mock implements ReadCurrency {}
 
+class MockRefuelingCubit extends Mock implements RefuelingsCubit {}
+
 void main() {
   RefuelingFormCubit cubit;
   MockCreateRefueling mockCreateRefueling;
@@ -37,6 +40,7 @@ void main() {
   MockReadVatRates mockReadVatRates;
   MockReadFuelTypes mockReadFuelTypes;
   MockReadCurrency mockReadCurrency;
+  MockRefuelingCubit mockRefuelingCubit;
 
   setUp(() {
     vehicle = Vehicle(id: 27, spz: 'AAAA');
@@ -44,13 +48,15 @@ void main() {
     mockReadVatRates = MockReadVatRates();
     mockReadFuelTypes = MockReadFuelTypes();
     mockReadCurrency = MockReadCurrency();
+    mockRefuelingCubit = MockRefuelingCubit();
 
     cubit = RefuelingFormCubit(
         createRefuelingUseCase: mockCreateRefueling,
         vehicle: vehicle,
         readVatRates: mockReadVatRates,
         readFuelTypes: mockReadFuelTypes,
-        readCurrency: mockReadCurrency);
+        readCurrency: mockReadCurrency,
+        refuelingsCubit: mockRefuelingCubit);
   });
 
   final returnModel = RefuelingModel.fromJson(jsonDecode(fixture('refueling.json')));
@@ -84,6 +90,7 @@ void main() {
         // assert
         verify(
             mockCreateRefueling.call(Params(vehicleID: vehicle.id, refueling: createRefuelingDTO)));
+
         verifyNoMoreInteractions(mockReadCurrency);
         verifyNoMoreInteractions(mockReadFuelTypes);
         verifyNoMoreInteractions(mockReadVatRates);
@@ -102,6 +109,7 @@ void main() {
         // assert
         verify(
             mockCreateRefueling.call(Params(vehicleID: vehicle.id, refueling: createRefuelingDTO)));
+        verify(mockRefuelingCubit.read());
         verifyNoMoreInteractions(mockReadCurrency);
         verifyNoMoreInteractions(mockReadFuelTypes);
         verifyNoMoreInteractions(mockReadVatRates);
@@ -118,7 +126,7 @@ void main() {
     );
 
     test(
-      'should use [Loading, Created] when 200',
+      'should use [Loading, Error] when 200',
       () async {
         // arrange
         when(mockCreateRefueling.call(Params(vehicleID: vehicle.id, refueling: createRefuelingDTO)))

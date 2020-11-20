@@ -15,21 +15,25 @@ import 'package:sss_mobile/features/vehicles/domain/usecases/create_refueling.da
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_currencies.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_fuel_types.dart';
 import 'package:sss_mobile/features/vehicles/domain/usecases/read_vat_rates.dart';
+import 'package:sss_mobile/features/vehicles/presentation/vehicle_detail_screen/cubit/refuelings/refuelings_cubit.dart';
 
 part 'refueling_form_state.dart';
 
 class RefuelingFormCubit extends Cubit<RefuelingFormState> {
-  RefuelingFormCubit({
-    @required this.createRefuelingUseCase,
-    @required this.vehicle,
-    @required this.readVatRates,
-    @required this.readFuelTypes,
-    @required this.readCurrency,
-  })  : assert(createRefuelingUseCase != null &&
-            vehicle != null &&
-            readVatRates != null &&
-            readFuelTypes != null &&
-            readCurrency != null),
+  RefuelingFormCubit(
+      {@required this.createRefuelingUseCase,
+      @required this.vehicle,
+      @required this.readVatRates,
+      @required this.readFuelTypes,
+      @required this.readCurrency,
+      @required this.refuelingsCubit})
+      : assert(
+            createRefuelingUseCase != null &&
+                vehicle != null &&
+                readVatRates != null &&
+                readFuelTypes != null &&
+                readCurrency != null,
+            refuelingsCubit != null),
         super(RefuelingFormStateInitial());
 
   final CreateRefueling createRefuelingUseCase;
@@ -38,12 +42,15 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
   final ReadCurrency readCurrency;
   final Vehicle vehicle;
 
+  final RefuelingsCubit refuelingsCubit;
+
   void createRefueling(Refueling refueling) async {
     emit(RefuelingFormStateLoading());
     emit((await createRefuelingUseCase(Params(vehicleID: vehicle.id, refueling: refueling))).fold(
       (failure) => RefuelingFormStateError(),
       (payload) => RefuelingFormStateCreated(),
     ));
+    await refuelingsCubit.read();
   }
 
   void createRefuelingWithFormData(Map<String, dynamic> data) async {
