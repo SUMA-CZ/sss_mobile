@@ -27,6 +27,7 @@
   "failedToSaveTrip" : "Error saving, is your End odometer greater than Begin odometer?",
   "failedDelete" : "Error deleting record",
   "save": "Save",
+  "saving": "Saving...",
   "edit" : "Edit",
   "delete" : "Delete",
   "errorCom" : "Error connecting to SSS",

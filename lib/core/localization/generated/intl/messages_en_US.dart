@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "price" : MessageLookupByLibrary.simpleMessage("Price"),
     "refresh" : MessageLookupByLibrary.simpleMessage("REFRESH"),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
+    "saving" : MessageLookupByLibrary.simpleMessage("Saving..."),
     "selectMapLocation" : MessageLookupByLibrary.simpleMessage("Parking spot"),
     "validationMin1" : MessageLookupByLibrary.simpleMessage("Must be greater than 1"),
     "validationNumeric" : MessageLookupByLibrary.simpleMessage("Must be numeric"),

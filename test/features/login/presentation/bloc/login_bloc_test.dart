@@ -5,6 +5,7 @@ import 'package:pedantic/pedantic.dart';
 import 'package:sss_mobile/core/authorization/auth.dart';
 import 'package:sss_mobile/core/authorization/auth_bloc.dart';
 import 'package:sss_mobile/core/error/failure.dart';
+import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/features/login/data/models/user_credentitials_model.dart';
 import 'package:sss_mobile/features/login/domain/entities/token.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
@@ -67,7 +68,10 @@ void main() {
     // arrange
     when(authenticate.call(any)).thenAnswer((_) async => Left(FailureAuthentication()));
 
-    final expectedForLoginBloc = [LoginLoading(), LoginFailure(error: 'Authentication Failed')];
+    final expectedForLoginBloc = [
+      LoginLoading(),
+      LoginFailure(error: S.current.errorAuthentication)
+    ];
     final expectedForAuthBloc = [AuthenticationLoading(), AuthenticationUnauthenticated()];
 
     //act

@@ -27,6 +27,7 @@
   "failedToSaveTrip" : "Jízdu se nepodařilo uložit, je konečný stav km větší než počáteční?",
   "failedDelete" : "Záznam se nepodařilo smazat",
   "save": "Uložit",
+  "saving": "Ukládání...",
   "edit" : "Upravit",
   "delete" : "Smazat",
   "errorCom" : "Chyba komunikace se SSS",

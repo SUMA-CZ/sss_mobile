@@ -305,6 +305,16 @@ class S {
     );
   }
 
+  /// `Ukládání...`
+  String get saving {
+    return Intl.message(
+      'Ukládání...',
+      name: 'saving',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Upravit`
   String get edit {
     return Intl.message(

@@ -57,6 +57,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "price" : MessageLookupByLibrary.simpleMessage("Cena"),
     "refresh" : MessageLookupByLibrary.simpleMessage("Zkusit znovu"),
     "save" : MessageLookupByLibrary.simpleMessage("Uložit"),
+    "saving" : MessageLookupByLibrary.simpleMessage("Ukládání..."),
     "selectMapLocation" : MessageLookupByLibrary.simpleMessage("Misto parkování"),
     "validationMin1" : MessageLookupByLibrary.simpleMessage("Musí být > 1"),
     "validationNumeric" : MessageLookupByLibrary.simpleMessage("Musí být číslo"),

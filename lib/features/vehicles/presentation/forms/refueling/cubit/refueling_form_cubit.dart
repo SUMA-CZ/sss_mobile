@@ -61,11 +61,12 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       model.vatRateObject = data['VatRate'];
       model.fuelTypeObject = data['FuelType'];
 
-      File file = data['images'].first;
-      final bytes = await Io.File(file.path).readAsBytes();
-      final base = base64Encode(bytes);
-
-      model.base64Image = base;
+      if ((data['images'] as List<dynamic>).isNotEmpty) {
+        File file = data['images'].first;
+        final bytes = await Io.File(file.path).readAsBytes();
+        final base = base64Encode(bytes);
+        model.base64Image = base;
+      }
 
       createRefueling(model);
     } catch (e) {

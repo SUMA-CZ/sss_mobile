@@ -13,7 +13,6 @@ import 'package:sss_mobile/env_config.dart';
 import 'core/authorization/auth_bloc.dart';
 import 'core/authorization/auth_events.dart';
 import 'core/authorization/auth_state.dart';
-import 'core/bloc/log_bloc_observer.dart';
 import 'core/network/authorization_interceptor.dart';
 import 'core/ui/screens/splash_screen.dart';
 import 'features/login/domain/repositories/user_repository.dart';
@@ -75,16 +74,16 @@ class SSSMobile extends StatelessWidget {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
-  di.sl<Dio>().interceptors.add(PrettyDioLogger(
-      requestHeader: true,
-      requestBody: true,
-      responseBody: false,
-      responseHeader: false,
-      error: true,
-      compact: true,
-      maxWidth: 90));
+  // di.sl<Dio>().interceptors.add(PrettyDioLogger(
+  //     requestHeader: true,
+  //     requestBody: true,
+  //     responseBody: true,
+  //     responseHeader: true,
+  //     error: true,
+  //     compact: true,
+  //     maxWidth: 90));
 
-  Bloc.observer = LogBlocObserver();
+  // Bloc.observer = LogBlocObserver();
   di.sl<Dio>().interceptors.add(AuthorizationInterceptor(repo: di.sl<UserRepository>()));
 
   runZonedGuarded(
