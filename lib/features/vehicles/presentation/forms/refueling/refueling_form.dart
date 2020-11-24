@@ -132,7 +132,8 @@ class RefuelingForm extends StatelessWidget {
                                             FormBuilderValidatorsWithLocalization.min(1)
                                           ],
                                           decoration: InputDecoration(labelText: S.current.litres),
-                                          keyboardType: TextInputType.number,
+                                          keyboardType: TextInputType.numberWithOptions(
+                                              decimal: true, signed: false),
                                         ),
                                       ),
                                       SizedBox(width: 20),
