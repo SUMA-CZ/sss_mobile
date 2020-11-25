@@ -176,6 +176,7 @@ class TripForm extends StatelessWidget {
                                     tilt: 0.0,
                                     zoom: 18.0),
                                 attribute: 'coords',
+                                validators: [],
                                 decoration: InputDecoration(labelText: 'Select Location'),
                                 markerIconColor: Colors.red,
                                 markerIconSize: 50,
