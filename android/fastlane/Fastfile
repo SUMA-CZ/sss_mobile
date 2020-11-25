@@ -7,7 +7,7 @@ platform :android do
   desc "Submits the APK to Google Play internal testing track"
   
   desc "Promote Internal to Alpha"
-  lane :upload_to_play_store_alpha do
+  lane :beta do
     upload_to_play_store(
       track: 'alpha',
       version_code: ENV["CI_PIPELINE_IID"],
@@ -18,7 +18,7 @@ platform :android do
   end
 
   desc "Promote prod to production"
-  lane :promote_prod_to_production do
+  lane :production do
     upload_to_play_store(
       track: 'production',
       version_code: ENV["CI_PIPELINE_IID"],

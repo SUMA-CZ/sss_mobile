@@ -15,7 +15,7 @@ variables:
   tags:
     - docker
 
-test:
+test:debian:
   extends: .android_docker_image
   stage: test
   script:
@@ -26,7 +26,7 @@ test:
       - coverage/
     expire_in: 5 days
 
-test-ios:
+test:macos:
   stage: test
   script:
     - flutter test --coverage
@@ -40,7 +40,7 @@ test-ios:
 
 ####################### IOS ###############################
 
-ipa.testflight:
+ipa:testflight:
   stage: deployment
   before_script:
     - cd ios/
@@ -55,7 +55,7 @@ ipa.testflight:
   only:
     - dev
 
-ipa.submit_to_review:
+ipa:submit_to_review:
   stage: deployment
   script:
     - bundle exec fastlane production
@@ -64,7 +64,7 @@ ipa.submit_to_review:
   only:
     - master
 
-ipa.push_tags:
+ipa:push_tags:
   stage: tag_release
   script:
     - git config user.email "${GITLAB_USER_EMAIL}"
@@ -77,7 +77,7 @@ ipa.push_tags:
 
 ####################### ANDROID ###############################
 
-apk.alpha_track:
+apk:alpha_track:
   stage: deployment
   extends: .android_docker_image
   before_script:
@@ -89,7 +89,7 @@ apk.alpha_track:
     - flutter pub get
   script:
     - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
-    - bundle exec fastlane upload_to_play_store_alpha
+    - bundle exec fastlane beta
   artifacts:
     paths:
       - build/app/outputs/apk/release/app-release.apk
@@ -97,10 +97,7 @@ apk.alpha_track:
   only:
     - dev
 
-
-####################### ANDROID MASTER ######################
-
-apk.prod_track:
+apk:prod_track:
   stage: deployment
   extends: .android_docker_image
   before_script:
@@ -113,26 +110,10 @@ apk.prod_track:
 
   script:
     - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
-    - bundle exec fastlane upload_to_play_store_prod_track
+    - bundle exec fastlane beta
   artifacts:
     paths:
       - build/app/outputs/apk/release/app-release.apk
     expire_in: 1 day
-  only:
-    - master
-
-apk.promote_to_production:
-  stage: deployment
-  extends: .android_docker_image
-  before_script:
-    # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
-    - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
-    - cd android/
-    - gem install bundler
-    - bundle install
-
-  script: bundle exec fastlane promote_prod_to_production
-  when: manual
-  allow_failure: false
   only:
     - master
