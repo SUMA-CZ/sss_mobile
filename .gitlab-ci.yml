@@ -1,6 +1,7 @@
 stages:
   - test
   - deployment
+  - tag_release
 
 before_script:
   - source .${CI_COMMIT_REF_NAME}.env
@@ -63,6 +64,17 @@ ipa.submit_to_review:
   allow_failure: false
   only:
     - master
+
+ipa.push_tags:
+  stage: tag_release
+  script:
+    - git config user.email "${GITLAB_USER_EMAIL}"
+    - git config user.name "${GITLAB_USER_NAME}"
+    - git remote add tag-origin https://syky27:${GITLAB_ACCESS_TOKEN}@${CI_REPO_PATH}
+    - git push tag-origin --tags
+  dependencies:
+    - ipa.submit_to_review
+
 
 ####################### ANDROID ###############################
 

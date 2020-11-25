@@ -1,5 +1,8 @@
 keychain_ajty = 'AJTY-KEYCHAIN'
 
+version_number = flutter_version()["version_name"]
+build_number = ENV["CI_PIPELINE_ID"] + (ENV["CI_COMMIT_REF_NAME"] == 'master' ? '.0' : '.9'
+
 default_platform(:ios)
 platform :ios do
   
@@ -9,12 +12,12 @@ platform :ios do
     
     increment_version_number(
       xcodeproj: "Runner.xcodeproj",
-      version_number: flutter_version()["version_name"] 
+      version_number: version_number 
     )
     
     increment_build_number(
       xcodeproj: "Runner.xcodeproj",
-      build_number: ENV["CI_PIPELINE_ID"] + (ENV["CI_COMMIT_REF_NAME"] == 'master' ? '.0' : '.9')
+      build_number: build_number
     )
 
     create_keychain(
@@ -45,6 +48,29 @@ platform :ios do
     
     upload_to_testflight
   end
+
+
+  desc "Promotes Testflight build for production"
+  lane :production do
+  
+    deliver(
+      build_number: build_number,
+      submit_for_review: true,
+      automatic_release: true,
+      force: true, 
+      skip_metadata: true,
+      skip_screenshots: true,
+      skip_binary_upload: true,
+      submission_information: "{\"export_compliance_uses_encryption\": false, \"add_id_info_uses_idfa\": false }"
+    )
+
+    add_git_tag(
+      tag: "#{version_name} (#{build_number}) AppStore"
+    )
+
+    push_git_tags
+  end
+
 end
 
 after_all do |lane|
