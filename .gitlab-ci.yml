@@ -54,7 +54,6 @@ ipa.testflight:
     - ios
   only:
     - dev
-    - rewritten_history
 
 ipa.submit_to_review:
   stage: deployment
