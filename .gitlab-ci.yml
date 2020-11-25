@@ -72,7 +72,7 @@ ipa:push_tags:
     - git remote add tag-origin https://syky27:${GITLAB_ACCESS_TOKEN}@${CI_REPO_PATH}
     - git push tag-origin --tags
   dependencies:
-    - ipa.submit_to_review
+    - ipa:submit_to_review
 
 
 ####################### ANDROID ###############################
