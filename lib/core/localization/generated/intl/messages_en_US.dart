@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "officialTrip" : MessageLookupByLibrary.simpleMessage("Business trip"),
     "parkingNote" : MessageLookupByLibrary.simpleMessage("Parking note"),
     "price" : MessageLookupByLibrary.simpleMessage("Price"),
+    "receiptNo" : MessageLookupByLibrary.simpleMessage("Receipt Number"),
     "refresh" : MessageLookupByLibrary.simpleMessage("REFRESH"),
     "save" : MessageLookupByLibrary.simpleMessage("Save"),
     "saving" : MessageLookupByLibrary.simpleMessage("Saving..."),

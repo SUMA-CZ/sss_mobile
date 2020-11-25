@@ -77,7 +77,10 @@ class TripForm extends StatelessWidget {
                             FormBuilderSlider(
                               attribute: 'FuelStatus',
                               onChanged: _onChanged,
-                              validators: [FormBuilderValidators.required()],
+                              validators: [
+                                FormBuilderValidators.required(
+                                    errorText: S.current.validationRequired)
+                              ],
                               numberFormat: NumberFormat('0 %'),
                               min: 0,
                               max: 1,
@@ -94,7 +97,10 @@ class TripForm extends StatelessWidget {
                                 Expanded(
                                   child: FormBuilderDateRangePicker(
                                     attribute: 'date_range',
-                                    validators: [FormBuilderValidators.required()],
+                                    validators: [
+                                      FormBuilderValidators.required(
+                                          errorText: S.current.validationRequired)
+                                    ],
                                     firstDate: DateTime(1970),
                                     lastDate: DateTime.now(),
                                     initialValue: [
@@ -117,8 +123,10 @@ class TripForm extends StatelessWidget {
                                     labelText: S.current.beginOdometer,
                                   ),
                                   validators: [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.numeric(),
+                                    FormBuilderValidators.required(
+                                        errorText: S.current.validationRequired),
+                                    FormBuilderValidators.numeric(
+                                        errorText: S.current.validationNumeric),
                                   ],
                                   keyboardType: TextInputType.number,
                                 )),
@@ -131,8 +139,10 @@ class TripForm extends StatelessWidget {
                                     labelText: S.current.endOdometer,
                                   ),
                                   validators: [
-                                    FormBuilderValidators.required(),
-                                    FormBuilderValidators.numeric(),
+                                    FormBuilderValidators.required(
+                                        errorText: S.current.validationRequired),
+                                    FormBuilderValidators.numeric(
+                                        errorText: S.current.validationNumeric),
                                   ],
 
                                   keyboardType: TextInputType.number,
@@ -141,7 +151,10 @@ class TripForm extends StatelessWidget {
                             ),
                             FormBuilderTextField(
                               attribute: 'Note',
-                              validators: [FormBuilderValidators.required()],
+                              validators: [
+                                FormBuilderValidators.required(
+                                    errorText: S.current.validationRequired),
+                              ],
                               decoration: InputDecoration(
                                 labelText: S.current.description,
                               ),
@@ -166,10 +179,6 @@ class TripForm extends StatelessWidget {
                                 decoration: InputDecoration(labelText: 'Select Location'),
                                 markerIconColor: Colors.red,
                                 markerIconSize: 50,
-                                onChanged: (val) {
-                                  print(val);
-                                },
-                                validators: [],
                                 gestureRecognizers: {
                                   Factory<PanGestureRecognizer>(() => PanGestureRecognizer())
                                 }),
@@ -181,7 +190,6 @@ class TripForm extends StatelessWidget {
                         children: <Widget>[
                           Expanded(
                             child: RaisedButton(
-                              // color: Theme.of(context).accentColor,
                               child: Text(S.current.save, style: TextStyle(color: Colors.white)),
                               onPressed: () async {
                                 if (_fbKey.currentState.saveAndValidate()) {

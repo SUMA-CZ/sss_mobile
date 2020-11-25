@@ -78,6 +78,7 @@ class RefuelingList extends StatelessWidget {
                     S.current.odometer, data.odometer.toString() ?? 0.toString()),
                 buildTableRowWithPadding(
                     S.current.price, data.price.toString() + ' ' + data.currency ?? ''),
+                buildTableRowWithPadding(S.current.receiptNo, data.receiptNo ?? ''),
                 buildTableRowWithPadding(
                     S.current.officialTrip, data.official ? S.current.yes : S.current.no),
                 buildTableRowWithPadding(S.current.note, data.note ?? ''),

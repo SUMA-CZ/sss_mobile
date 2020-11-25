@@ -46,5 +46,6 @@
  "validationMin1":"Must be greater than 1",
  "validationNumeric":"Must be numeric",
  "errorSharedPrefs" : "Error saving token",
- "errorAuthentication" : "Authentication Error"
+ "errorAuthentication" : "Authentication Error",
+ "receiptNo":"Receipt Number"
 }

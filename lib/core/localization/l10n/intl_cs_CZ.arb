@@ -46,5 +46,6 @@
   "validationMin1":"Musí být > 1",
   "validationNumeric":"Musí být číslo",
    "errorSharedPrefs" : "Error při ukládání tokenu",
-   "errorAuthentication" : "Chybná autentifikace"
+   "errorAuthentication" : "Chybná autentifikace",
+   "receiptNo":"Číslo dokladu"
 }

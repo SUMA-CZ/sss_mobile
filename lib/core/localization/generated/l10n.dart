@@ -504,6 +504,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Číslo dokladu`
+  String get receiptNo {
+    return Intl.message(
+      'Číslo dokladu',
+      name: 'receiptNo',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

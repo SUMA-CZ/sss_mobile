@@ -67,6 +67,7 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       model.currencyObject = data['Currency'];
       model.vatRateObject = data['VatRate'];
       model.fuelTypeObject = data['FuelType'];
+      model.receiptNo = data['ReceiptNumber'];
 
       if ((data['images'] as List<dynamic>).isNotEmpty) {
         File file = data['images'].first;

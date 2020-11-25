@@ -55,6 +55,7 @@ class MessageLookup extends MessageLookupByLibrary {
     "officialTrip" : MessageLookupByLibrary.simpleMessage("Pracovní cesta"),
     "parkingNote" : MessageLookupByLibrary.simpleMessage("Poznámka k parkování"),
     "price" : MessageLookupByLibrary.simpleMessage("Cena"),
+    "receiptNo" : MessageLookupByLibrary.simpleMessage("Číslo dokladu"),
     "refresh" : MessageLookupByLibrary.simpleMessage("Zkusit znovu"),
     "save" : MessageLookupByLibrary.simpleMessage("Uložit"),
     "saving" : MessageLookupByLibrary.simpleMessage("Ukládání..."),
