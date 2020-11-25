@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
+import 'package:sss_mobile/core/ui/alerts.dart';
 import 'package:sss_mobile/core/ui/widgets/table_row_with_padding.dart';
 import 'package:sss_mobile/features/login/domain/repositories/user_repository.dart';
 import 'package:sss_mobile/features/vehicles/domain/entities/refueling.dart';
@@ -100,7 +101,9 @@ class RefuelingList extends StatelessWidget {
               FlatButton(
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4.0)),
                 onPressed: () {
-                  BlocProvider.of<RefuelingsCubit>(context).delete(data.id);
+                  showDeleteAlertDialog(context, () {
+                    BlocProvider.of<RefuelingsCubit>(context).delete(data.id);
+                  });
                 },
                 child: Column(
                   children: <Widget>[

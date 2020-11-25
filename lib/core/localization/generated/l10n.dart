@@ -514,6 +514,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Ponechat`
+  String get keep {
+    return Intl.message(
+      'Ponechat',
+      name: 'keep',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Opravdu chcete tento záznam smazat?`
+  String get deleteRecord {
+    return Intl.message(
+      'Opravdu chcete tento záznam smazat?',
+      name: 'deleteRecord',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

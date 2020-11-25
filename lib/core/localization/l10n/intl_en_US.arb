@@ -47,5 +47,7 @@
  "validationNumeric":"Must be numeric",
  "errorSharedPrefs" : "Error saving token",
  "errorAuthentication" : "Authentication Error",
- "receiptNo":"Receipt Number"
+ "receiptNo":"Receipt Number",
+ "keep":"Keep",
+ "deleteRecord": "Are you sure, you wish to delete this record?"
 }

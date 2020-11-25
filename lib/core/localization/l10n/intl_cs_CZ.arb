@@ -47,5 +47,8 @@
   "validationNumeric":"Musí být číslo",
    "errorSharedPrefs" : "Error při ukládání tokenu",
    "errorAuthentication" : "Chybná autentifikace",
-   "receiptNo":"Číslo dokladu"
+   "receiptNo":"Číslo dokladu",
+   "keep":"Ponechat",
+   "deleteRecord": "Opravdu chcete tento záznam smazat?"
+
 }
