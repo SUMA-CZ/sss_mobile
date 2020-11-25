@@ -30,14 +30,19 @@ class RefuelingForm extends StatelessWidget {
                 }
 
                 if (state is RefuelingFormStateLoading) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text(S.current.saving), backgroundColor: Colors.green),
+                  // TODO: Fix deprication in stable version
+                  Scaffold.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(S.current.saving),
+                      backgroundColor: Colors.green,
+                    ),
                   );
                 }
 
                 if (state is RefuelingFormStateCreated) {
+                  // TODO: Fix deprication in stable version
+                  Scaffold.of(context).hideCurrentSnackBar();
                   Navigator.of(context).pop();
-                  ScaffoldMessenger.of(context).hideCurrentSnackBar();
                 }
               },
               child: BlocBuilder<RefuelingFormCubit, RefuelingFormState>(
