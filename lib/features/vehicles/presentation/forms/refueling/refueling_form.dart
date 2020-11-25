@@ -162,8 +162,6 @@ class RefuelingForm extends StatelessWidget {
                                       validators: [
                                         FormBuilderValidators.required(
                                             errorText: S.current.validationRequired),
-                                        FormBuilderValidators.numeric(
-                                            errorText: S.current.validationNumeric),
                                         FormBuilderValidators.min(1,
                                             errorText: S.current.validationMin1)
                                       ],

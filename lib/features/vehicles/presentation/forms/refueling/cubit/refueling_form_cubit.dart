@@ -60,10 +60,10 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       var model = RefuelingModelCreateDTO();
       model.date = data['Date'];
       model.odometer = int.parse(data['OdometerState']);
-      model.price = double.parse(data['PriceIncludingVAT']);
+      model.price = double.parse(data['PriceIncludingVAT'].toString().replaceAll(',', '.'));
       model.official = data['OfficialJourney'];
       model.note = data['Note'];
-      model.fuelAmount = double.parse(data['FuelBulk']);
+      model.fuelAmount = double.parse(data['FuelBulk'].toString().replaceAll(',', '.'));
       model.currencyObject = data['Currency'];
       model.vatRateObject = data['VatRate'];
       model.fuelTypeObject = data['FuelType'];
@@ -79,7 +79,7 @@ class RefuelingFormCubit extends Cubit<RefuelingFormState> {
       createRefueling(model);
     } catch (e) {
       emit(RefuelingFormStateError());
-      await getLoaded();
+      // await getLoaded();
     }
   }
 
