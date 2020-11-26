@@ -71,6 +71,13 @@ platform :ios do
     push_git_tags
   end
 
+  desc "Handles DSYMs"
+  lane :monitoring do 
+    download_dsyms
+    upload_symbols_to_sentry
+  end
+
+
 end
 
 after_all do |lane|

@@ -2,6 +2,7 @@ stages:
   - test
   - deployment
   - tag_release
+  - monitoring
 
 before_script:
   - source .${CI_COMMIT_REF_NAME}.env
@@ -71,6 +72,13 @@ ipa:push_tags:
     - git config user.name "${GITLAB_USER_NAME}"
     - git remote add tag-origin https://syky27:${GITLAB_ACCESS_TOKEN}@${CI_REPO_PATH}
     - git push tag-origin --tags
+  dependencies:
+    - ipa:submit_to_review
+
+ipa:dsyms:
+  stage: monitoring
+  script:
+    - bundle exec fastlane monitoring
   dependencies:
     - ipa:submit_to_review
 
