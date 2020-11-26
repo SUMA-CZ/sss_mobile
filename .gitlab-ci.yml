@@ -4,9 +4,6 @@ stages:
   - tag_release
   - monitoring
 
-before_script:
-  - source .${CI_COMMIT_REF_NAME}.env
-
 variables:
   LC_ALL: "en_US.UTF-8"
   LANG: "en_US.UTF-8"
@@ -20,6 +17,7 @@ test:debian:
   extends: .android_docker_image
   stage: test
   script:
+    - source .${CI_COMMIT_REF_NAME}.env
     - flutter test --coverage
     - genhtml coverage/lcov.info --output=coverage
   artifacts:
@@ -30,6 +28,7 @@ test:debian:
 test:macos:
   stage: test
   script:
+    - source .${CI_COMMIT_REF_NAME}.env
     - flutter test --coverage
     - genhtml coverage/lcov.info --output=coverage
   artifacts:
@@ -44,6 +43,7 @@ test:macos:
 ipa:testflight:
   stage: deployment
   before_script:
+    - source .${CI_COMMIT_REF_NAME}.env
     - cd ios/
     - gem install bundler
     - bundle install --path vendor/bundle
@@ -92,6 +92,7 @@ apk:alpha_track:
   stage: deployment
   extends: .android_docker_image
   before_script:
+    - source .${CI_COMMIT_REF_NAME}.env
     # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
     - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
     - cd android/
@@ -112,6 +113,7 @@ apk:prod_track:
   stage: deployment
   extends: .android_docker_image
   before_script:
+    - source .${CI_COMMIT_REF_NAME}.env
     # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
     - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
     - cd android/
