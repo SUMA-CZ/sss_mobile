@@ -75,12 +75,15 @@ ipa:push_tags:
   dependencies:
     - ipa:submit_to_review
 
-ipa:dsyms:
+ipa:sentry:dsyms:
   stage: monitoring
   script:
     - bundle exec fastlane monitoring
+    - brew install getsentry/tools/sentry-cli
+    - sentry-cli releases set-commits --auto $CI_PIPELINE_ID
   dependencies:
     - ipa:submit_to_review
+
 
 
 ####################### ANDROID ###############################
