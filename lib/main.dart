@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:sentry/sentry.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
@@ -97,4 +96,8 @@ void main() async {
       }
     },
   );
+
+  await sentry.capture(
+      event: Event(
+          level: SeverityLevel.info, message: 'App Started', environment: EnvConfig.SENTRY_ENV));
 }

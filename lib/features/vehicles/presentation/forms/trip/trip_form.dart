@@ -6,10 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_map_field/form_builder_map_field.dart';
 import 'package:intl/intl.dart';
+import 'package:sentry/sentry.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
 import 'package:sss_mobile/features/vehicles/data/models/trip_model.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/trip/cubit/trip_form_cubit.dart';
+
+import '../../../../../env_config.dart';
+import '../../../../../main.dart';
 
 class TripForm extends StatelessWidget {
   final GlobalKey<FormBuilderState> _fbKey = GlobalKey<FormBuilderState>();
@@ -42,7 +46,7 @@ class TripForm extends StatelessWidget {
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: BlocListener<TripFormCubit, TripFormState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is TripFormError) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
@@ -53,6 +57,11 @@ class TripForm extends StatelessWidget {
                 }
 
                 if (state is TripFormCreated) {
+                  await sentry.capture(
+                      event: Event(
+                          level: SeverityLevel.info,
+                          message: 'Trip Created',
+                          environment: EnvConfig.SENTRY_ENV));
                   Navigator.of(context).pop();
                 }
               },

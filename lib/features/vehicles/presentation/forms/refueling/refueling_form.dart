@@ -3,9 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:sentry/sentry.dart';
 import 'package:sss_mobile/core/localization/generated/l10n.dart';
 import 'package:sss_mobile/core/ui/widgets/loading_indicator.dart';
+import 'package:sss_mobile/env_config.dart';
 import 'package:sss_mobile/features/vehicles/presentation/forms/refueling/cubit/refueling_form_cubit.dart';
+
+import '../../../../../main.dart';
 
 class RefuelingForm extends StatelessWidget {
   final GlobalKey<FormBuilderState> _fbRefuelingKey = GlobalKey<FormBuilderState>();
@@ -19,7 +23,7 @@ class RefuelingForm extends StatelessWidget {
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: BlocListener<RefuelingFormCubit, RefuelingFormState>(
-              listener: (context, state) {
+              listener: (context, state) async {
                 if (state is RefuelingFormStateError) {
                   Scaffold.of(context).showSnackBar(
                     SnackBar(
@@ -42,6 +46,11 @@ class RefuelingForm extends StatelessWidget {
                 if (state is RefuelingFormStateCreated) {
                   // TODO: Fix deprication in stable version
                   Scaffold.of(context).hideCurrentSnackBar();
+                  await sentry.capture(
+                      event: Event(
+                          level: SeverityLevel.info,
+                          message: 'Refueling Created',
+                          environment: EnvConfig.SENTRY_ENV));
                   Navigator.of(context).pop();
                 }
               },
