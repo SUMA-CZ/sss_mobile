@@ -47,20 +47,20 @@ ipa:testflight:
     - gem install bundler
     - bundle install --path vendor/bundle
     - flutter pub get
-
   script:
     - bundle exec fastlane beta
   tags:
     - ios
   only:
     - dev
+    - master
 
 ipa:submit_to_review:
   stage: deployment
-  script:
-    - bundle exec fastlane production
   when: manual
   allow_failure: false
+  script:
+    - bundle exec fastlane production
   only:
     - master
 
