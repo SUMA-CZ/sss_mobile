@@ -51,7 +51,7 @@ ipa:testflight:
     - gem install bundler
     - bundle install --path vendor/bundle
     - flutter pub get
-    - pub run environment_config:generate
+    - flutter pub run environment_config:generate
   script:
     - bundle exec fastlane beta
   tags:
@@ -102,7 +102,7 @@ apk:alpha_track:
     - gem install bundler
     - bundle install
     - flutter pub get
-    - pub run environment_config:generate
+    - flutter pub run environment_config:generate
   script:
     - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
     - bundle exec fastlane beta
