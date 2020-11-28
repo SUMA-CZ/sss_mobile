@@ -43,7 +43,7 @@ test:macos:
 
 ipa:testflight:
   extends: test:macos
-  needs: [test:macos]
+  needs: ["test:macos"]
   stage: deployment
   before_script:
     - source .${CI_COMMIT_REF_NAME}.env
