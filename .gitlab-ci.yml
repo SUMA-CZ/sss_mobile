@@ -83,13 +83,14 @@ ipa:push_tags:
   stage: tags
   release:
     tag_name: ${CI_PIPELINE_ID}-iOS
+    description: 'iOS Release'
 
 apk:push_tags:
   extends: apk:prod_track
   stage: tags
   release:
     tag_name: ${CI_PIPELINE_ID}-Android
-    description: ${CI_PIPELINE_ID}-Android Release
+    description: 'Android Release'
 
 
 ipa:sentry:dsyms:
