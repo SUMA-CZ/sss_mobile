@@ -1,7 +1,7 @@
 stages:
   - test
   - deployment
-  - tag_release
+  - tags
   - monitoring
 
 variables:
@@ -41,13 +41,14 @@ test:macos:
 ####################### IOS ###############################
 
 ipa:testflight:
+  extends: test:macos
   stage: deployment
   before_script:
+    - source .${CI_COMMIT_REF_NAME}.env
     - cd ios/
     - gem install bundler
     - bundle install --path vendor/bundle
     - flutter pub get
-    - source .${CI_COMMIT_REF_NAME}.env
     - pub run environment_config:generate
   script:
     - bundle exec fastlane beta
@@ -58,6 +59,7 @@ ipa:testflight:
     - master
 
 ipa:submit_to_review:
+  extends: ipa:testflight
   stage: deployment
   when: manual
   allow_failure: false
@@ -67,7 +69,8 @@ ipa:submit_to_review:
     - master
 
 ipa:push_tags:
-  stage: tag_release
+  extends: ipa:submit_to_review
+  stage: tags
   script:
     - git config user.email "${GITLAB_USER_EMAIL}"
     - git config user.name "${GITLAB_USER_NAME}"
@@ -77,6 +80,7 @@ ipa:push_tags:
     - ipa:submit_to_review
 
 ipa:sentry:dsyms:
+  extends: ipa:push_tags
   stage: monitoring
   script:
     - bundle exec fastlane monitoring
@@ -93,13 +97,13 @@ apk:alpha_track:
   stage: deployment
   extends: .android_docker_image
   before_script:
+    - source .${CI_COMMIT_REF_NAME}.env
     # this will fetch the base64 encoded key store from our CI variables, decode it and place it underneath the path specified in build.gradle
     - echo "$PLAY_STORE_UPLOAD_KEY" | base64 --decode > android/key.jks
     - cd android/
     - gem install bundler
     - bundle install
     - flutter pub get
-    - source .${CI_COMMIT_REF_NAME}.env
     - pub run environment_config:generate
   script:
     - flutter build apk --release --build-number=$CI_PIPELINE_ID --build-name=1.0.$CI_PIPELINE_ID
