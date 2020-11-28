@@ -1,3 +1,6 @@
+  [![pipeline status](https://gitlab.sumanet.cz/suma/sss/sss-mobile-flutter/badges/dev/pipeline.svg)](https://gitlab.sumanet.cz/suma/sss/sss-mobile-flutter/-/commits/dev)
+ [![coverage report](https://gitlab.sumanet.cz/suma/sss/sss-mobile-flutter/badges/dev/coverage.svg)](https://gitlab.sumanet.cz/suma/sss/sss-mobile-flutter/-/commits/dev) 
+
 # SSS Mobile
 
 **Dude dont't be lazy and use TDD!** 

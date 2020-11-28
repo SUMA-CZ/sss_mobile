@@ -1,6 +1,7 @@
 stages:
   - test
   - deployment
+  - release
   - tags
   - monitoring
 
@@ -60,7 +61,7 @@ ipa:testflight:
 
 ipa:submit_to_review:
   extends: ipa:testflight
-  stage: deployment
+  stage: release
   when: manual
   allow_failure: false
   script:
@@ -116,7 +117,7 @@ apk:alpha_track:
     - dev
 
 apk:prod_track:
-  stage: deployment
+  stage: release
   extends: .android_docker_image
   before_script:
     - source .${CI_COMMIT_REF_NAME}.env
