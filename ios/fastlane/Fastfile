@@ -51,7 +51,7 @@ platform :ios do
 
 
   desc "Promotes Testflight build for production"
-  lane :production do
+  lane :make_prod do
   
     deliver(
       build_number: build_number,
@@ -63,12 +63,6 @@ platform :ios do
       skip_binary_upload: true,
       submission_information: "{\"export_compliance_uses_encryption\": false, \"add_id_info_uses_idfa\": false }"
     )
-
-    add_git_tag(
-      tag: "#{version_name} (#{build_number}) AppStore"
-    )
-
-    push_git_tags
   end
 
   desc "Handles DSYMs"

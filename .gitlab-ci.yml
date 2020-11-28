@@ -14,6 +14,12 @@ variables:
   tags:
     - docker
 
+.marcela_osx:
+  script:
+    - bundle update fastlane
+  tags: 
+    - ios
+
 test:debian:
   extends: .android_docker_image
   stage: test
@@ -27,6 +33,7 @@ test:debian:
     expire_in: 5 days
 
 test:macos:
+  extends: .marcela_osx
   stage: test
   script:
     - source .${CI_COMMIT_REF_NAME}.env
@@ -66,18 +73,23 @@ ipa:submit_to_review:
   when: manual
   allow_failure: false
   script:
-    - bundle exec fastlane production
+    - bundle exec fastlane make_prod
   only:
     - master
+  
 
 ipa:push_tags:
   extends: ipa:submit_to_review
   stage: tags
-  script:
-    - git config user.email "${GITLAB_USER_EMAIL}"
-    - git config user.name "${GITLAB_USER_NAME}"
-    - git remote add tag-origin https://syky27:${GITLAB_ACCESS_TOKEN}@${CI_REPO_PATH}
-    - git push tag-origin --tags
+  release:
+    tag_name: ${CI_PIPELINE_ID}-iOS
+
+apk:push_tags:
+  extends: apk:prod_track
+  stage: tags
+  release:
+    tag_name: ${CI_PIPELINE_ID}-Android
+
 
 ipa:sentry:dsyms:
   extends: ipa:push_tags
