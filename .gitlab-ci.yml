@@ -89,6 +89,7 @@ apk:push_tags:
   stage: tags
   release:
     tag_name: ${CI_PIPELINE_ID}-Android
+    description: ${CI_PIPELINE_ID}-Android Release
 
 
 ipa:sentry:dsyms:
