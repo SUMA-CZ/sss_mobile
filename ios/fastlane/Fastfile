@@ -75,5 +75,10 @@ platform :ios do
 end
 
 after_all do |lane|
-  delete_keychain(name: keychain_ajty)
+  begin
+     delete_keychain(name: keychain_ajty)
+   rescue => ex
+     print "failed to delete kechain"
+   end
+  
 end
