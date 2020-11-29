@@ -1,0 +1,10 @@
+NSPhotoLibraryUsageDescription = "Selecting images to upload receipt pictures";
+NSCameraUsageDescription = "Taking photo of receipts";
+NSMicrophoneUsageDescription = "Voice message recording";
+NSContactsUsageDescription = "Selecting contacts";
+NSCalendarsUsageDescription = "For editing events";
+NSAppleMusicUsageDescription = "For music playback";
+NSMotionUsageDescription = "Recording your trip";
+NSSpeechRecognitionUsageDescription = "Voice detection for automatic trip note recording";
+NSLocationAlwaysUsageDescription = "For recording your trip";
+NSLocationWhenInUseUsageDescription = "For recording your trip";
